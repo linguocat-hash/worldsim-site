@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Указываем поисковикам, где искать карту сайта
+Sitemap: https://worldsim.translationboard.mn/sitemap.xml
