@@ -1,0 +1,2737 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WorldSIM Mongolia | Аяллын сим карт</title>
+
+    <meta name="description" content="WorldSIM Mongolia | Аяллын сим карт | Аяллын Data eSIM - Биет СИМ">
+
+<link rel="icon" type="image/x-icon" href="favicon2.ico">
+
+<!-- Иконка для вкладок браузера (32x32 пикселя) -->
+<link rel="icon" type="image/png" href="WorldSIMicon32_32.png" sizes="32x32">
+
+<!-- Иконка для экранов Android (192x192 пикселя) -->
+<link rel="icon" type="image/png" href="WorldSIMicon192_192.png" sizes="192x192">
+
+<!-- Иконка для домашнего экрана Apple / iPhone (180x180 пикселей) -->
+<link rel="apple-touch-icon" href="WorldSIMicon180_180.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorldSIM Монгол</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --brand-blue: #002b49;   /* Темно-синий из WORLDSIM */
+            --brand-green: #7cb305;  /* Салатовый из WORLDSIM */
+            --text-dark: #111111;
+            --text-gray: #666666;
+            --bg-light: #f4f6f8;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding-bottom: 75px;
+        }
+
+        /* --- Шапка сайта (Светлая под логотип) --- */
+        header {
+            background-color: var(--white);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            height: 60px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo-img {
+            height: 38px; /* Оптимальная высота для мобильной шапки */
+            width: auto;
+            display: block;
+        }
+
+        /* Буст-меню кнопка */
+        .header-menu-btn {
+            background: var(--brand-blue);
+            border: none;
+            color: var(--white);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+
+        .header-menu-btn:active {
+            background: #001f35;
+        }
+
+        /* Выпадающий список буст-меню */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 55px;
+            right: 15px;
+            background: var(--white);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            width: 220px;
+            z-index: 1001;
+            border: 1px solid #e0e0e0;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 12px 16px;
+            color: var(--brand-blue);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:active {
+            background-color: #f5f5f5;
+            color: var(--brand-green);
+        }
+
+/* --- Баннер (Hero Section) --- */
+.hero {
+    background-image: url('Worldsimfrontpage.png');
+    background-size: cover;          /* Растягивает картинку, чтобы заполнить весь блок */
+    background-position: center;     /* Центрирует картинку */
+    background-repeat: no-repeat;    /* Запрещает повторение картинки */
+    padding: 60px 20px;              /* Немного увеличил отступы для красоты */
+    text-align: center;
+    color: var(--white);
+    position: relative;              /* Нужно для работы полупрозрачного слоя */
+}
+
+/* Опционально: создаем затемнение, чтобы белый текст читался лучше на фото */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);  /* 40% затемнение */
+    z-index: 0;
+}
+
+/* Поднимаем контент выше слоя затемнения */
+.hero h1, .hero p, .hero .search-container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.hero p {
+    font-size: 13px;
+    opacity: 0.9; /* Сделал текст чуть ярче */
+    margin-bottom: 20px;
+}
+
+        /* --- Переключатели --- */
+        .tabs-container {
+            display: flex;
+            gap: 8px;
+            padding: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .tabs-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            background: var(--white);
+            color: var(--brand-blue);
+            border: 1px solid #dee2e6;
+            transition: all 0.2s;
+        }
+
+        .tab.active {
+            background: var(--brand-green);
+            color: var(--white);
+            border-color: var(--brand-green);
+        }
+
+        /* --- Список карточек товаров --- */
+        .product-list {
+            padding: 0 15px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #eef0f2;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .product-details h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--brand-blue);
+            margin-bottom: 3px;
+        }
+
+        .product-price {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--brand-green);
+        }
+
+        .arrow-icon {
+            color: var(--brand-blue);
+            opacity: 0.5;
+            font-size: 14px;
+        }
+
+/* --- Нижняя навигация (Обновлено) --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            
+            /* ЗАМЕНА ФОНА: Установили картинку вместо var(--white) */
+            background-image: url('Worldsimfrontpage_2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 1000;
+        }
+
+        /* Темная подложка ТОЛЬКО для нижней панели, чтобы текст и салатовые иконки читались */
+        .bottom-nav::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 26, 44, 0.75); /* Темно-синее полупрозрачное затемнение */
+            z-index: 0;
+        }
+
+        .nav-item {
+            position: relative;
+            z-index: 1; /* Поднимаем элементы над фоновым затемнением */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.65); /* Неактивный текст (белый с прозрачностью) */
+            font-size: 11px;
+            text-decoration: none;
+            gap: 4px;
+            font-weight: 600;
+        }
+
+        /* Неактивные иконки на темном фоне */
+        .nav-item i {
+            font-size: 18px;
+            color: rgba(124, 179, 5, 0.6); /* Салатовый цвет с прозрачностью */
+        }
+
+        /* Активное состояние кнопки */
+        .nav-item.active {
+            color: #ffffff; /* Активный текст становится чисто белым */
+        }
+
+        /* Активное состояние иконки — горит ярко-салатовым */
+        .nav-item.active i {
+            color: #7cb305;
+            filter: drop-shadow(0 0 4px rgba(124, 179, 5, 0.4)); /* Легкое неоновое свечение */
+        }
+/* Стили под-вкладок */
+        .sub-tabs-container {
+            display: flex;
+            padding: 0 15px 10px 15px;
+            gap: 10px;
+        }
+
+        .sub-tab {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 15px;
+            background: #eef0f2;
+            color: var(--brand-blue);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .sub-tab.active {
+            background: var(--white);
+            border-color: var(--brand-blue);
+        }
+
+        .product-subtitle {
+            font-size: 11px;
+            color: var(--text-gray);
+            margin-top: 2px;
+        }
+
+        .multi-flag-icon {
+            width: 45px;
+            height: 45px;
+            background: #eef1f4;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+/* --- Стили для БИЕТ СИМ тарифов --- */
+        .sim-header-info {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--brand-blue);
+            margin: 10px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sim-category-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-gray);
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        /* Сетка для карточек (на мобильных по 1 в ряд, на планшетах - по 2) */
+        .sim-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .sim-card {
+            background: var(--white);
+            border: 1px solid #eef0f2;
+            border-radius: 8px;
+            padding: 16px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .sim-badge {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            background: #eef1f4;
+            color: var(--brand-blue);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .sim-price {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--brand-blue);
+            margin-bottom: 12px;
+        }
+
+        .sim-details {
+            border-top: 1px solid #f4f6f8;
+            padding-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .sim-detail-item {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sim-detail-item i {
+            width: 14px;
+            color: var(--brand-blue);
+            opacity: 0.7;
+        }
+
+        .sim-detail-item span {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Наша фирменная зеленая кнопка */
+        .sim-buy-btn {
+            background: var(--brand-green);
+            color: var(--white);
+            border: none;
+            width: 100%;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .sim-buy-btn:active {
+            background: #639002;
+        }
+
+        /* Справочные информационные блоки внизу */
+        .sim-footer-notes {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .note-block {
+            background: var(--white);
+            border-left: 4px solid var(--brand-blue);
+            padding: 12px 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .note-block.bg-alert {
+            border-left-color: #faad14;
+            background: #fffbe6;
+        }
+
+        .note-block h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--brand-blue);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .note-block p {
+            font-size: 12px;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+/* Стили для выбора стран и вывода тарифов */
+        .country-select-box {
+            margin-bottom: 15px;
+        }
+
+        .country-select-box select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            background-color: var(--white);
+            border: 1px solid #dcdfe6;
+            border-radius: 8px;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .tariff-result-card {
+            background: #ffffff;
+            border: 2px solid var(--brand-blue);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 15px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tariff-result-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--brand-blue);
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 6px;
+        }
+
+        .tariff-meta-row {
+            font-size: 13px;
+            margin-bottom: 12px;
+            color: var(--text-gray);
+        }
+        .tariff-meta-row strong {
+            color: var(--text-dark);
+            background: #eef1f4;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .tariff-grid-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .t-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #f0f2f5;
+        }
+
+        .t-item small {
+            display: block;
+            font-size: 11px;
+            color: var(--text-gray);
+            margin-bottom: 4px;
+        }
+
+        .t-item span {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .text-green { color: #52c41a !important; }
+        .text-orange { color: #fa8c16 !important; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+/* --- Стили для eSIM Pro --- */
+        .pro-description {
+            font-size: 13px;
+            color: var(--text-dark);
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .pro-benefits-grid {
+            background: #f4f7fa;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            border: 1px dashed #d0d9e0;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .benefit-icon {
+            font-size: 14px;
+            margin-top: 1px;
+        }
+
+        .benefit-text {
+            font-size: 12px;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+
+        .benefit-text strong {
+            display: block;
+            color: var(--brand-blue);
+            font-size: 12.5px;
+        }
+
+        .pro-card {
+            border-top: 3px solid #007aff !important;
+        }
+
+        .pro-badge {
+            background: #e6f0ff !important;
+            color: #007aff !important;
+        }
+
+        .pro-highlight {
+            color: #007aff !important;
+            font-weight: 700;
+        }
+
+        .pro-btn {
+            background: #007aff !important;
+        }
+        .pro-btn:active {
+            background: #0056b3 !important;
+        }
+/* --- СТИЛИ ДЛЯ ВСПЛЫВАЮЩЕГО ОКНА ТАРИФОВ (BOTTOM SHEET) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-bottom-sheet {
+            position: absolute;
+            bottom: -100%;
+            left: 0; right: 0;
+            background: #ffffff;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 16px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+            transition: bottom 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .modal-overlay.active .modal-bottom-sheet {
+            bottom: 0;
+        }
+
+        .modal-drag-handler {
+            width: 40px; height: 5px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin: 0 auto 10px auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f0f2f5;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .modal-title-row { display: flex; align-items: center; }
+        .modal-header h2 { font-size: 17px; font-weight: 700; color: #1f2d3d; margin: 0; }
+        .modal-close-btn { background: none; border: none; font-size: 24px; color: #909399; cursor: pointer; }
+
+        .modal-operator-info {
+            background: #f8f9fa; border: 1px solid #eef1f4; border-radius: 8px; padding: 10px; margin-bottom: 15px;
+        }
+        .op-meta-item { font-size: 12.5px; color: #606266; margin-bottom: 4px; }
+        .op-meta-item:last-child { margin-bottom: 0; }
+        .op-meta-item span { color: #1f2d3d; font-weight: 600; }
+
+        .modal-section-title { font-size: 13px; font-weight: 700; color: #606266; margin-bottom: 8px; }
+
+        /* Сетка для опций (выбор данных и дней) */
+        .modal-options-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .opt-btn {
+            background: #ffffff;
+            border: 1px solid #dcdfe6;
+            border-radius: 6px;
+            padding: 10px 4px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #606266;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .opt-btn.active {
+            border-color: #00b09b;
+            background: #e6f7f4;
+            color: #00b09b;
+            font-weight: 700;
+        }
+        .opt-btn.disabled {
+            background: #f5f7fa; border-color: #e4e7ed; color: #c0c4cc; cursor: not-allowed;
+        }
+
+        /* Итоговая панель */
+        .modal-footer-price-box {
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .price-label { font-size: 13px; color: #909399; }
+        .price-value { font-size: 20px; font-weight: 800; color: #00b09b; }
+        .modal-action-btn {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            color: white; border: none; border-radius: 6px;
+            padding: 10px 20px; font-size: 14px; font-weight: 700; cursor: pointer;
+        }
+
+        .modal-notes-box {
+            margin-top: 12px; font-size: 11px; color: #909399; line-height: 1.4;
+        }
+/* --- Уникальные стили для окна адреса (КОНФЛИКТ ИСПРАВЛЕН) --- */
+.address-modal-overlay {
+    display: none; /* Изначально полностью скрыто */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); 
+    backdrop-filter: blur(5px); 
+    z-index: 9999; /* Поверх тарифов и меню */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.address-modal-content {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 450px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    color: #333;
+}
+
+.address-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+}
+
+.address-map-link {
+    display: block;
+    position: relative;
+    margin: 15px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.address-modal-img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.address-map-hint {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    text-align: center;
+    padding: 6px;
+    font-size: 13px;
+}
+
+.address-call-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #2b8a3e;
+    color: white;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+/* --- Уникальные стили для окна помощи "Тусламж" --- */
+.help-modal-overlay {
+    display: none; /* Изначально скрыто */
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); 
+    backdrop-filter: blur(5px); 
+    z-index: 9999; /* Поверх всех элементов сайта */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.help-modal-content {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    color: #111111;
+}
+
+.help-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+}
+
+.help-section-card {
+    background: #f4f6f8;
+    border-left: 4px solid var(--brand-blue);
+    padding: 15px;
+    border-radius: 0 12px 12px 0;
+    margin-top: 15px;
+}
+
+.help-section-card.esim-alert {
+    border-left-color: var(--brand-green);
+    background: #f9fbe7;
+}
+
+.help-modal-content h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--brand-blue);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.help-modal-content h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--brand-blue);
+    margin-bottom: 8px;
+}
+
+.help-modal-content p, .help-modal-content li {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #333333;
+}
+
+.help-modal-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.help-modal-content li {
+    margin-bottom: 8px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <img src="WorldSIM_Logo_TravelPRNews.png" alt="WorldSIM Монгол" class="logo-img">
+    </div> 
+    
+<button class="header-menu-btn" onclick="toggleMenu()">
+    <i class="fa-solid fa-bars"></i> Цэс
+</button>
+
+<div class="dropdown-menu" id="boostMenu">
+    <a href="#" onclick="handleMenuClick('physical-sim')">
+        <i class="fa-solid fa-sim-card" style="margin-right: 6px;"></i> Дугаартай Биет Сим
+    </a>
+    <a href="#" onclick="handleMenuClick('esim-pro')">
+        <i class="fa-solid fa-id-card" style="margin-right: 6px;"></i> Дугаартай eSIM Pro
+    </a>
+    <a href="#" onclick="handleMenuClick('data-esim')">
+        <i class="fa-solid fa-globe" style="margin-right: 6px;"></i> Data eSIM
+    </a>
+    
+    <div style="border-top: 1px solid #eee; margin: 4px 0;"></div>
+    
+    <a href="#" onclick="navigateTo('help', event); toggleMenu(); return false;">
+        <i class="fa-solid fa-circle-question" style="margin-right: 6px;"></i> Тусламж
+    </a>
+    
+    <a href="#" onclick="navigateTo('address', event); toggleMenu(); return false;">
+        <i class="fa-solid fa-location-dot" style="margin-right: 6px;"></i> Манай хаяг
+    </a>
+</div>
+</header>
+
+<section class="hero">
+    <h1>Дэлхийгээр аялах<br>таны найдвартай түнш</h1>
+    <p>Аялагчдад зориулсан шилдэг eSIM болон дугаартай биет сим карт</p>
+    
+    <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="countrySearch" placeholder="Улс хайх... Жишээ нь: USA">
+    </div>
+</section>
+
+<div class="tabs-container">
+    <div class="tab active" onclick="switchTab(this, 'data-esim')">Data eSIM</div>
+    <div class="tab" onclick="switchTab(this, 'physical-sim')">Дугаартай Биет Сим</div>
+    <div class="tab" onclick="switchTab(this, 'esim-pro')">Дугаартай eSIM Pro</div>
+</div>
+
+<div class="sub-tabs-container" id="subTabsContainer">
+    <div class="sub-tab active" onclick="switchSubTab('single-country')">Улсууд</div>
+    <div class="sub-tab" onclick="switchSubTab('regions')">Бүс нутаг</div>
+</div>
+
+<main class="product-list">
+    
+    <div id="region-products" style="display: none;">
+        
+        <div class="product-card" onclick="openTariffModal('Хятад, Хонг Конг, Макао')" style="cursor: pointer;">
+            <div class="product-info">
+                <div class="multi-flag-icon">
+                    <i class="fa-solid fa-earth-asia" style="color: var(--brand-blue); font-size: 24px;"></i>
+                </div>
+                <div class="product-details">
+                    <h3>Хятад, Хонг Конг, Макао</h3>
+                    <p class="product-subtitle">Гурвалсан бүс нутгийн дата багц</p>
+                    <div class="product-price">27,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Ази 15 улс 🌏')" style="cursor: pointer;">
+            <div class="product-info">
+                <div class="multi-flag-icon">
+                    <i class="fa-solid fa-network-wired" style="color: var(--brand-blue); font-size: 24px;"></i>
+                </div>
+                <div class="product-details">
+                    <h3>Азийн 15 улс</h3>
+                    <p class="product-subtitle">Сингапур, Малайз, Тайланд, Япон, Солонгос г.м</p>
+                    <div class="product-price">27,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Ази 25 улс 🌏')" style="cursor: pointer;">
+            <div class="product-info">
+                <div class="multi-flag-icon">
+                    <i class="fa-solid fa-globe" style="color: var(--brand-blue); font-size: 24px;"></i>
+                </div>
+                <div class="product-details">
+                    <h3>Азийн 25 улс</h3>
+                    <p class="product-subtitle">Азийн бүс нутгийн дата багц (Бизнес ангилал)</p>
+                    <div class="product-price">36,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Ойрх Дорнод 🏜️')" style="cursor: pointer;">
+            <div class="product-info">
+                <div class="multi-flag-icon">
+                    <i class="fa-solid fa-map-location-dot" style="color: var(--brand-blue); font-size: 24px;"></i>
+                </div>
+                <div class="product-details">
+                    <h3>Ойрх Дорнод улсын бүс нутаг</h3>
+                    <p class="product-subtitle">Дубай, Саудын Араб, Турк, Египет, Катар г.м</p>
+                    <div class="product-price">37,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Европ (40 улс) 🇪🇺')" style="cursor: pointer;">
+            <div class="product-info">
+                <div class="multi-flag-icon">
+                    <i class="fa-solid fa-earth-europe" style="color: var(--brand-blue); font-size: 24px;"></i>
+                </div>
+                <div class="product-details">
+                    <h3>Европ (Light багц)</h3>
+                    <p class="product-subtitle">Европын холбооны 40 улс даяар</p>
+                    <div class="product-price">26,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Европ (56 улс) 🇪🇺🌍')" style="cursor: pointer;">
+            <div class="product-info">
+                <div class="multi-flag-icon">
+                    <i class="fa-solid fa-earth-europe" style="color: var(--brand-blue); font-size: 24px;"></i>
+                </div>
+                <div class="product-details">
+                    <h3>Европ (Premium багц)</h3>
+                    <p class="product-subtitle">Европын 56 улс</p>
+                    <div class="product-price">31,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+    </div> <div id="single-country-products">
+        
+        <div class="product-card" onclick="openTariffModal('БНХАУ (China)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/cn.png" alt="Хятад" class="product-img">
+                <div class="product-details">
+                    <h3>БНХАУ (Mainland China)</h3>
+                    <div class="product-price">28,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Япон (Japan)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/jp.png" alt="Япон" class="product-img">
+                <div class="product-details">
+                    <h3>Япон (Japan)</h3>
+                    <div class="product-price">20,000 ₮ -өөс</div> 
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Солонгос (Korea)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/kr.png" alt="Солонгос" class="product-img">
+                <div class="product-details">
+                    <h3>Солонгос (Korea)</h3>
+                    <div class="product-price">25,000 ₮ -өөс</div> 
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('ОХУ (Russia)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/ru.png" alt="ОХУ" class="product-img">
+                <div class="product-details">
+                    <h3>ОХУ (Russia)</h3>
+                    <div class="product-price">29,000 ₮ -өөс</div> 
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Казахстан (Kazakhstan)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/kz.png" alt="Казахстан" class="product-img">
+                <div class="product-details">
+                    <h3>Казахстан (Kazakhstan)</h3>
+                    <div class="product-price">28,000 ₮ -өөс</div> 
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('АНУ (USA)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/us.png" alt="АНУ" class="product-img">
+                <div class="product-details">
+                    <h3>АНУ (USA)</h3>
+                    <div class="product-price">24,000 ₮ -өөс</div> 
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Канада (Canada)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/ca.png" alt="Канада" class="product-img">
+                <div class="product-details">
+                    <h3>Канада (Canada)</h3>
+                    <div class="product-price">31,000 ₮ -өөс</div> 
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Тайвань (Taiwan)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/tw.png" alt="Тайвань" class="product-img">
+                <div class="product-details">
+                    <h3>Тайвань (Taiwan)</h3>
+                    <div class="product-price">24,000 ₮ -өөс</div> 
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Гонконг (Hong Kong)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/hk.png" alt="Гонконг" class="product-img">
+                <div class="product-details">
+                    <h3>Гонконг (Hong Kong)</h3>
+                    <div class="product-price">21,000 ₮ -өөс</div> 
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Тайланд (Thailand)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/th.png" alt="Тайланд" class="product-img">
+                <div class="product-details">
+                    <h3>Тайланд (Thailand)</h3>
+                    <div class="product-price">20,000 ₮ -өөс</div> 
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Вьетнам (Vietnam)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/vn.png" alt="Вьетнам" class="product-img">
+                <div class="product-details">
+                    <h3>Вьетнам (Vietnam)</h3>
+                    <div class="product-price">20,000 ₮ -өөс</div> 
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Малайз (Malaysia)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/my.png" alt="Малайз" class="product-img">
+                <div class="product-details">
+                    <h3>Малайз (Malaysia)</h3>
+                    <div class="product-price">24,000 ₮ -өөс</div> 
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Филиппин (Philippines)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/ph.png" alt="Филиппин" class="product-img">
+                <div class="product-details">
+                    <h3>Филиппин (Philippines)</h3>
+                    <div class="product-price">26,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Лаос (Laos)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/la.png" alt="Лаос" class="product-img">
+                <div class="product-details">
+                    <h3>Лаос (Laos)</h3>
+                    <div class="product-price">26,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Сингапур (Singapore)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/sg.png" alt="Сингапур" class="product-img">
+                <div class="product-details">
+                    <h3>Сингапур (Singapore)</h3>
+                    <div class="product-price">23,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Индонезия (Indonesia)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/id.png" alt="Индонезия" class="product-img">
+                <div class="product-details">
+                    <h3>Индонезия (Indonesia)</h3>
+                    <div class="product-price">24,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Австрали (Australia)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/au.png" alt="Австрали" class="product-img">
+                <div class="product-details">
+                    <h3>Австрали (Australia)</h3>
+                    <div class="product-price">26,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Непал (Nepal)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/np.png" alt="Непал" class="product-img">
+                <div class="product-details">
+                    <h3>Непал (Nepal)</h3>
+                    <div class="product-price">36,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('АНЭ (UAE)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/ae.png" alt="АНЭ" class="product-img">
+                <div class="product-details">
+                    <h3>АНЭ (UAE)</h3>
+                    <div class="product-price">32,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Саудын Араб (Saudi Arabia)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/sa.png" alt="Саудын Араб" class="product-img">
+                <div class="product-details">
+                    <h3>Саудын Араб (Saudi Arabia)</h3>
+                    <div class="product-price">31,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Энэтхэг (India)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/in.png" alt="Энэтхэг" class="product-img">
+                <div class="product-details">
+                    <h3>Энэтхэг (India)</h3>
+                    <div class="product-price">32,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+        <div class="product-card" onclick="openTariffModal('Турк (Turkey)')" style="cursor: pointer;">
+            <div class="product-info">
+                <img src="https://flagcdn.com/w160/tr.png" alt="Турк" class="product-img">
+                <div class="product-details">
+                    <h3>Турк (Turkey)</h3>
+                    <div class="product-price">24,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
+    </div>
+
+<div id="physical-sim-container" style="display: none;">
+            
+    <div class="sim-header-info">
+        <i class="fa-solid fa-credit-card"></i> Биет СИМ-ийн тариф
+    </div>
+
+    <div class="sim-category-title">[ ЭНГИЙН БАГЦУУД ]</div>
+    <div class="sim-grid">
+        <div class="sim-card pro-card">
+            <div class="sim-badge pro-badge">Багц №1</div>
+            <div class="sim-price">97,000 ₮</div>
+            <div class="sim-details">
+                <div class="sim-detail-item"><i class="fa-solid fa-money-bill-wave"></i> Нэгж: <span>22.70 $</span></div>
+                <div class="sim-detail-item"><i class="fa-solid fa-calendar-days"></i> Хугацаа: <span>365 хоног</span></div>
+            </div>
+            <a href="https://m.me/61560020138379" target="_blank" style="text-decoration: none; display: block;">
+                <button class="sim-buy-btn">Захиалах</button>
+            </a>
+        </div>
+
+        <div class="sim-card pro-card">
+            <div class="sim-badge pro-badge">Багц №2</div>
+            <div class="sim-price">97,000 ₮</div>
+            <div class="sim-details">
+                <div class="sim-detail-item"><i class="fa-solid fa-chart-simple"></i> Дата: <span>1GB (7 хоног)</span></div>
+                <div class="sim-detail-item"><i class="fa-solid fa-money-bill-wave"></i> Нэгж: <span>16.45 $</span></div>
+                <div class="sim-detail-item"><i class="fa-solid fa-calendar-days"></i> Хугацаа: <span>365 хоног</span></div>
+            </div>
+            <a href="https://m.me/61560020138379" target="_blank" style="text-decoration: none; display: block;">
+                <button class="sim-buy-btn">Захиалах</button>
+            </a>
+        </div>
+
+        <div class="sim-card pro-card">
+            <div class="sim-badge pro-badge">Багц №3</div>
+            <div class="sim-price">97,000 ₮</div>
+            <div class="sim-details">
+                <div class="sim-detail-item"><i class="fa-solid fa-chart-simple"></i> Дата: <span>3GB (7 хоног)</span></div>
+                <div class="sim-detail-item"><i class="fa-solid fa-money-bill-wave"></i> Нэгж: <span>10.20 $</span></div>
+                <div class="sim-detail-item"><i class="fa-solid fa-calendar-days"></i> Хугацаа: <span>365 хоног</span></div>
+            </div>
+            <a href="https://m.me/61560020138379" target="_blank" style="text-decoration: none; display: block;">
+                <button class="sim-buy-btn">Захиалах</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="sim-category-title" style="margin-top: 20px;">[ ИХ ДАТАТАЙ БАГЦУУД ]</div>
+    <div class="sim-grid">
+        <div class="sim-card pro-card">
+            <div class="sim-badge pro-badge">Багц №4</div>
+            <div class="sim-price">97,000 ₮</div>
+            <div class="sim-details">
+                <div class="sim-detail-item"><i class="fa-solid fa-chart-simple"></i> Дата: <span>5GB (15 хоног)</span></div>
+                <div class="sim-detail-item"><i class="fa-solid fa-money-bill-wave"></i> Нэгж: <span>3.95 $</span></div>
+                <div class="sim-detail-item"><i class="fa-solid fa-calendar-days"></i> Хугацаа: <span>365 хоног</span></div>
+            </div>
+            <a href="https://m.me/61560020138379" target="_blank" style="text-decoration: none; display: block;">
+                <button class="sim-buy-btn">Захиалах</button>
+            </a>
+        </div>
+
+        <div class="sim-card pro-card">
+            <div class="sim-badge pro-badge">Багц №5</div>
+            <div class="sim-price">160,000 ₮</div>
+            <div class="sim-details">
+                <div class="sim-detail-item"><i class="fa-solid fa-chart-simple"></i> Дата: <span>10GB (30 хоног)</span></div>
+                <div class="sim-detail-item"><i class="fa-solid fa-money-bill-wave"></i> Нэгж: <span>6.45 $</span></div>
+                <div class="sim-detail-item"><i class="fa-solid fa-calendar-days"></i> Хугацаа: <span>365 хоног</span></div>
+                </div>
+            <a href="https://m.me/61560020138379" target="_blank" style="text-decoration: none; display: block;">
+                <button class="sim-buy-btn">Захиалах</button>
+            </a>
+        </div>
+<div class="sim-card pro-card">
+    <div class="sim-badge pro-badge">Багц №6</div>
+    <div class="sim-price">219,000 ₮</div>
+    <div class="sim-details">
+        <div class="sim-detail-item"><i class="fa-solid fa-chart-simple"></i> Дата: <span>20GB (30 хоног)</span></div>
+        <div class="sim-detail-item"><i class="fa-solid fa-money-bill-wave"></i> Нэгж: <span>15.20 $</span></div>
+        <div class="sim-detail-item"><i class="fa-solid fa-calendar-days"></i> Хугацаа: <span>365 хоног</span></div>
+    </div>
+    <a href="https://m.me/61560020138379" target="_blank" style="text-decoration: none; display: block;">
+        <button class="sim-buy-btn">Захиалах</button>
+    </a>
+</div>
+            </div>
+
+<div class="sim-category-title" style="margin-top: 25px; color: var(--brand-blue);">📍 Улс бүрийн тариф шалгах</div>
+<div class="country-select-box">
+    <select id="simCountrySelector" onchange="updateCountryTariff()">
+    <option value="" disabled selected>Улсаа сонгоно уу...</option>
+        
+        <option value="Австрали">Австрали 🇦🇺</option>
+        <option value="Австри">Австри 🇦🇹</option>
+        <option value="Азербайджан">Азербайджан 🇦🇿</option>
+        <option value="АНУ">АНУ 🇺🇸</option>
+        <option value="Англи">Англи 🇬🇧</option>
+        <option value="Бельги">Бельги 🇧🇪</option>
+        <option value="Босни Герцеговин">Босни Герцеговин 🇧🇦</option>
+        <option value="Вьетнам">Вьетнам 🇻🇳</option>
+        <option value="Герман">Герман 🇩🇪</option>
+        <option value="Грек">Грек 🇬🇷</option>
+        <option value="Гүрж">Гүрж 🇬🇪</option>
+        <option value="Египет">Египет 🇪🇬</option>
+        <option value="Индонези">Индонези 🇮🇩</option>
+        <option value="Ирланд">Ирланд 🇮🇪</option>
+        <option value="Исланд">Исланд 🇮🇸</option>
+        <option value="Испани">Испани 🇪🇸</option>
+        <option value="Итали">Итали 🇮🇹</option>
+        <option value="Казахстан">Казахстан 🇰🇿</option>
+        <option value="Камбож">Камбож 🇰🇭</option>
+        <option value="Канад">Канад 🇨🇦</option>
+        <option value="Кени">Кени 🇰🇪</option>
+        <option value="Киргиз">Киргиз 🇰🇬</option>
+        <option value="Кувейт">Кувейт 🇰🇼</option>
+        <option value="Литва">Литва 🇱🇹</option>
+        <option value="Люксембург">Люксембург 🇱🇺</option>
+        <option value="Макао">Макао 🇲🇴</option>
+        <option value="Малайз">Малайз 🇲🇾</option>
+        <option value="Мексик">Мексик 🇲🇽</option>
+        <option value="Монгол">Монгол 🇲🇳</option>
+        <option value="Мьянмар">Мьянмар 🇲🇲</option>
+        <option value="Нидерланд">Нидерланд 🇳🇱</option>
+        <option value="Норвег">Норвег 🇳🇴</option>
+        <option value="ОХУ">ОХУ 🇷🇺</option>
+        <option value="Өмнөд Африк">Өмнөд Африк 🇿🇦</option>
+        <option value="Өмнөд Судан">Өмнөд Судан 🇸🇸</option>
+        <option value="Пакистан">Пакистан 🇵🇰</option>
+        <option value="Польш">Польш 🇵🇱</option>
+        <option value="Португал">Португал 🇵🇹</option>
+        <option value="Румын">Румын 🇷🇴</option>
+        <option value="Серби">Серби 🇷🇸</option>
+        <option value="Сингапур">Сингапур 🇸🇬</option>
+        <option value="Солонгос">Солонгос 🇰🇷</option>
+        <option value="Судан">Судан 🇸🇩</option>
+        <option value="Тажикистан">Тажикистан 🇹жил</option>
+        <option value="Тайвань">Тайвань 🇹🇼</option>
+        <option value="Тайланд">Тайланд 🇹🇭</option>
+        <option value="Тунис">Тунис 🇹🇳</option>
+        <option value="Турк">Турк 🇹🇷</option>
+        <option value="Узбекистан">Узбекистан 🇺🇿</option>
+        <option value="Унгар">Унгар 🇭🇺</option>
+        <option value="Филлипин">Филиппин 🇵🇭</option>
+        <option value="Франц">Франц 🇫🇷</option>
+        <option value="Финланд">Финланд 🇫🇮</option>
+        <option value="Хонг Конг">Хонг Конг 🇭🇰</option>
+        <option value="Хятад">Хятад 🇨🇳</option>
+        <option value="Чех">Чех 🇨🇿</option>
+        <option value="Швед">Швед 🇸🇪</option>
+        <option value="Швейцар">Швейцар 🇨🇭</option>
+        <option value="Шинэ Зеланди">Шинэ Зеланди 🇳🇿</option>
+        <option value="Япон">Япон 🇯🇵</option>
+    </select>
+</div>
+
+<div id="countryTariffResult" class="tariff-result-card" style="display: none;">
+    <h3 id="resCountryName">Улс</h3>
+    <div class="tariff-meta-row">
+        <span><i class="fa-solid fa-tower-cell"></i> Оператор:</span>
+        <strong id="resOperator">-</strong>
+    </div>
+    <div class="tariff-grid-details">
+        <div class="t-item">
+            <small>Монгол руу /1мин/</small>
+            <span id="resToMongolia">-</span>
+        </div>
+        <div class="t-item">
+            <small>Аялах улс дотор /1мин/</small>
+            <span id="resLocalCall">-</span>
+        </div>
+        <div class="t-item">
+            <small>Дуудлага хүлээн авах</small>
+            <span id="resIncoming" class="text-green">-</span>
+        </div>
+        <div class="t-item">
+            <small>Задгай дата /1MB/</small>
+            <span id="resDataPrice" class="text-orange">-</span>
+        </div>
+        <div class="t-item">
+            <small>Мэссэж</small>
+            <span id="resSms">-</span>
+        </div>
+    </div>
+</div>
+
+<div class="sim-footer-notes" style="margin-top: 20px;">
+    <div class="note-block" style="border-left: 4px solid #7cb305; background-color: rgba(124, 179, 5, 0.06); padding: 15px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        
+        <h4 style="color: #7cb305; margin-top: 0; margin-bottom: 8px; font-weight: 700;">
+    <i class="fa-solid fa-circle-info"></i> Санамж:
+</h4>
+<p style="margin-bottom: 12px; color: #333;">
+    Жагсаалтад байхгүй бусад улс орны талаар мэдээлэл авахыг хүсвэл 
+    <a href="https://www.facebook.com/profile.php?id=100070001765710" target="_blank" rel="noopener noreferrer" style="color: #1890ff; font-weight: 600; text-decoration: underline;">манай FaceBook</a> 
+    хуудсаар зочлон, чатаар ажилтантай холбогдоорой.
+</p>
+        
+        <hr style="border: 0; border-top: 1px solid rgba(124, 179, 5, 0.2); margin: 15px 0;">
+
+        <h4 style="color: #7cb305; margin-top: 0; margin-bottom: 12px; font-weight: 700;"><i class="fa-solid fa-earth-americas"></i> Хамрах хүрээ:</h4>
+        
+        <div class="flag-container" style="display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; align-items: center;">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg" alt="USA" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/GB.svg" alt="UK" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/DE.svg" alt="Germany" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/FR.svg" alt="France" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/CH.svg" alt="Switzerland" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/IT.svg" alt="Italy" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/CZ.svg" alt="Czechia" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/AT.svg" alt="Austria" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/AU.svg" alt="Australia" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/TH.svg" alt="Thailand" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/SG.svg" alt="Singapore" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/MY.svg" alt="Malaysia" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/JP.svg" alt="Japan" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/KR.svg" alt="South Korea" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+        </div>
+
+        <p style="margin-top: 5px; font-size: 0.95em; font-weight: 500; color: #444;">+ дэлхийн 220 гаруй улс орон 🌎</p>
+    </div>
+</div>
+
+        </div>
+<div id="esim-pro-container" style="display: none;">
+            
+            <div class="sim-header-info">
+                <i class="fa-solid fa-gem" style="color: #007aff;"></i> Global eSIM Pro (Voice, SMS, Data)
+            </div>
+
+            <p class="pro-description">
+                Олон улсын байнгын дугаартай eSIM Pro картыг манай хаягаар ирж эсвэл чатаар холбогдон авах боломжтой.
+            </p>
+
+            <div class="pro-benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">1️⃣</div>
+                    <div class="benefit-text"><strong>Хугацаагүй дугаар 🔢</strong> Таны дугаар хэзээ ч устахгүй.</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">2️⃣</div>
+                    <div class="benefit-text"><strong>Байнгын хэрэглээ 🗓</strong> Ашиглах тусам эрх хаагдахгүй (Дугаар идэвхгүй бол 1 жил хадгалагдана).</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">3️⃣</div>
+                    <div class="benefit-text"><strong>Уян хатан хэрэглээ 🌐</strong> Дата багц авах, яриа хийх, цэнэглэх боломжтой.</div>
+                </div>
+            </div>
+
+            <div class="sim-category-title" style="margin-top: 20px;">[ Сонгох багцууд ]</div>
+            <div class="sim-grid">
+                <div class="sim-card pro-card">
+                    <div class="sim-badge pro-badge">30 хоног ⏱</div>
+                    <div class="sim-price">145,000 ₮</div>
+                    <div class="sim-details">
+                        <div class="sim-detail-item"><i class="fa-solid fa-bolt"></i> Төрөл: <span>Global eSIM Pro</span></div>
+                        <div class="sim-detail-item"><i class="fa-solid fa-money-bill-wave"></i> Дагалдах цэнэг: <span class="pro-highlight">$20.00</span></div>
+                    </div>
+                    <a href="https://m.me/61560020138379" target="_blank" style="text-decoration: none; display: block;">
+        <button class="sim-buy-btn">eSIM Pro авах</button>
+    </a>
+                </div>
+
+                <div class="sim-card pro-card">
+                    <div class="sim-badge pro-badge">90 хоног ⏱</div>
+                    <div class="sim-price">190,000 ₮</div>
+                    <div class="sim-details">
+                        <div class="sim-detail-item"><i class="fa-solid fa-bolt"></i> Төрөл: <span>Global eSIM Pro</span></div>
+                        <div class="sim-detail-item"><i class="fa-solid fa-money-bill-wave"></i> Дагалдах цэнэг: <span class="pro-highlight">$40.00</span></div>
+                    </div>
+                    <a href="https://m.me/61560020138379" target="_blank" style="text-decoration: none; display: block;">
+        <button class="sim-buy-btn">eSIM Pro авах</button>
+    </a>
+                </div>
+
+                <div class="sim-card pro-card">
+                    <div class="sim-badge pro-badge">180 хоног ⏱</div>
+                    <div class="sim-price">261,000 ₮</div>
+                    <div class="sim-details">
+                        <div class="sim-detail-item"><i class="fa-solid fa-bolt"></i> Төрөл: <span>Global eSIM Pro</span></div>
+                        <div class="sim-detail-item"><i class="fa-solid fa-money-bill-wave"></i> Дагалдах цэнэг: <span class="pro-highlight">$62.50</span></div>
+                    </div>
+                    <a href="https://m.me/61560020138379" target="_blank" style="text-decoration: none; display: block;">
+        <button class="sim-buy-btn">eSIM Pro авах</button>
+    </a>
+                </div>
+            </div>
+
+<div class="sim-category-title" style="margin-top: 25px; color: var(--brand-blue);">📍 Улс бүрийн тариф шалгах</div>
+<div class="country-select-box">
+    <select id="esimCountrySelector" onchange="updateEsimCountryTariff()">
+    <option value="" disabled selected>Улсаа сонгоно уу...</option>
+        
+        <option value="Австрали">Австрали 🇦🇺</option>
+        <option value="Австри">Австри 🇦🇹</option>
+        <option value="Азербайджан">Азербайджан 🇦🇿</option>
+        <option value="АНУ">АНУ 🇺🇸</option>
+        <option value="Англи">Англи 🇬🇧</option>
+        <option value="Бельги">Бельги 🇧🇪</option>
+        <option value="Босни Герцеговин">Босни Герцеговин 🇧🇦</option>
+        <option value="Вьетнам">Вьетнам 🇻🇳</option>
+        <option value="Герман">Герман 🇩🇪</option>
+        <option value="Грек">Грек 🇬🇷</option>
+        <option value="Гүрж">Гүрж 🇬🇪</option>
+        <option value="Египет">Египет 🇪🇬</option>
+        <option value="Индонези">Индонези 🇮🇩</option>
+        <option value="Ирланд">Ирланд 🇮🇪</option>
+        <option value="Исланд">Исланд 🇮🇸</option>
+        <option value="Испани">Испани 🇪🇸</option>
+        <option value="Итали">Итали 🇮🇹</option>
+        <option value="Казахстан">Казахстан 🇰🇿</option>
+        <option value="Камбож">Камбож 🇰🇭</option>
+        <option value="Канад">Канад 🇨🇦</option>
+        <option value="Кени">Кени 🇰🇪</option>
+        <option value="Киргиз">Киргиз 🇰🇬</option>
+        <option value="Кувейт">Кувейт 🇰🇼</option>
+        <option value="Литва">Литва 🇱🇹</option>
+        <option value="Люксембург">Люксембург 🇱🇺</option>
+        <option value="Макао">Макао 🇲🇴</option>
+        <option value="Малайз">Малайз 🇲🇾</option>
+        <option value="Мексик">Мексик 🇲🇽</option>
+        <option value="Монгол">Монгол 🇲🇳</option>
+        <option value="Мьянмар">Мьянмар 🇲🇲</option>
+        <option value="Нидерланд">Нидерланд 🇳🇱</option>
+        <option value="Норвег">Норвег 🇳🇴</option>
+        <option value="ОХУ">ОХУ 🇷🇺</option>
+        <option value="Өмнөд Африк">Өмнөд Африк 🇿🇦</option>
+        <option value="Өмнөд Судан">Өмнөд Судан 🇸🇸</option>
+        <option value="Пакистан">Пакистан 🇵🇰</option>
+        <option value="Польш">Польш 🇵🇱</option>
+        <option value="Португал">Португал 🇵🇹</option>
+        <option value="Румын">Румын 🇷🇴</option>
+        <option value="Серби">Серби 🇷🇸</option>
+        <option value="Сингапур">Сингапур 🇸🇬</option>
+        <option value="Солонгос">Солонгос 🇰🇷</option>
+        <option value="Судан">Судан 🇸🇩</option>
+        <option value="Тажикистан">Тажикистан 🇹🇯</option>
+        <option value="Тайвань">Тайвань 🇹🇼</option>
+        <option value="Тайланд">Тайланд 🇹🇭</option>
+        <option value="Тунис">Тунис 🇹🇳</option>
+        <option value="Турк">Турк 🇹🇷</option>
+        <option value="Узбекистан">Узбекистан 🇺🇿</option>
+        <option value="Унгар">Унгар 🇭🇺</option>
+        <option value="Филлипин">Филиппин 🇵🇭</option>
+        <option value="Франц">Франц 🇫🇷</option>
+        <option value="Финланд">Финланд 🇫🇮</option>
+        <option value="Хонг Конг">Хонг Конг 🇭🇰</option>
+        <option value="Хятад">Хятад 🇨🇳</option>
+        <option value="Чех">Чех 🇨🇿</option>
+        <option value="Швед">Швед 🇸🇪</option>
+        <option value="Швейцар">Швейцар 🇨🇭</option>
+        <option value="Шинэ Зеланди">Шинэ Зеланди 🇳🇿</option>
+        <option value="Япон">Япон 🇯🇵</option>
+    </select>
+</div>
+
+            <div id="esimCountryTariffResult" class="tariff-result-card" style="display: none;">
+    <h3 id="esimResCountryName">Улс</h3>
+    <div class="tariff-meta-row">
+        <span><i class="fa-solid fa-tower-cell"></i> Оператор:</span>
+        <strong id="esimResOperator">-</strong>
+    </div>
+    <div class="tariff-grid-details">
+        <div class="t-item">
+            <small>Монгол руу /1мин/</small>
+            <span id="esimResToMongolia">-</span>
+        </div>
+        <div class="t-item">
+            <small>Аялах улс дотор /1мин/</small>
+            <span id="esimResLocalCall">-</span>
+        </div>
+        <div class="t-item">
+            <small>Дуудлага хүлээн авах</small>
+            <span id="esimResIncoming" class="text-green">-</span>
+        </div>
+        <div class="t-item">
+            <small>Задгай дата /1MB/</small>
+            <span id="esimResDataPrice" class="text-orange">-</span>
+        </div>
+        <div class="t-item">
+            <small>Мэссэж</small>
+            <span id="esimResSms">-</span>
+        </div>
+    </div>
+</div>
+
+<div class="sim-footer-notes" style="margin-top: 20px;">
+    <div class="note-block" style="border-left: 4px solid #007aff; background-color: rgba(0, 122, 255, 0.04); padding: 15px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        
+        <h4 style="color: #7cb305; margin-top: 0; margin-bottom: 8px; font-weight: 700;">
+    <i class="fa-solid fa-circle-info"></i> Санамж:
+</h4>
+<p style="margin-bottom: 12px; color: #333;">
+    Жагсаалтад байхгүй бусад улс орны талаар мэдээлэл авахыг хүсвэл 
+    <a href="https://www.facebook.com/profile.php?id=100070001765710" target="_blank" rel="noopener noreferrer" style="color: #1890ff; font-weight: 600; text-decoration: underline;">манай FaceBook</a> 
+    хуудсаар зочлон, чатаар ажилтантай холбогдоорой.
+</p>
+        
+        <hr style="border: 0; border-top: 1px solid rgba(0, 122, 255, 0.15); margin: 15px 0;">
+
+        <h4 style="color: #007aff; margin-top: 0; margin-bottom: 12px; font-weight: 700;"><i class="fa-solid fa-earth-americas"></i> Хамрах хүрээ:</h4>
+        
+        <div class="flag-container" style="display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; align-items: center;">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/US.svg" alt="USA" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/GB.svg" alt="UK" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/DE.svg" alt="Germany" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/FR.svg" alt="France" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/CH.svg" alt="Switzerland" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/IT.svg" alt="Italy" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/CZ.svg" alt="Czechia" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/AT.svg" alt="Austria" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/AU.svg" alt="Australia" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/TH.svg" alt="Thailand" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/SG.svg" alt="Singapore" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/MY.svg" alt="Malaysia" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/JP.svg" alt="Japan" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+            <img src="https://purecatamphetamine.github.io/country-flag-icons/3x2/KR.svg" alt="South Korea" style="width: 24px; height: 16px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.15);">
+        </div>
+
+        <p style="margin-top: 5px; font-size: 0.95em; font-weight: 500; color: #444;">+ дэлхийн 220 гаруй улс орон 🌎</p>
+    </div>
+</div>
+    </main>
+
+<nav class="bottom-nav">
+    <a href="#" class="nav-item active" onclick="navigateTo('home')">
+        <i class="fa-solid fa-house"></i>
+        <span>Нүүр</span>
+    </a>
+    
+    <a href="#" class="nav-item" onclick="navigateTo('address', event); return false;">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>Манай хаяг</span>
+    </a>
+
+    <a href="#" class="nav-item" onclick="navigateTo('help', event); return false;">
+        <i class="fa-solid fa-circle-question"></i>
+        <span>Тусламж</span>
+    </a>
+</nav>
+
+<div id="addressModal" class="address-modal-overlay">
+    <div class="address-modal-content">
+        <span class="address-modal-close" onclick="closeAddressModal()">×</span>
+        
+        <h2>📍 Манай хаяг, цагийн хуваарь</h2>
+        <p>Та манай оффис дээр ирж үйлчилгээ авах боломжтой:</p>
+        
+        <a href="https://maps.app.goo.gl/ECfotyHKngNeDhkm9" target="_blank" class="address-map-link">
+            <img src="OfficeRekhet.jpg" alt="Эрхэт оффис байршил" class="address-modal-img">
+            <span class="address-map-hint"><i class="fa-solid fa-map-location-dot"></i> Google Maps дээр харах</span>
+        </a>
+
+        <div class="address-info" style="font-size: 14px; line-height: 1.5; margin: 15px 0; color: #333;">
+            <p style="margin-bottom: 8px;"><strong>1️⃣ Байршил:</strong> БЗД, Энх тайваны өргөн чөлөө, Бөхийн өргөөний баруун талд, Эрхэт оффис, 10 давхар, 1006 тоот.</p>
+            <p style="margin-bottom: 8px;"><strong>2️⃣ Цагийн хуваарь:</strong><br>
+               Да-Ба: 09:00 - 17:00 🕘<br>
+               Бя-Ня: Тантай цагаа тохироод уулзах боломжтой. 🤝
+            </p>
+            <p><strong>3️⃣ Холбоо барих:</strong> 80599859 ☎️</p>
+        </div>
+
+        <p class="warning-text" style="background-color: #fff9db; padding: 10px; border-radius: 8px; font-size: 13px; border-left: 4px solid #fcc419; margin-top: 10px;">📌 Та ирэхээсээ өмно заавал мэдэгдээрэй. 👌</p>
+
+        <a href="tel:+97680599859" class="address-call-btn">
+            <i class="fa-solid fa-phone"></i> Залгах
+        </a>
+    </div>
+</div>
+<div id="helpModal" class="help-modal-overlay">
+    <div class="help-modal-content">
+        <span class="help-modal-close" onclick="closeHelpModal()">×</span>
+        
+        <h2>🙋‍♂️ Тусламж болон заавар</h2>
+        
+        <div class="help-section-card esim-alert">
+            <h3>📱 Таны утас eSIM дэмжих үү?</h3>
+            <p style="margin-bottom: 10px; font-weight: 600; color: #555;">Худалдан авалт хийхээсээ өмнө та зааварчилгааны дагуу заавал шалгаарай:</p>
+            <ul>
+                <li><strong>1️⃣</strong> Утасныхаа залгах хэсэгт <code style="background: #e0e0e0; padding: 2px 6px; border-radius: 4px; font-weight: 700; color: #d63384;">*#06#</code> кодыг бичнэ.</li>
+                <li><strong>2️⃣</strong> Гарч ирсэн мэдээлэл дунд <strong>EID дугаар</strong> байвал таны утас eSIM дэмжинэ. ✅</li>
+                <li><strong>3️⃣</strong> Хэрэв зөвхөн IMEI дугаар байвал eSIM дэмжихгүй. Энэ тохиолдолд та манай <strong>Биет СИМ-ийг</strong> сонгон ашиглах боломжтой. 😊</li>
+            </ul>
+        </div>
+
+        <div class="help-section-card">
+            <h3>🌐 Олон улсын Data eSIM</h3>
+            <p>Энэхүү eSIM нь <strong>зөвхөн ДАТА</strong> ашиглах зориулалттай бөгөөд уламжлалт дуудлага хийх боломжгүйг анхаарна уу. Зөвхөн интернэт болон онлайн аппликейшн (Viber, WhatsApp, WeChat гэх мэт) ашиглахад тохиромжтой.</p>
+        </div>
+    </div>
+</div>
+<script>
+
+// ==========================================
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И БАЗА ДАННЫХ
+// ==========================================
+let selectedDataPackage = "";
+let selectedDays = "";
+let currentCountryKey = "";
+
+const simTariffsData = {
+    "Австрали": { op: "Singtel Optus", toMn: "0.11 $", local: "0.12 $", inc: "Үнэгүй", data: "0.0060 $", sms: "0.06 $" },
+    "Австри": { op: "Orange", toMn: "0.09 $", local: "0.42 $", inc: "Үнэгүй", data: "0.0070 $", sms: "0.21 $" },
+    "Азербайджан": { op: "J/V/ Bakcell", toMn: "0.77 $", local: "1.08 $", inc: "Үнэгүй", data: "0.0313 $", sms: "0.11 $" },
+    "АНУ": { op: "AT&T", toMn: "0.09 $", local: "0.10 $", inc: "Үнэгүй", data: "0.0090 $", sms: "0.20 $" },
+    "Англи": { op: "H3G", toMn: "0.09 $", local: "0.34 $", inc: "Үнэгүй", data: "0.0060 $", sms: "0.34 $" },
+    "Бельги": { op: "Mobistar", toMn: "0.09 $", local: "0.66 $", inc: "Үнэгүй", data: "0.0040 $", sms: "0.22 $" },
+    "Босни Герцеговин": { op: "M-Tel", toMn: "0.57 $", local: "1.02 $", inc: "Үнэгүй", data: "0.0313 $", sms: "0.03 $" },
+    "Вьетнам": { op: "Three", toMn: "0.31 $", local: "0.18 $", inc: "Үнэгүй", data: "0.0075 $", sms: "0.03 $" },
+    "Герман": { op: "Vodafone", toMn: "0.09 $", local: "0.45 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.23 $" },
+    "Грек": { op: "Vodafone", toMn: "0.09 $", local: "0.20 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.16 $" },
+    "Гүрж": { op: "Geocell", toMn: "0.94 $", local: "1.33 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.42 $" },
+    "Египет": { op: "Vodafone", toMn: "0.80 $", local: "0.96 $", inc: "Үнэгүй", data: "0.0119 $", sms: "0.03 $" },
+    "Индонези": { op: "H3G CP", toMn: "0.25 $", local: "0.13 $", inc: "Үнэгүй", data: "0.0100 $", sms: "0.03 $" },
+    "Ирланд": { op: "Three", toMn: "0.09 $", local: "0.08 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.18 $" },
+    "Исланд": { op: "NOVA", toMn: "0.09 $", local: "0.15 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.06 $" },
+    "Испани": { op: "Orange", toMn: "0.09 $", local: "0.35 $", inc: "Үнэгүй", data: "0.0040 $", sms: "0.23 $" },
+    "Итали": { op: "Hi3G", toMn: "0.09 $", local: "0.44 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.15 $" },
+    "Казахстан": { op: "Beeline", toMn: "0.58 $", local: "0.85 $", inc: "Үнэгүй", data: "0.0119 $", sms: "0.08 $" },
+    "Камбож": { op: "Smart Mobile", toMn: "2.82 $", local: "2.73 $", inc: "Үнэгүй", data: "0.0313 $", sms: "0.09 $" },
+    "Канад": { op: "Videotron", toMn: "0.28 $", local: "0.08 $", inc: "Үнэгүй", data: "0.0070 $", sms: "0.06 $" },
+    "Кени": { op: "Safaricom", toMn: "0.50 $", local: "0.83 $", inc: "Үнэгүй", data: "0.0313 $", sms: "0.06 $" },
+    "Киргиз": { op: "Beeline", toMn: "0.38 $", local: "0.81 $", inc: "Үнэгүй", data: "0.0119 $", sms: "0.08 $" },
+    "Кувейт": { op: "Zain", toMn: "0.38 $", local: "0.33 $", inc: "Үнэгүй", data: "0.0105 $", sms: "0.29 $" },
+    "Литва": { op: "Bite", toMn: "0.09 $", local: "0.75 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.06 $" },
+    "Люксембург": { op: "Orange/VOX Mo", toMn: "0.09 $", local: "0.36 $", inc: "Үнэгүй", data: "0.0040 $", sms: "0.07 $" },
+    "Макао": { op: "Hutchison", toMn: "0.80 $", local: "0.30 $", inc: "Үнэгүй", data: "0.0154 $", sms: "0.07 $" },
+    "Малайз": { op: "Maxis", toMn: "0.56 $", local: "0.09 $", inc: "Үнэгүй", data: "0.0025 $", sms: "0.39 $" },
+    "Мексик": { op: "Movistar/Pegaso", toMn: "0.46 $", local: "0.37 $", inc: "Үнэгүй", data: "0.0438 $", sms: "0.20 $" },
+    "Монгол": { op: "Unitel", toMn: "0.62 $", local: "0.62 $", inc: "Үнэгүй", data: "0.0619 $", sms: "0.20 $" },
+    "Мьянмар": { op: "Telenor", toMn: "0.38 $", local: "0.40 $", inc: "Үнэгүй", data: "0.0095 $", sms: "0.08 $" },
+    "Нидерланд": { op: "Vodafone", toMn: "0.09 $", local: "0.46 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.21 $" },
+    "Норвег": { op: "Telenor", toMn: "0.09 $", local: "0.09 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.16 $" },
+    "ОХУ": { op: "Tele2", toMn: "1.03 $", local: "0.84 $", inc: "Үнэгүй", data: "0.0090 $", sms: "0.06 $" },
+    "Өмнөд Африк": { op: "Vodacom", toMn: "0.41 $", local: "0.42 $", inc: "Үнэгүй", data: "0.0119 $", sms: "0.17 $" },
+    "Өмнөд Судан": { op: "Zain SouthSudan", toMn: "0.96 $", local: "0.96 $", inc: "Үнэгүй", data: "0.0313 $", sms: "0.23 $" },
+    "Пакистан": { op: "Telenor", toMn: "0.38 $", local: "0.15 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.06 $" },
+    "Польш": { op: "T-Mobile", toMn: "0.09 $", local: "0.31 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.18 $" },
+    "Португал": { op: "Vodafone", toMn: "0.09 $", local: "0.78 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.18 $" },
+    "Румын": { op: "Vodafone", toMn: "0.09 $", local: "0.10 $", inc: "Үнэгүй", data: "0.0006 $", sms: "0.09 $" },
+    "Серби": { op: "VIP Mobile", toMn: "0.09 $", local: "0.58 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.21 $" },
+    "Сингапур": { op: "Singtel", toMn: "0.25 $", local: "0.09 $", inc: "Үнэгүй", data: "0.0100 $", sms: "0.13 $" },
+    "Солонгос": { op: "SK Telecom", toMn: "0.11 $", local: "0.11 $", inc: "Үнэгүй", data: "0.0060 $", sms: "0.27 $" },
+    "Судан": { op: "Zain", toMn: "0.71 $", local: "0.58 $", inc: "Үнэгүй", data: "0.0225 $", sms: "0.06 $" },
+    "Тажикистан": { op: "Tacom", toMn: "0.38 $", local: "0.61 $", inc: "Үнэгүй", data: "0.0313 $", sms: "0.06 $" },
+    "Тайвань": { op: "Chunghwa", toMn: "0.31 $", local: "0.21 $", inc: "Үнэгүй", data: "0.0060 $", sms: "0.23 $" },
+    "Тайланд": { op: "DTAC", toMn: "0.31 $", local: "0.13 $", inc: "Үнэгүй", data: "0.0055 $", sms: "0.06 $" },
+    "Тунис": { op: "TuniCell", toMn: "1.14 $", local: "1.43 $", inc: "Үнэгүй", data: "0.0075 $", sms: "0.07 $" },
+    "Турк": { op: "Turkcell", toMn: "0.09 $", local: "0.43 $", inc: "Үнэгүй", data: "0.0040 $", sms: "0.21 $" },
+    "Узбекистан": { op: "Uzbektelecom", toMn: "0.61 $", local: "0.80 $", inc: "Үнэгүй", data: "0.0313 $", sms: "0.21 $" },
+    "Унгар": { op: "Vodafone", toMn: "0.09 $", local: "0.21 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.16 $" },
+    "Филлипин": { op: "Globe Telecom", toMn: "0.38 $", local: "0.29 $", inc: "Үнэгүй", data: "0.0060 $", sms: "0.12 $" },
+    "Франц": { op: "S.F.R.", toMn: "0.09 $", local: "0.36 $", inc: "Үнэгүй", data: "0.0045 $", sms: "0.19 $" },
+    "Финланд": { op: "DNA/Finnet", toMn: "0.09 $", local: "0.53 $", inc: "Үнэгүй", data: "0.0055 $", sms: "0.16 $" },
+    "Хонг Конг": { op: "H3G", toMn: "0.77 $", local: "0.19 $", inc: "Үнэгүй", data: "0.0120 $", sms: "0.27 $" },
+    "Хятад": { op: "China Mobile", toMn: "0.56 $", local: "0.11 $", inc: "0.35 $", data: "0.0116 $", sms: "0.27 $" },
+    "Чех": { op: "Vodafone", toMn: "0.09 $", local: "0.21 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.14 $" },
+    "Швед": { op: "Telenor", toMn: "0.09 $", local: "0.10 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.20 $" },
+    "Швейцар": { op: "Swisscom", toMn: "0.28 $", local: "0.75 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.29 $" },
+    "Шинэ Зеланди": { op: "Vodafone", toMn: "0.25 $", local: "0.16 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.15 $" },
+    "Япон": { op: "SoftBank", toMn: "0.40 $", local: "0.31 $", inc: "Үнэгүй", data: "0.0119 $", sms: "0.20 $" }
+};
+
+// ==========================================
+// ФУНКЦИИ ОБРАБОТКИ ВЫБОРА СТРАН
+// ==========================================
+
+// Функция для Биет СИМ
+function updateCountryTariff() {
+    const selector = document.getElementById('simCountrySelector');
+    const resultCard = document.getElementById('countryTariffResult');
+    const selectedCountry = selector.value;
+
+    // Проверяем, существует ли данные для выбранной страны
+    if (simTariffsData && simTariffsData[selectedCountry]) {
+        const data = simTariffsData[selectedCountry];
+        document.getElementById('resCountryName').innerText = selectedCountry;
+        document.getElementById('resOperator').innerText = data.op;
+        document.getElementById('resToMongolia').innerText = data.toMn;
+        document.getElementById('resLocalCall').innerText = data.local;
+        document.getElementById('resIncoming').innerText = data.inc;
+        document.getElementById('resDataPrice').innerText = data.data;
+        document.getElementById('resSms').innerText = data.sms;
+        
+        if (resultCard) resultCard.style.display = 'block';
+    }
+}
+
+// Функция для eSIM Pro
+function updateEsimCountryTariff() {
+    const selector = document.getElementById('esimCountrySelector');
+    const resultCard = document.getElementById('esimCountryTariffResult');
+    const selectedCountry = selector.value;
+
+    if (simTariffsData && simTariffsData[selectedCountry]) {
+        const data = simTariffsData[selectedCountry];
+        document.getElementById('esimResCountryName').innerText = selectedCountry;
+        document.getElementById('esimResOperator').innerText = data.op;
+        document.getElementById('esimResToMongolia').innerText = data.toMn;
+        document.getElementById('esimResLocalCall').innerText = data.local;
+        document.getElementById('esimResIncoming').innerText = data.inc;
+        document.getElementById('esimResDataPrice').innerText = data.data;
+        document.getElementById('esimResSms').innerText = data.sms;
+        
+        if (resultCard) resultCard.style.display = 'block';
+    }
+}
+
+// БАЗА ДАННЫХ ДЛЯ DATA eSIM (12 НАПРАВЛЕНИЙ)
+const esimProductsData = {
+    "БНХАУ (China)": {
+        operator: "China Mobile",
+        standard: "5G / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана. VPN шаардлагагүй.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 28000, "5": 29000, "7": 31000, "10": 33000, "15": 36000, "30": 38000 },
+            "5 GB":     { "3": 34000, "5": 36000, "7": 38000, "10": 42000, "15": 44000, "30": 48000 },
+            "10 GB":    { "3": 48000, "5": 52000, "7": 56000, "10": 59000, "15": 64000, "30": 68000 },
+            "20 GB":    { "3": 77000, "5": 79000, "7": 87000, "10": 92000, "15": 94000, "30": 98000 },
+            "30 GB":    { "3": 98000, "5": 105000, "7": 112000, "10": 116000, "15": 124000, "30": 132000 },
+            "Өдөр бүр 500 MB": { "3": 29000, "5": 34000, "7": 44000, "10": 58000, "15": 78000, "20": 95000, "30": 131000 },
+            "Өдөр бүр 1 GB":   { "3": 31000, "5": 44000, "7": 54000, "10": 71000, "15": 102000, "20": 129000, "30": 180000 },
+            "Өдөр бүр 2 GB":   { "3": 47000, "5": 68000, "7": 88000, "10": 116000, "15": 170000, "20": 214000, "30": 316000 },
+            "Хязгааргүй дата": { "1": 34000, "3": 62000, "5": 83000, "7": 112000, "10": 151000, "15": 197000, "20": 287000, "30": 371000 }
+        }
+    },
+    "Япон (Japan)": {
+        operator: "KDD / SoftBank",
+        standard: "5G / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "5 GB":     { "3": 31000, "5": 34000, "7": 36000, "10": 37000, "15": 38000, "30": 41000 },
+            "10 GB":    { "3": 44000, "5": 48000, "7": 51000, "10": 54000, "15": 55000, "30": 59000 },
+            "20 GB":    { "3": 78000, "5": 82000, "7": 85000, "10": 89000, "15": 91000, "30": 96000 },
+            "Өдөр бүр 500 MB": { "3": 20000, "5": 24000, "7": 27000, "10": 34000, "15": 41000, "20": 48000, "30": 65000 },
+            "Өдөр бүр 1 GB":   { "3": 24000, "5": 31000, "7": 37000, "10": 48000, "15": 65000, "20": 82000, "30": 112000 },
+            "Өдөр бүр 2 GB":   { "3": 31000, "5": 48000, "7": 58000, "10": 75000, "15": 109000, "20": 136000, "30": 180000 },
+            "Хязгааргүй дата": { "3": 50000, "5": 75000, "7": 103000, "10": 134000, "15": 186000, "20": 229000, "30": 274000 }
+        }
+    },
+    "Солонгос (Korea)": {
+        operator: "SKT / KT",
+        standard: "5G / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "5 GB":     { "3": 33000, "5": 36000, "7": 38000, "10": 40000, "15": 42000, "30": 45000 },
+            "10 GB":    { "3": 48000, "5": 58000, "7": 61000, "10": 65000, "15": 68000, "30": 71000 },
+            "20 GB":    { "3": 85000, "5": 88000, "7": 92000, "10": 96000, "15": 99000, "30": 105000 },
+            "Өдөр бүр 500 MB": { "3": 25000, "5": 29000, "7": 32000, "10": 39000, "15": 51000, "20": 64000, "30": 87000 },
+            "Өдөр бүр 1 GB":   { "3": 28000, "5": 32000, "7": 35000, "10": 52000, "15": 64000, "20": 77000, "30": 108000 },
+            "Өдөр бүр 2 GB":   { "3": 34000, "5": 48000, "7": 61000, "10": 78000, "15": 126000, "20": 146000, "30": 211000 },
+            "Хязгааргүй дата": { "3": 51000, "5": 75000, "7": 94000, "10": 119000, "15": 163000, "20": 198000, "30": 271000 }
+        }
+    },
+    "ОХУ (Russia)": {
+        operator: "Beeline",
+        standard: "4G+",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).",
+        tariffs: {
+            "1 GB":             { "7": 29000 },
+            "2 GB":             { "15": 44000 },
+            "3 GB":             { "30": 54000 },
+            "5 GB":             { "30": 76000 },
+            "10 GB":            { "30": 132000 },
+            "20 GB":            { "30": 206000 },
+            "Хязгааргүй дата": { "1": 44000, "3": 89000, "5": 132000, "7": 170000, "10": 234000, "15": 311000, "30": 576000 }
+        }
+    },
+    "Казахстан (Kazakhstan)": {
+        operator: "Beeline",
+        standard: "4G / LTE",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 31000, "5": 34000, "7": 36000, "10": 37000, "15": 38000, "30": 41000 },
+            "5 GB":     { "3": 38000, "5": 41000, "7": 43000, "10": 45000, "15": 48000, "30": 51000 },
+            "10 GB":    { "3": 54000, "5": 57000, "7": 59000, "10": 62000, "15": 65000, "30": 68000 },
+            "20 GB":    { "3": 89000, "5": 96000, "7": 99000, "10": 106000, "15": 110000, "30": 113000 },
+            "Өдөр бүр 500 MB": { "3": 28000, "5": 31000, "7": 39000, "10": 48000, "15": 64000, "20": 79000, "30": 109000 },
+            "Өдөр бүр 1 GB":   { "3": 31000, "5": 41000, "7": 51000, "10": 58000, "15": 79000, "20": 102000, "30": 143000 },
+            "Өдөр бүр 2 GB":   { "3": 41000, "5": 55000, "7": 68000, "10": 92000, "15": 133000, "20": 170000, "30": 248000 },
+            "Хязгааргүй дата": { "3": 54000, "5": 82000, "7": 109000, "10": 136000, "15": 184000, "20": 221000, "30": 316000 }
+        }
+    },
+    "АНУ (USA)": {
+        operator: "T-Mobile / AT&T / Verizon",
+        standard: "4G / 5G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• eSIM хүчинтэй хугацаа: 30 хоног.<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 28000, "5": 32000, "7": 34000, "10": 36000, "15": 38000, "30": 39000 },
+            "5 GB":     { "3": 39000, "5": 42000, "7": 45000, "10": 47000, "15": 48000, "30": 50000 },
+            "10 GB":    { "3": 56000, "5": 59000, "7": 62000, "10": 65000, "15": 68000, "30": 71000 },
+            "20 GB":    { "3": 91000, "5": 102000, "7": 105000, "10": 112000, "15": 116000, "30": 120000 },
+            "Өдөр бүр 500 MB": { "3": 24000, "5": 27000, "7": 34000, "10": 45000, "15": 58000, "20": 71000, "30": 99000 },
+            "Өдөр бүр 1 GB":   { "3": 28000, "5": 34000, "7": 41000, "10": 54000, "15": 75000, "20": 92000, "30": 133000 },
+            "Өдөр бүр 2 GB":   { "3": 38000, "5": 51000, "7": 65000, "10": 85000, "15": 123000, "20": 157000, "30": 225000 },
+            "Хязгааргүй дата": { "3": 57000, "5": 85000, "7": 105000, "10": 129000, "15": 175000, "20": 227000, "30": 335000 }
+        }
+    },
+    "Гонконг (Hong Kong)": {
+        operator: "3HK",
+        standard: "5G / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 24000, "5": 26000, "7": 28000, "10": 30000, "15": 32000, "20": 34000, "30": 36000 },
+            "5 GB":     { "3": 28000, "5": 31000, "7": 34000, "10": 36000, "15": 38000, "20": 40000, "30": 42000 },
+            "10 GB":    { "3": 42000, "5": 44000, "7": 48000, "10": 52000, "15": 56000, "20": 58000, "30": 62000 },
+            "20 GB":    { "3": 61000, "5": 66000, "7": 69000, "10": 74000, "15": 77000, "20": 83000, "30": 88000 },
+            "Өдөр бүр 500 MB": { "3": 21000, "5": 25000, "7": 29000, "10": 35000, "15": 42000, "20": 49000, "30": 66000 },
+            "Өдөр бүр 1 GB":   { "3": 31000, "5": 35000, "7": 39000, "10": 49000, "15": 66000, "20": 80000, "30": 108000 },
+            "Өдөр бүр 2 GB":   { "3": 34000, "5": 49000, "7": 59000, "10": 73000, "15": 98000, "20": 122000, "30": 166000 },
+            "Хязгааргүй дата": { "3": 46000, "5": 62000, "7": 75000, "10": 97000, "15": 132000, "20": 166000, "30": 235000 }
+        }
+    },
+    "Канада (Canada)": {
+        operator: "Bell / Telus / SaskTel / Rogers",
+        standard: "4G / 5G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дууссан тохиолдолд сонгосон багцын хурдаар (128kbps эсвэл 512kbps) хязгааргүй үргэлжлүүлэн ажиллана.",
+        tariffs: {
+            "1 GB":             { "7": 31000 },
+            "2 GB":             { "15": 45000 },
+            "3 GB":             { "30": 59000 },
+            "5 GB":             { "30": 73000 },
+            "10 GB":            { "30": 130000 },
+            "20 GB":            { "30": 215000 },
+            "Өдөр бүр 500 MB":  { "3": 35000, "5": 49000, "7": 65000, "10": 85000, "15": 120000, "20": 157000, "30": 208000 },
+            "Өдөр бүр 1 GB (128kbps)": { "3": 48000, "5": 69000, "7": 89000, "10": 119000, "15": 174000, "20": 226000, "30": 304000 },
+            "Өдөр бүр 1 GB (512kbps)": { "3": 82000, "5": 126000, "7": 172000, "10": 239000, "15": 348000, "30": 575000 },
+            "Өдөр бүр 2 GB":    { "3": 70000, "5": 113000, "7": 151000, "10": 209000, "15": 307000, "20": 402000, "30": 546000 }
+        }
+    },
+    "Тайвань (Taiwan)": {
+        operator: "CHT",
+        standard: "4G / LTE / 5G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 24000, "5": 26000, "7": 28000, "10": 30000, "15": 32000, "30": 34000 },
+            "5 GB":     { "3": 33000, "5": 35000, "7": 37000, "10": 39000, "15": 41000, "30": 43000 },
+            "10 GB":    { "3": 42000, "5": 44000, "7": 48000, "10": 50000, "15": 52000, "30": 54000 },
+            "20 GB":    { "3": 65000, "5": 69000, "7": 73000, "10": 75000, "15": 79000, "30": 84000 },
+            "Өдөр бүр 500 MB": { "3": 24000, "5": 28000, "7": 34000, "10": 41000, "15": 53000, "20": 65000, "30": 89000 },
+            "Өдөр бүр 1 GB":   { "3": 28000, "5": 34000, "7": 41000, "10": 55000, "15": 72000, "20": 89000, "30": 126000 },
+            "Өдөр бүр 2 GB":   { "3": 34000, "5": 47000, "7": 58000, "10": 75000, "15": 106000, "20": 136000, "30": 198000 },
+            "Хязгааргүй дата": { "3": 44000, "5": 70000, "7": 89000, "10": 119000, "15": 160000, "20": 194000, "30": 242000 }
+        }
+    },
+    "Тайланд (Thailand)": {
+        operator: "DTAC / AIS",
+        standard: "4G / LTE / 5G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 24000, "5": 26000, "7": 28000, "10": 30000, "15": 32000, "30": 34000 },
+            "5 GB":     { "3": 33000, "5": 35000, "7": 37000, "10": 39000, "15": 41000, "30": 43000 },
+            "10 GB":    { "3": 50000, "5": 52000, "7": 54000, "10": 56000, "15": 58000, "30": 62000 },
+            "20 GB":    { "3": 73000, "5": 83000, "7": 86000, "10": 89000, "15": 93000, "30": 100000 },
+            "Өдөр бүр 500 MB": { "3": 20000, "5": 25000, "7": 28000, "10": 35000, "15": 45000, "20": 54000, "30": 74000 },
+            "Өдөр бүр 1 GB":   { "3": 27000, "5": 34000, "7": 41000, "10": 55000, "15": 72000, "20": 89000, "30": 126000 },
+            "Өдөр бүр 2 GB":   { "3": 34000, "5": 47000, "7": 58000, "10": 78000, "15": 110000, "20": 140000, "30": 201000 },
+            "Хязгааргүй дата": { "3": 52000, "5": 74000, "7": 102000, "10": 125000, "15": 170000, "20": 224000, "30": 266000 }
+        }
+    },
+    "Вьетнам (Vietnam)": {
+        operator: "Viettel / Vinaphone / Mobifone",
+        standard: "4G / 5G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• eSIM хүргүүлэх хугацаа: 15 мин.<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 24000, "5": 26000, "7": 27000, "10": 28000, "15": 30000, "30": 35000 },
+            "5 GB":     { "3": 31000, "5": 34000, "7": 36000, "10": 38000, "15": 40000, "30": 42000 },
+            "10 GB":    { "3": 45000, "5": 48000, "7": 51000, "10": 53000, "15": 56000, "30": 58000 },
+            "20 GB":    { "3": 75000, "5": 78000, "7": 81000, "10": 83000, "15": 86000, "30": 89000 },
+            "Өдөр бүр 500 MB": { "3": 20000, "5": 24000, "7": 31000, "10": 34000, "15": 44000, "20": 54000, "30": 73000 },
+            "Өдөр бүр 1 GB":   { "3": 24000, "5": 34000, "7": 41000, "10": 54000, "15": 69000, "20": 85000, "30": 112000 },
+            "Өдөр бүр 2 GB":   { "3": 31000, "5": 45000, "7": 55000, "10": 79000, "15": 105000, "20": 122000, "30": 177000 },
+            "Хязгааргүй дата": { "3": 51000, "5": 75000, "7": 102000, "10": 126000, "15": 170000, "20": 194000, "30": 248000 }
+        }
+    },
+    "Малайз (Malaysia)": {
+        operator: "Digi / Celcom / Maxis",
+        standard: "5G / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "5": 28000, "7": 30000, "10": 33000, "15": 35000, "30": 39000 },
+            "5 GB":     { "3": 34000, "5": 38000, "7": 40000, "10": 43000, "15": 45000, "30": 49000 },
+            "10 GB":    { "3": 51000, "5": 57000, "7": 59000, "10": 62000, "15": 64000, "30": 68000 },
+            "20 GB":    { "3": 82000, "5": 86000, "7": 90000, "10": 94000, "15": 98000, "30": 106000 },
+            "Өдөр бүр 500 MB": { "3": 24000, "5": 28000, "7": 36000, "10": 40000, "15": 50000, "20": 60000, "30": 78000 },
+            "Өдөр бүр 1 GB":   { "5": 37000, "7": 45000, "10": 56000, "15": 73000, "20": 90000, "30": 124000 },
+            "Өдөр бүр 2 GB":   { "3": 34000, "5": 51000, "7": 61000, "10": 82000, "15": 113000, "20": 144000, "30": 206000 },
+            "Хязгааргүй дата": { "3": 58000, "5": 80000, "7": 108000, "10": 137000, "15": 183000, "20": 208000, "30": 265000 }
+        }
+    },
+"Филиппин (Philippines)": {
+        operator: "Globe",
+        standard: "5G / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 37000, "5": 40000, "7": 42000, "10": 44000, "15": 48000, "30": 53000 },
+            "5 GB":     { "3": 44000, "5": 47000, "7": 51000, "10": 53000, "15": 57000, "30": 62000 },
+            "10 GB":    { "3": 73000, "5": 76000, "7": 80000, "10": 82000, "15": 86000, "30": 91000 },
+            "20 GB":    { "3": 119000, "5": 122000, "7": 126000, "10": 128000, "15": 132000, "30": 137000 },
+            "Өдөр бүр 500 MB": { "3": 26000, "5": 33000, "7": 39000, "10": 53000, "15": 47000, "20": 84000, "30": 108000 },
+            "Өдөр бүр 1 GB":   { "3": 33000, "5": 47000, "7": 57000, "10": 74000, "15": 102000, "20": 129000, "30": 181000 },
+            "Өдөр бүр 2 GB":   { "3": 47000, "5": 64000, "7": 85000, "10": 116000, "15": 157000, "20": 205000, "30": 292000 },
+            "Хязгааргүй дата": { "3": 74000, "5": 116000, "7": 154000, "10": 213000, "15": 309000, "20": 405000, "30": 564000 }
+        }
+    },
+"Лаос (Laos)": {
+        operator: "LTC (Lao Telecom)",
+        standard: "5G / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 34000, "5": 37000, "7": 40000, "10": 44000, "15": 48000, "30": 53000 },
+            "5 GB":     { "3": 48000, "5": 56000, "7": 60000, "10": 64000, "15": 68000, "30": 72000 },
+            "10 GB":    { "3": 73000, "5": 76000, "7": 80000, "10": 82000, "15": 86000, "30": 91000 },
+            "20 GB":    { "3": 119000, "5": 122000, "7": 126000, "10": 128000, "15": 132000, "30": 142000 },
+            "Өдөр бүр 500 MB": { "3": 26000, "5": 34000, "7": 40000, "10": 54000, "15": 66000, "20": 84000, "30": 108000 },
+            "Өдөр бүр 1 GB":   { "3": 34000, "5": 47000, "7": 57000, "10": 74000, "15": 102000, "20": 129000, "30": 182000 },
+            "Өдөр бүр 2 GB":   { "3": 47000, "5": 66000, "7": 86000, "10": 118000, "15": 162000, "20": 208000, "30": 294000 },
+            "Хязгааргүй дата": { "3": 76000, "5": 112000, "7": 154000, "10": 214000, "15": 310000, "20": 406000, "30": 564000 }
+        }
+    },
+"Сингапур (Singapore)": {
+        operator: "Singtel",
+        standard: "5G / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 26000, "5": 28000, "7": 30000, "10": 32000, "15": 34000, "30": 38000 },
+            "5 GB":     { "3": 33000, "5": 37000, "7": 39000, "10": 42000, "15": 44000, "30": 48000 },
+            "10 GB":    { "3": 50000, "5": 58000, "7": 61000, "10": 63000, "15": 65000, "30": 73000 },
+            "20 GB":    { "3": 81000, "5": 85000, "7": 89000, "10": 93000, "15": 97000, "30": 105000 },
+            "Өдөр бүр 500 MB": { "3": 23000, "5": 27000, "7": 35000, "10": 39000, "15": 51000, "20": 63000, "30": 78000 },
+            "Өдөр бүр 1 GB":   { "3": 26000, "5": 38000, "7": 46000, "10": 58000, "15": 78000, "20": 98000, "30": 124000 },
+            "Өдөр бүр 2 GB":   { "3": 33000, "5": 51000, "7": 63000, "10": 81000, "15": 112000, "20": 143000, "30": 205000 },
+            "Хязгааргүй дата": { "3": 53000, "5": 75000, "7": 103000, "10": 127000, "15": 173000, "20": 226000, "30": 271000 }
+        }
+    },
+"Индонезия (Indonesia)": {
+        operator: "Telkomsel",
+        standard: "4G / LTE / 5G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "5": 28000, "7": 30000, "10": 33000, "15": 35000, "30": 39000 },
+            "5 GB":     { "3": 34000, "5": 38000, "7": 40000, "10": 43000, "15": 45000, "30": 49000 },
+            "10 GB":    { "3": 51000, "5": 57000, "7": 59000, "10": 62000, "15": 64000, "30": 68000 },
+            "20 GB":    { "3": 82000, "5": 86000, "7": 90000, "10": 94000, "15": 98000, "30": 106000 },
+            "Өдөр бүр 500 MB": { "3": 24000, "5": 28000, "7": 36000, "10": 40000, "15": 50000, "20": 60000, "30": 78000 },
+            "Өдөр бүр 1 GB":   { "5": 37000, "7": 45000, "10": 56000, "15": 73000, "20": 90000, "30": 124000 },
+            "Өдөр бүр 2 GB":   { "3": 34000, "5": 51000, "7": 61000, "10": 82000, "15": 113000, "20": 144000, "30": 206000 },
+            "Хязгааргүй дата": { "3": 58000, "5": 80000, "7": 108000, "10": 137000, "15": 183000, "20": 208000, "30": 265000 }
+        }
+    },
+"Австрали (Australia)": {
+        operator: "Optus",
+        standard: "5G / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 32000, "5": 34000, "7": 36000, "10": 38000, "15": 40000, "20": 42000, "30": 44000 },
+            "5 GB":     { "3": 42000, "5": 44000, "7": 46000, "10": 48000, "15": 50000, "20": 52000, "30": 54000 },
+            "10 GB":    { "3": 66000, "5": 68000, "7": 72000, "10": 76000, "15": 78000, "20": 80000, "30": 82000 },
+            "20 GB":    { "3": 109000, "5": 114000, "7": 118000, "10": 122000, "15": 126000, "20": 130000, "30": 138000 },
+            "Өдөр бүр 500 MB": { "3": 26000, "5": 34000, "7": 42000, "10": 54000, "15": 66000, "20": 82000, "30": 106000 },
+            "Өдөр бүр 1 GB":   { "3": 33000, "5": 45000, "7": 57000, "10": 77000, "15": 105000, "20": 137000, "30": 193000 },
+            "Өдөр бүр 2 GB":   { "3": 43000, "5": 63000, "7": 83000, "10": 108000, "15": 149000, "20": 194000, "30": 274000 },
+            "Хязгааргүй дата": { "3": 56000, "5": 77000, "7": 105000, "10": 129000, "15": 175000, "20": 226000, "30": 323000 }
+        }
+    },
+"Непал (Nepal)": {
+        operator: "Ncell",
+        standard: "LTE / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 52000, "5": 56000, "7": 58000, "10": 62000, "15": 64000, "20": 66000, "30": 70000 },
+            "5 GB":     { "3": 76000, "5": 80000, "7": 84000, "10": 88000, "15": 92000, "20": 94000, "30": 96000 },
+            "10 GB":    { "3": 118000, "5": 122000, "7": 126000, "10": 130000, "15": 132000, "20": 134000, "30": 136000 },
+            "20 GB":    { "3": 188000, "5": 192000, "7": 196000, "10": 198000, "15": 200000, "20": 202000, "30": 204000 },
+            "Өдөр бүр 500 MB": { "3": 36000, "5": 48000, "7": 60000, "10": 76000, "15": 96000, "20": 124000, "30": 164000 },
+            "Өдөр бүр 1 GB":   { "3": 52000, "5": 70000, "7": 94000, "10": 124000, "15": 174000, "20": 224000, "30": 320000 },
+            "Өдөр бүр 2 GB":   { "3": 70000, "5": 108000, "7": 144000, "10": 196000, "15": 276000, "20": 364000, "30": 396000 },
+            "Хязгааргүй дата": { "3": 102000, "5": 149000, "7": 204000, "10": 284000, "15": 420000, "20": 552000, "30": 662000 }
+        }
+    },
+"АНЭ (UAE)": {
+        operator: "Etisalat",
+        standard: "4G / LTE / 5G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 39000, "5": 41000, "7": 44000, "10": 46000, "15": 48000, "20": 50000, "30": 52000 },
+            "5 GB":     { "3": 51000, "5": 54000, "7": 56000, "10": 58000, "15": 60000, "20": 62000, "30": 66000 },
+            "10 GB":    { "3": 82000, "5": 84000, "7": 86000, "10": 88000, "15": 91000, "20": 94000, "30": 96000 },
+            "20 GB":    { "3": 130000, "5": 138000, "7": 148000, "10": 154000, "15": 158000, "20": 162000, "30": 166000 },
+            "Өдөр бүр 500 MB": { "3": 32000, "5": 45000, "7": 52000, "10": 66000, "15": 99000, "20": 113000, "30": 141000 },
+            "Өдөр бүр 1 GB":   { "3": 45000, "5": 66000, "7": 83000, "10": 106000, "15": 151000, "20": 188000, "30": 249000 },
+            "Өдөр бүр 2 GB":   { "3": 49000, "5": 72000, "7": 94000, "10": 129000, "15": 184000, "20": 236000, "30": 378000 },
+            "Хязгааргүй дата": { "3": 84000, "5": 126000, "7": 168000, "10": 289000, "15": 448000, "20": 548000, "30": 684000 }
+        }
+    },
+"Саудын Араб (Saudi Arabia)": {
+        operator: "Mobily / STC",
+        standard: "5G / 4G / LTE",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 41000, "5": 43000, "7": 47000, "10": 48000, "15": 50000, "20": 52000, "30": 54000, "60": 62000 },
+            "5 GB":     { "3": 57000, "5": 61000, "7": 64000, "10": 67000, "15": 69000, "20": 71000, "30": 74000, "60": 86000 },
+            "10 GB":    { "3": 92000, "5": 102000, "7": 106000, "10": 11000, "15": 113000, "20": 116000, "30": 119000, "60": 135000 },
+            "20 GB":    { "3": 154000, "5": 162000, "7": 166000, "10": 167000, "15": 169000, "20": 171000, "30": 173000, "60": 236000 },
+            "Өдөр бүр 500 MB": { "3": 31000, "5": 43000, "7": 55000, "10": 75000, "15": 103000, "20": 131000, "30": 175000 },
+            "Өдөр бүр 1 GB":   { "3": 38000, "5": 54000, "7": 70000, "10": 94000, "15": 134000, "20": 174000, "30": 254000 },
+            "Өдөр бүр 2 GB":   { "3": 58000, "5": 86000, "7": 114000, "10": 142000, "15": 182000, "20": 262000, "30": 425000 },
+            "Хязгааргүй дата": { "3": 104000, "5": 148000, "7": 208000, "10": 248000, "15": 352000, "20": 412000, "30": 588000 }
+        }
+    },
+"Энэтхэг (India)": {
+        operator: "Bharti AirTel / JIO",
+        standard: "5G / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 44000, "5": 47000, "7": 49000, "10": 51000, "15": 53000, "30": 56000 },
+            "5 GB":     { "3": 53000, "5": 57000, "7": 61000, "10": 65000, "15": 69000, "30": 73000 },
+            "10 GB":    { "3": 91000, "5": 97000, "7": 104000, "10": 108000, "15": 115000, "30": 119000 },
+            "20 GB":    { "3": 166000, "5": 177000, "7": 184000, "10": 194000, "15": 201000, "30": 209000 },
+            "Өдөр бүр 500 MB": { "3": 32000, "5": 43000, "7": 55000, "10": 66000, "15": 91000, "20": 115000, "30": 153000 },
+            "Өдөр бүр 1 GB":   { "3": 39000, "5": 56000, "7": 70000, "10": 94000, "15": 132000, "20": 170000, "30": 246000 },
+            "Өдөр бүр 2 GB":   { "3": 56000, "5": 84000, "7": 111000, "10": 153000, "15": 212000, "20": 280000, "30": 442000 },
+            "Хязгааргүй дата": { "3": 97000, "5": 149000, "7": 204000, "10": 270000, "15": 356000, "20": 460000, "30": 563000 }
+        }
+    },
+"Турк (Turkey)": {
+        operator: "Turk Telecom (AVEA) / Vodafone",
+        standard: "4G / 5G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 28000, "5": 32000, "7": 34000, "10": 36000, "15": 38000, "30": 39000 },
+            "5 GB":     { "3": 39000, "5": 42000, "7": 45000, "10": 47000, "15": 48000, "30": 50000 },
+            "10 GB":    { "3": 52000, "5": 55000, "7": 59000, "10": 62000, "15": 66000, "30": 70000 },
+            "20 GB":    { "3": 89000, "5": 93000, "7": 95000, "10": 97000, "15": 99000, "30": 102000 },
+            "Өдөр бүр 500 MB": { "3": 24000, "5": 32000, "7": 38000, "10": 48000, "15": 62000, "20": 78000, "30": 109000 },
+            "Өдөр бүр 1 GB":   { "3": 28000, "5": 38000, "7": 45000, "10": 59000, "15": 79000, "20": 99000, "30": 140000 },
+            "Өдөр бүр 2 GB":   { "3": 38000, "5": 55000, "7": 69000, "10": 93000, "15": 134000, "20": 170000, "30": 250000 },
+            "Хязгааргүй дата": { "3": 52000, "5": 75000, "7": 106000, "10": 133000, "15": 181000, "20": 214000, "30": 320000 }
+        }
+    },
+"Хятад, Хонг Конг, Макао": {
+        operator: "China Unicom, 3HK, CTM, 3MC",
+        standard: "5G (Хятад, Хонг Конг) / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps хурдаар дата ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 33000, "5": 35000, "7": 36000, "10": 39000, "15": 41000, "30": 46000 },
+            "5 GB":     { "3": 48000, "5": 51000, "7": 54000, "10": 56000, "15": 58000, "30": 63000 },
+            "10 GB":    { "3": 65000, "5": 68000, "7": 75000, "10": 83000, "15": 85000, "30": 88000, "90": 122000 },
+            "20 GB":    { "3": 109000, "5": 116000, "7": 122000, "10": 133000, "15": 139000, "30": 146000, "90": 242000 },
+            "30 GB":    { "3": 146000, "5": 153000, "7": 163000, "10": 170000, "15": 180000, "30": 187000 },
+            "Өдөр бүр 500 MB": { "3": 27000, "5": 34000, "7": 44000, "10": 58000, "15": 78000, "20": 95000, "30": 131000 },
+            "Өдөр бүр 1 GB":   { "3": 31000, "5": 44000, "7": 54000, "10": 71000, "15": 102000, "20": 129000, "30": 180000 },
+            "Өдөр бүр 2 GB":   { "3": 47000, "5": 68000, "7": 88000, "10": 116000, "15": 146000, "20": 197000, "30": 250000 },
+            "Хязгааргүй дата": { "3": 65000, "5": 99000, "7": 133000, "10": 180000, "15": 269000, "20": 315000, "30": 418000 }
+        }
+    },
+"Ази 15 улс 🌏": {
+    "operator": "🇦🇺 Australia (Telstra), 🇰🇭 Cambodia (Metfone), 🇨🇳 China Mainland (China Mobile, China Unicom, China Telecom), 🇭🇰 Hong Kong, 🇮🇩 Indonesia (Telkomsel, XL), 🇯🇵 Japan (Rakuten, SoftBank, Docomo), 🇰🇷 Korea (SK Telecom, LG U+), 🇲🇴 Macau, 🇲🇾 Malaysia (Digi, Celcom, U Mobile), 🇳🇿 New Zealand (Spark), 🇵🇭 Philippines (Globe), 🇸🇬 Singapore (Simba, StarHub), 🇹🇼 Taiwan (Chunghwa), 🇹🇭 Thailand (AIS, True Move), 🇻🇳 Vietnam (Vietnamobile, Vinaphone)",
+    "standard": "5G / 4G / LTE",
+    "hotspot": "Ажиллана",
+    "notes": "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохиолдолд 128kbps хурдаар дата ажиллана.",
+    "tariffs": {
+            "3 GB":     { "3": 33000, "5": 35000, "7": 36000, "10": 39000, "15": 41000, "30": 46000 },
+            "5 GB":     { "3": 36000, "5": 39000, "7": 41000, "10": 42000, "15": 44000, "30": 49000 },
+            "10 GB":    { "3": 51000, "5": 54000, "7": 57000, "10": 61000, "15": 65000, "30": 69000 },
+            "20 GB":    { "3": 79000, "5": 84000, "7": 88000, "10": 92000, "15": 96000, "30": 104000 },
+            "30 GB":    { "3": 108000, "5": 112000, "7": 122000, "10": 126000, "15": 134000, "30": 145000 },
+            "Өдөр бүр 500 MB": { "3": 27000, "5": 34000, "7": 44000, "10": 58000, "15": 78000, "20": 95000, "30": 131000 },
+            "Өдөр бүр 1 GB":   { "3": 31000, "5": 44000, "7": 54000, "10": 71000, "15": 102000, "20": 129000, "30": 180000 },
+            "Өдөр бүр 2 GB":   { "3": 47000, "5": 68000, "7": 88000, "10": 116000, "15": 146000, "20": 197000, "30": 250000 },
+            "Хязгааргүй дата": { "3": 59000, "5": 97000, "7": 126000, "10": 180000, "15": 269000, "20": 322000, "30": 458000 }
+        }
+    },
+"Ази 25 улс 🌏": {
+        "operator": "🇦🇺 Australia, 🇳🇿 New Zealand, 🇨🇳 China, 🇯🇵 Japan, 🇰🇷 South Korea, 🇹🇼 Taiwan, 🇻🇳 Vietnam, 🇹🇭 Thailand, 🇲🇾 Malaysia, 🇵🇭 Philippines, 🇧🇩 Bangladesh, 🇭🇰 Hong Kong, 🇮🇳 India, 🇰🇭 Cambodia, 🇬🇪 Georgia, 🇮🇩 Indonesia, 🇮🇱 Israel, 🇰🇿 Kazakhstan, 🇰🇬 Kyrgyzstan, 🇺🇿 Uzbekistan, 🇰🇼 Kuwait, 🇲🇴 Macao, 🇵🇰 Pakistan, 🇶🇦 Qatar, 🇱🇰 Sri Lanka",
+        "standard": "5G / 4G / LTE",
+        "hotspot": "Ажиллана",
+        "notes": "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохиолдолд 128kbps бага хурдаар үргэлжлүүлэн ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 38000, "5": 42000, "7": 46000, "10": 50000, "15": 54000, "30": 58000 },
+            "5 GB":     { "3": 52000, "5": 56000, "7": 60000, "10": 64000, "15": 68000, "30": 76000 },
+            "10 GB":    { "3": 84000, "5": 88000, "7": 72000, "10": 76000, "15": 80000, "30": 88000 },
+            "20 GB":    { "3": 14000, "5": 145000, "7": 150000, "10": 155000, "15": 160000, "30": 178000 },
+            "Өдөр бүр 500 MB": { "3": 36000, "5": 46000, "7": 57000, "10": 75000, "15": 102000, "20": 131000, "30": 181000 },
+            "Өдөр бүр 1 GB":   { "3": 47000, "5": 71000, "7": 91000, "10": 126000, "15": 177000, "20": 231000, "30": 314000 },
+            "Өдөр бүр 2 GB":   { "3": 58000, "5": 82000, "7": 104000, "10": 142000, "15": 198000, "20": 262000, "30": 368000 },
+            "Хязгааргүй дата": { "3": 92000, "5": 138000, "7": 184000, "10": 256000, "15": 378000, "20": 434000, "30": 554000 }
+        }
+    },
+"Ойрх Дорнод 🏜️": {
+        "operator": "🇦🇪 United Arab Emirates, 🇸🇦 Saudi Arabia, 🇰🇿 Kazakhstan, 🇺🇿 Uzbekistan, 🇹🇯 Tajikistan, 🇪🇬 Egypt, 🇮🇱 Israel, 🇵🇰 Pakistan, 🇦🇿 Azerbaijan, 🇦🇲 Armenia, 🇬🇪 Georgia, 🇰🇬 Kyrgyzstan, 🇶🇦 Qatar, 🇰🇼 Kuwait, 🇧🇭 Bahrain, 🇮🇶 Iraq, 🇴🇲 Oman, 🇹🇷 Turkey",
+        "standard": "5G / 4G",
+        "hotspot": "Ажиллана",
+        "notes": "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• (*) Дата багц дууссан тохиолдолд 128kbps хурдаар үргэлжлүүлэн ажиллана.<br>• (**) Дата багц дууссан тохиолдолд 512kbps хурдаар үргэлжлүүлэн ажиллана.",
+        tariffs: {
+            "1 GB *":   { "7": 38000 },
+            "2 GB *":   { "15": 54000 },
+            "3 GB *":   { "3": 49000, "5": 52000, "7": 56000, "10": 60000, "15": 62000, "20": 64000, "30": 68000 },
+            "5 GB *":   { "3": 67000, "5": 72000, "7": 76000, "10": 80000, "15": 86000, "20": 92000, "30": 96000 },
+            "10 GB *":  { "3": 107000, "5": 116000, "7": 124000, "10": 135000, "15": 144000, "20": 154000, "30": 161000 },
+            "20 GB *":  { "3": 181000, "5": 198000, "7": 208000, "10": 224000, "15": 244000, "20": 264000, "30": 276000 },
+            "Өдөр бүр 500 MB *": { "3": 37000, "5": 51000, "7": 66000, "10": 84000, "15": 114000, "20": 144000, "30": 196000 },
+            "Өдөр бүр 1 GB *":   { "3": 48000, "5": 78000, "7": 98000, "10": 124000, "15": 178000, "20": 224000, "30": 314000 },
+            "Өдөр бүр 2 GB *":   { "3": 84000, "5": 134000, "7": 172000, "10": 224000, "15": 318000, "20": 396000, "30": 524000 },
+            "Өдөр бүр 1 GB **":  { "3": 58000, "5": 88000, "7": 108000, "10": 138000, "15": 194000, "20": 248000, "30": 348000 }
+        }
+    },
+"Европ (40 улс) 🇪🇺": {
+        "operator": "🇦🇹 Austria – A1, 3 (Drei), 🇵🇹 Azores (Portugal) – NOS, MEO, 🇧🇪 Belgium – Orange, Proximus, 🇧🇬 Bulgaria – A1, Vivacom, 🇭🇷 Croatia – Telemach, A1, 🇨🇾 Cyprus – Cyta, Epic, 🇨🇿 Czech Republic – O2, Vodafone, 🇩🇰 Denmark – 3, Telia, 🇪🇪 Estonia – Telia, Tele2, 🇫🇮 Finland – Elisa, Telia, 🇫🇷 France – SFR, 🇬🇫 French Guiana – Digicel, Outremer, 🇩🇪 Germany – O2, Vodafone, 🇬🇷 Greece – Vodafone, Nova, 🇬🇵 Guadeloupe – Digicel, Outremer, 🇭🇺 Hungary – Yettel, Vodafone, 🇮🇸 Iceland – Siminn, Vodafone, 🇮🇪 Ireland – 3, Vodafone, 🇮🇹 Italy – WindTre, Vodafone, 🇱🇻 Latvia – Tele2, LMT, 🇱🇮 Liechtenstein – Telecom Liechtenstein, 🇱🇹 Lithuania – Tele2, Telia, 🇱🇺 Luxembourg – POST, Tango, 🇲🇹 Malta – GO, Epic, 🇲🇶 Martinique – Digicel, Outremer, 🇾🇹 Mayotte – SRR (Orange Réunion), 🇳🇱 Netherlands – Vodafone, KPN, 🇳🇴 Norway – Telia, Telenor, 🇵🇱 Poland – Play, Orange, 🇵🇹 Portugal – NOS, MEO, 🇷🇪 Reunion – SRR (Orange Réunion), 🇷🇴 Romania – Orange, Vodafone, 🇸🇲 San Marino – WindTre, 🇸🇰 Slovakia – O2, Orange, 🇸🇮 Slovenia – A1, Telekom Slovenije, 🇪🇸 Spain – Vodafone, Movistar, 🇸🇪 Sweden – Tele2, 3, Telia, Telenor, 🇨🇭 Switzerland – Sunrise, Salt, 🇬🇧 United Kingdom – O2, 3, Vodafone, 🇻🇦 Vatican City – WindTre, Vodafone",
+        standard: "5G / 4G / LTE",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps бага хурдаар үргэлжлүүлэн ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 29000, "5": 31000, "7": 33000, "10": 36000, "15": 38000, "30": 40000 },
+            "5 GB":     { "3": 36000, "5": 38000, "7": 42000, "10": 44000, "15": 52000, "30": 54000 },
+            "10 GB":    { "3": 51000, "5": 54000, "7": 58000, "10": 62000, "15": 66000, "30": 70000 },
+            "20 GB":    { "3": 86000, "5": 90000, "7": 94000, "10": 98000, "15": 104000, "30": 112000 },
+            "30 GB":    { "3": 114000, "5": 118000, "7": 126000, "10": 134000, "15": 138000, "30": 146000 },
+            "Өдөр бүр 1 GB":   { "3": 26000, "5": 34000, "7": 44000, "10": 52000, "15": 68000, "20": 85000, "30": 117000 },
+            "Өдөр бүр 2 GB":   { "3": 36000, "5": 48000, "7": 64000, "10": 84000, "15": 112000, "20": 142000, "30": 204000 },
+            "Өдөр бүр 3 GB":   { "3": 39000, "5": 58000, "7": 76000, "10": 104000, "15": 142000, "20": 187000, "30": 271000 },
+            "Хязгааргүй багц": { "3": 56000, "5": 84000, "7": 11000, "10": 139000, "15": 197000, "20": 247000, "30": 297000 }
+        }
+    },
+"Европ (56 улс) 🇪🇺🌍": {
+        "operator": "🇦🇱 Albania, 🇦🇹 Austria, 🇧🇪 Belgium, 🇧🇬 Bulgaria, 🇭🇷 Croatia, 🇨🇾 Cyprus, 🇨🇿 Czech Republic, 🇩🇰 Denmark, 🇪🇪 Estonia, 🇫🇮 Finland, 🇫🇷 France, 🇫🇴 Faroe Islands, 🇩🇪 Germany, 🇬🇷 Greece, 🇭🇺 Hungary, 🇮🇸 Iceland, 🇮🇪 Ireland, 🇮🇹 Italy, 🇱🇻 Latvia, 🇱🇮 Liechtenstein, 🇱🇹 Lithuania, 🇱🇺 Luxembourg, 🇲🇹 Malta, 🇲🇩 Moldova, 🇲🇪 Montenegro, 🇳🇱 Netherlands, 🇳🇴 Norway, 🇵🇱 Poland, 🇵🇹 Portugal, 🇷🇴 Romania, 🇸🇰 Slovakia, 🇸🇮 Slovenia, 🇪🇸 Spain, 🇸🇪 Sweden, 🇨🇭 Switzerland, 🇬🇧 United Kingdom, 🇮🇱 Israel, 🇹🇷 Turkey, 🇺🇦 Ukraine, 🇻🇦 Holy See (Vatican City State), 🇸🇲 San Marino, 🇺🇿 Uzbekistan, 🇮🇨 Canary Islands, 🇪🇸 Balearic Islands, 🇵🇹 Azores, 🇵🇹 Madeira, 🇮🇹 Sardinia, 🇦🇽 Åland Islands, 🇮🇲 Isle of Man, 🇯🇪 Jersey, 🇬🇬 Guernsey, 🇫🇰 Falkland Islands, 🇸🇭 St. Helena, 🇦🇨 Ascension Island, 🇮🇴 British Indian Ocean Territory",
+        standard: "5G / 4G",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Дата багц дууссан тохидолд 128kbps бага хурдаар үргэлжлүүлэн ажиллана.",
+        tariffs: {
+            "3 GB":     { "3": 33000, "5": 36000, "7": 40000, "10": 44000, "15": 48000, "30": 51000 },
+            "5 GB":     { "3": 42000, "5": 46000, "7": 49000, "10": 52000, "15": 56000, "30": 59000 },
+            "10 GB":    { "3": 57000, "5": 61000, "7": 66000, "10": 70000, "15": 74000, "30": 78000 },
+            "20 GB":    { "3": 92000, "5": 98000, "7": 106000, "10": 110000, "15": 114000, "30": 122000 },
+            "30 GB":    { "3": 129000, "5": 137000, "7": 145000, "10": 149000, "15": 153000, "30": 157000 },
+            "Өдөр бүр 1 GB":   { "3": 31000, "5": 36000, "7": 47000, "10": 55000, "15": 70000, "20": 94000, "30": 127000 },
+            "Өдөр бүр 2 GB":   { "3": 38000, "5": 50000, "7": 66000, "10": 86000, "15": 126000, "20": 166000, "30": 218000 },
+            "Өдөр бүр 3 GB":   { "3": 44000, "5": 61000, "7": 79000, "10": 112000, "15": 153000, "20": 197000, "30": 286000 },
+            "Хязгааргүй багц": { "3": 61000, "5": 91000, "7": 121000, "10": 152000, "15": 205000, "20": 287000, "30": 311000 }
+        }
+    }
+};
+// ==========================================
+// 1. ФУНКЦИИ МОДАЛЬНЫХ ОКН (АДРЕС, ПОМОЩЬ И ТАРИФЫ)
+// ==========================================
+function openAddressModal() {
+    const modal = document.getElementById('addressModal');
+    if (modal) modal.style.display = 'flex';
+}
+
+function closeAddressModal() {
+    const modal = document.getElementById('addressModal');
+    if (modal) modal.style.display = 'none';
+}
+
+// ДОБАВЛЕНО: Теперь крестик в окне помощи будет работать!
+function closeHelpModal() {
+    const modal = document.getElementById('helpModal');
+    if (modal) modal.style.display = 'none';
+}
+
+function closeTariffModal() {
+    const overlay = document.getElementById('tariffModalOverlay');
+    if (overlay) overlay.classList.remove('active');
+}
+
+// Открытие модального окна для выбранной страны (eSIM)
+function openTariffModal(countryName) {
+    currentCountryKey = countryName;
+    const countryData = esimProductsData[countryName];
+    
+    if (!countryData) {
+        alert("Энэ улсын тариф хараахан ороогүй байна.");
+        return;
+    }
+
+    document.getElementById('modalCountryName').innerText = countryName;
+    document.getElementById('modalOperatorName').innerText = countryData.operator;
+    document.getElementById('modalNetworkStandard').innerText = countryData.standard;
+    document.getElementById('modalHotspotStatus').innerText = countryData.hotspot;
+    document.getElementById('modalFooterNotes').innerHTML = countryData.notes;
+
+    const dataContainer = document.getElementById('modalDataOptions');
+    if (dataContainer) {
+        dataContainer.innerHTML = "";
+        const packages = Object.keys(countryData.tariffs);
+        packages.forEach((pkg, index) => {
+            const btn = document.createElement('button');
+            btn.className = "opt-btn";
+            btn.innerText = pkg;
+            btn.onclick = () => selectDataPackage(pkg);
+            if (index === 0) btn.click(); 
+            dataContainer.appendChild(btn);
+        });
+    }
+
+    const overlay = document.getElementById('tariffModalOverlay');
+    if (overlay) overlay.classList.add('active');
+}
+
+function selectDataPackage(pkg) {
+    selectedDataPackage = pkg;
+    const dataButtons = document.querySelectorAll('#modalDataOptions .opt-btn');
+    dataButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.innerText === pkg);
+    });
+
+    const dayContainer = document.getElementById('modalDayOptions');
+    if (dayContainer && esimProductsData[currentCountryKey]) {
+        dayContainer.innerHTML = "";
+        const availableDays = Object.keys(esimProductsData[currentCountryKey].tariffs[pkg]);
+        availableDays.forEach((day, index) => {
+            const btn = document.createElement('button');
+            btn.className = "opt-btn";
+            btn.innerText = day + " хоног";
+            btn.onclick = () => selectDays(day);
+            if (index === 0) btn.click(); 
+            dayContainer.appendChild(btn);
+        });
+    }
+}
+
+function selectDays(day) {
+    selectedDays = day;
+    const dayButtons = document.querySelectorAll('#modalDayOptions .opt-btn');
+    dayButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.innerText === (day + " хоног"));
+    });
+    calculateFinalPrice();
+}
+
+function calculateFinalPrice() {
+    const countryData = esimProductsData[currentCountryKey];
+    if (countryData && countryData.tariffs[selectedDataPackage] && countryData.tariffs[selectedDataPackage][selectedDays]) {
+        const price = countryData.tariffs[selectedDataPackage][selectedDays];
+        document.getElementById('modalFinalPrice').innerText = price.toLocaleString() + " ₮";
+    } else {
+        document.getElementById('modalFinalPrice').innerText = "- ₮";
+    }
+}
+
+// === ОБНОВЛЕННАЯ ФУНКЦИЯ ЗАКАЗА ===
+function confirmOrder() {
+    const country = currentCountryKey || "eSIM";
+    const dataPkg = selectedDataPackage || "";
+    const days = selectedDays ? selectedDays + " хоног" : "";
+    const price = document.getElementById('modalFinalPrice').innerText;
+
+    // Автоматический текст заказа для оператора
+    const textMessage = `Сайн байна уу? Захиалга өгөх хүсэлтэй байна:\n🌍 Улс: ${country}\n📦 Багц: ${dataPkg}\n⏳ Хугацаа: ${days}\n💰 Үнэ: ${price}`;
+    
+    // Безопасное кодирование текста для ссылки
+    const encodedText = encodeURIComponent(textMessage);
+    
+    // Переход в Messenger с готовым текстом
+    const messengerUrl = `https://m.me/61560020138379?text=${encodedText}`;
+
+    window.open(messengerUrl, '_blank');
+    closeTariffModal();
+}
+
+// ==========================================
+// 2. ГЛАВНАЯ НАВИГАЦИЯ И БУРГЕР-МЕНЮ (ЦЭС)
+// ==========================================
+function toggleMenu() {
+    const menu = document.getElementById('boostMenu');
+    if (menu) {
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+}
+
+// ЕДИНАЯ функция навигации нижнего таббара сайта
+function navigateTo(page, event) {
+    // Безопасно предотвращаем мгновенное закрытие окон от window.onclick
+    if (event && event.stopPropagation) {
+        event.stopPropagation();
+    }
+
+    // --- ОТКРЫТИЕ ОКНА АДРЕСА ---
+    if (page === 'address') {
+        openAddressModal();
+        const boostMenu = document.getElementById('boostMenu');
+        if (boostMenu) boostMenu.style.display = 'none';
+        return false; 
+    }
+
+    // --- ОТКРЫТИЕ ОКНА ПОМОЩИ ---
+    if (page === 'help') {
+        const helpModal = document.getElementById('helpModal');
+        if (helpModal) {
+            helpModal.style.display = 'flex'; // Показываем модалку помощи
+        }
+        const boostMenu = document.getElementById('boostMenu');
+        if (boostMenu) boostMenu.style.display = 'none'; // Скрываем цэс
+        return false;
+    }
+
+    // Подсветка active-иконки (оставляем без изменений)
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    } else {
+        const activeItem = document.querySelector(`.bottom-nav .nav-item[onclick*="${page}"]`);
+        if (activeItem) activeItem.classList.add('active');
+    }
+
+    if (page === 'home') {
+        console.log('Нүүр хуудас руу буцлаа');
+    }
+}
+
+// Обработка кликов из верхнего бургер-меню
+function handleMenuClick(tabType) {
+    const targetTab = document.querySelector(`.tab[onclick*="${tabType}"]`);
+    if (targetTab) {
+        switchTab(targetTab, tabType);
+    }
+
+    const tabsContainer = document.querySelector('.tabs-container');
+    if (tabsContainer) {
+        tabsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    const menu = document.getElementById("boostMenu");
+    if (menu) {
+        menu.style.display = 'none';
+        menu.classList.remove("show"); // Удаляем класс на всякий случай
+    }
+}
+
+// ==========================================
+// 3. ВАША СТАНДАРТНАЯ ЛОГИКА ТАРИФОВ И ВКЛАДОК
+// ==========================================
+function switchTab(element, categoryType) {
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+    element.classList.add('active');
+
+    const subTabs = document.getElementById('subTabsContainer');
+    const singleProducts = document.getElementById('single-country-products');
+    const regionProducts = document.getElementById('region-products');
+    const physicalSimContainer = document.getElementById('physical-sim-container');
+    const esimProContainer = document.getElementById('esim-pro-container');
+    
+    if (subTabs) subTabs.style.display = 'none';
+    if (singleProducts) singleProducts.style.display = 'none';
+    if (regionProducts) regionProducts.style.display = 'none';
+    if (physicalSimContainer) physicalSimContainer.style.display = 'none';
+    if (esimProContainer) esimProContainer.style.display = 'none';
+
+    if (categoryType === 'data-esim') {
+        if (subTabs) subTabs.style.display = 'flex';
+        switchSubTab('single-country'); 
+    } 
+    else if (categoryType === 'physical-sim') {
+        if (physicalSimContainer) physicalSimContainer.style.display = 'block';
+    } 
+    else if (categoryType === 'esim-pro') {
+        if (esimProContainer) esimProContainer.style.display = 'block';
+    }
+}
+
+function switchSubTab(subCategory) {
+    document.querySelectorAll('.sub-tab').forEach(st => st.classList.remove('active'));
+    const singleProducts = document.getElementById('single-country-products');
+    const regionProducts = document.getElementById('region-products');
+    
+    if (subCategory === 'single-country') {
+        if (document.querySelectorAll('.sub-tab')[0]) document.querySelectorAll('.sub-tab')[0].classList.add('active');
+        if (singleProducts) singleProducts.style.display = 'block';
+        if (regionProducts) regionProducts.style.display = 'none';
+    } else if (subCategory === 'regions') {
+        if (document.querySelectorAll('.sub-tab')[1]) document.querySelectorAll('.sub-tab')[1].classList.add('active');
+        if (singleProducts) singleProducts.style.display = 'none';
+        if (regionProducts) regionProducts.style.display = 'block';
+    }
+}
+
+function updateCountryTariff() {
+    const selector = document.getElementById('simCountrySelector');
+    const resultCard = document.getElementById('countryTariffResult');
+    const selectedCountry = selector.value;
+
+    if (simTariffsData[selectedCountry]) {
+        const data = simTariffsData[selectedCountry];
+        document.getElementById('resCountryName').innerText = selectedCountry;
+        document.getElementById('resOperator').innerText = data.op;
+        document.getElementById('resToMongolia').innerText = data.toMn;
+        document.getElementById('resLocalCall').innerText = data.local;
+        document.getElementById('resIncoming').innerText = data.inc;
+        document.getElementById('resDataPrice').innerText = data.data;
+        document.getElementById('resSms').innerText = data.sms;
+        resultCard.style.display = 'block';
+    }
+}
+
+function updateCountryTariffPro() {
+    const selector = document.getElementById('proCountrySelector');
+    const resultCard = document.getElementById('proTariffResult');
+    const selectedCountry = selector.value;
+
+    if (simTariffsData && simTariffsData[selectedCountry]) {
+        const data = simTariffsData[selectedCountry];
+        document.getElementById('proResCountryName').innerText = selectedCountry;
+        document.getElementById('proResOperator').innerText = data.op;
+        document.getElementById('proResToMongolia').innerText = data.toMn;
+        document.getElementById('proResLocalCall').innerText = data.local;
+        document.getElementById('proResIncoming').innerText = data.inc;
+        document.getElementById('proResDataPrice').innerText = data.data;
+        document.getElementById('proResSms').innerText = data.sms;
+        resultCard.style.display = 'block';
+    }
+}
+
+// ==========================================
+// 4. ГЛОБАЛЬНЫЕ СЛУШАТЕЛИ СОБЫТИЙ (ОБЪЕДИНЕНО)
+// ==========================================
+
+// Поиск по странам
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("countrySearch");
+    if (searchInput) {
+        searchInput.addEventListener("input", function (e) {
+            const filterValue = e.target.value.toLowerCase().trim();
+            const productCards = document.querySelectorAll(".product-card");
+
+            productCards.forEach(function (card) {
+                const titleText = card.querySelector("h3") ? card.querySelector("h3").textContent.toLowerCase() : "";
+                const subtitleText = card.querySelector(".product-subtitle") ? card.querySelector(".product-subtitle").textContent.toLowerCase() : "";
+
+                if (filterValue === "") {
+                    card.style.display = ""; 
+                } else if (titleText.includes(filterValue) || subtitleText.includes(filterValue)) {
+                    card.style.display = ""; 
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    }
+});
+
+// Единый клик по экрану для закрытия всех всплывающих элементов "мимо кассы"
+window.onclick = function(event) {
+    // А) Закрытие бургер-меню (Цэс)
+    if (!event.target.matches('.header-menu-btn') && !event.target.matches('.fa-bars')) {
+        const dropdown = document.getElementById('boostMenu');
+        if (dropdown && dropdown.style.display === 'block') {
+            dropdown.style.display = 'none';
+        }
+    }
+
+    // Б) Закрытие окна адреса
+    const addressModal = document.getElementById('addressModal');
+    if (event.target === addressModal) {
+        addressModal.style.display = 'none';
+    }
+
+    // В) Закрытие окна тарифов (eSIM тарифной шторки)
+    const tariffModal = document.getElementById('tariffModalOverlay');
+    if (event.target === tariffModal) {
+        tariffModal.classList.remove('active');
+    }
+
+    // Г) Закрытие окна помощи по клику на темную область
+    const helpModal = document.getElementById('helpModal');
+    if (event.target === helpModal) {
+        helpModal.style.display = 'none';
+    }
+};
+
+    </script>
+<div id="tariffModalOverlay" class="modal-overlay" onclick="closeTariffModal()">
+        <div class="modal-bottom-sheet" onclick="event.stopPropagation()">
+            <div class="modal-drag-handler"></div>
+            
+            <div class="modal-header">
+                <div class="modal-title-row">
+                    <img id="modalCountryFlag" src="" alt="" style="display:none; width:24px; margin-right:8px;">
+                    <h2 id="modalCountryName">Улсын нэр</h2>
+                </div>
+                <button class="modal-close-btn" onclick="closeTariffModal()">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="modal-operator-info">
+                    <div class="op-meta-item"><strong>Оператор:</strong> <span id="modalOperatorName">-</span></div>
+                    <div class="op-meta-item"><strong>Стандарт:</strong> <span id="modalNetworkStandard">-</span></div>
+                    <div class="op-meta-item"><strong>Хотспот (Хуваалцах):</strong> <span id="modalHotspotStatus">-</span></div>
+                </div>
+
+                <div class="modal-section-title">1. Дата багц сонгох:</div>
+                <div id="modalDataOptions" class="modal-options-grid">
+                    </div>
+
+                <div class="modal-section-title" style="margin-top: 15px;">2. Хугацаа сонгох (Хоног):</div>
+                <div id="modalDayOptions" class="modal-options-grid">
+                    </div>
+
+                <div class="modal-footer-price-box">
+                    <div class="price-label">Үндсэн үнэ:</div>
+                    <div id="modalFinalPrice" class="price-value">0 ₮</div>
+                    <button class="modal-action-btn" onclick="confirmOrder()">Захиалах</button>
+                </div>
+
+                <div id="modalFooterNotes" class="modal-notes-box">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
