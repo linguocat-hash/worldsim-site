@@ -2420,7 +2420,7 @@ const esimProductsData = {
     }
 };
 // ==========================================
-// 1. ФУНКЦИИ МОДАЛЬНЫХ ОКН (АДРЕС, ПОМОЩЬ И ТАРИФЫ)
+// ФУНКЦИИ МОДАЛЬНЫХ ОКН
 // ==========================================
 function openAddressModal() {
     const modal = document.getElementById('addressModal');
@@ -2432,7 +2432,6 @@ function closeAddressModal() {
     if (modal) modal.style.display = 'none';
 }
 
-// ДОБАВЛЕНО: Теперь крестик в окне помощи будет работать!
 function closeHelpModal() {
     const modal = document.getElementById('helpModal');
     if (modal) modal.style.display = 'none';
@@ -2466,10 +2465,15 @@ function openTariffModal(countryName) {
         packages.forEach((pkg, index) => {
             const btn = document.createElement('button');
             btn.className = "opt-btn";
+            btn.setAttribute("role", "button"); // Для корректных кликов на iOS
+            btn.style.cursor = "pointer";       // Для корректных кликов на iOS
             btn.innerText = pkg;
-            btn.onclick = () => selectDataPackage(pkg);
-            if (index === 0) btn.click(); 
+            btn.onclick = (e) => {
+                e.stopPropagation(); // Защита от закрытия окна на iPhone
+                selectDataPackage(pkg);
+            };
             dataContainer.appendChild(btn);
+            if (index === 0) selectDataPackage(pkg); 
         });
     }
 
@@ -2491,10 +2495,15 @@ function selectDataPackage(pkg) {
         availableDays.forEach((day, index) => {
             const btn = document.createElement('button');
             btn.className = "opt-btn";
+            btn.setAttribute("role", "button"); // Исправление для iOS
+            btn.style.cursor = "pointer";       // Исправление для iOS
             btn.innerText = day + " хоног";
-            btn.onclick = () => selectDays(day);
-            if (index === 0) btn.click(); 
+            btn.onclick = (e) => {
+                e.stopPropagation(); // Защита от закрытия окна на iPhone
+                selectDays(day);
+            };
             dayContainer.appendChild(btn);
+            if (index === 0) selectDays(day); 
         });
     }
 }
@@ -2518,28 +2527,33 @@ function calculateFinalPrice() {
     }
 }
 
-// === ОБНОВЛЕННАЯ ФУНКЦИЯ ЗАКАЗА ===
+// === ЕДИНАЯ ИСПРАВЛЕННАЯ ФУНКЦИЯ ЗАКАЗА ===
 function confirmOrder() {
     const country = currentCountryKey || "eSIM";
-    const dataPkg = selectedDataPackage || "";
-    const days = selectedDays ? selectedDays + " хоног" : "";
+    const dataPkg = selectedDataPackage || "Не выбрано";
+    const days = selectedDays ? selectedDays + " хоног" : "Не выбрано";
     const price = document.getElementById('modalFinalPrice').innerText;
+    const pageId = "110415741283142";
 
-    // Автоматический текст заказа для оператора
+    // Шаблон сообщения для Meta Business Suite
     const textMessage = `Сайн байна уу? Захиалга өгөх хүсэлтэй байна:\n🌍 Улс: ${country}\n📦 Багц: ${dataPkg}\n⏳ Хугацаа: ${days}\n💰 Үнэ: ${price}`;
-    
-    // Безопасное кодирование текста для ссылки
     const encodedText = encodeURIComponent(textMessage);
     
-    // Переход в Messenger с готовым текстом
-    const messengerUrl = `https://m.me/110415741283142?text=${encodedText}`;
+    let finalUrl = "";
 
-    window.open(messengerUrl, '_blank');
+    // Разделение логики Android / iPhone
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        finalUrl = "fb-messenger://user-thread/" + pageId;
+    } else {
+        finalUrl = "https://m.me/" + pageId + "?text=" + encodedText;
+    }
+
+    window.open(finalUrl, '_blank');
     closeTariffModal();
 }
 
 // ==========================================
-// 2. ГЛАВНАЯ НАВИГАЦИЯ И БУРГЕР-МЕНЮ (ЦЭС)
+// ГЛАВНАЯ НАВИГАЦИЯ И ТАБЫ
 // ==========================================
 function toggleMenu() {
     const menu = document.getElementById('boostMenu');
@@ -2548,14 +2562,9 @@ function toggleMenu() {
     }
 }
 
-// ЕДИНАЯ функция навигации нижнего таббара сайта
 function navigateTo(page, event) {
-    // Безопасно предотвращаем мгновенное закрытие окон от window.onclick
-    if (event && event.stopPropagation) {
-        event.stopPropagation();
-    }
+    if (event && event.stopPropagation) event.stopPropagation();
 
-    // --- ОТКРЫТИЕ ОКНА АДРЕСА ---
     if (page === 'address') {
         openAddressModal();
         const boostMenu = document.getElementById('boostMenu');
@@ -2563,21 +2572,15 @@ function navigateTo(page, event) {
         return false; 
     }
 
-    // --- ОТКРЫТИЕ ОКНА ПОМОЩИ ---
     if (page === 'help') {
         const helpModal = document.getElementById('helpModal');
-        if (helpModal) {
-            helpModal.style.display = 'flex'; // Показываем модалку помощи
-        }
+        if (helpModal) helpModal.style.display = 'flex';
         const boostMenu = document.getElementById('boostMenu');
-        if (boostMenu) boostMenu.style.display = 'none'; // Скрываем цэс
+        if (boostMenu) boostMenu.style.display = 'none';
         return false;
     }
 
-    // Подсветка active-иконки (оставляем без изменений)
-    document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
-        item.classList.remove('active');
-    });
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(item => item.classList.remove('active'));
     
     if (event && event.currentTarget) {
         event.currentTarget.classList.add('active');
@@ -2585,34 +2588,19 @@ function navigateTo(page, event) {
         const activeItem = document.querySelector(`.bottom-nav .nav-item[onclick*="${page}"]`);
         if (activeItem) activeItem.classList.add('active');
     }
-
-    if (page === 'home') {
-        console.log('Нүүр хуудас руу буцлаа');
-    }
 }
 
-// Обработка кликов из верхнего бургер-меню
 function handleMenuClick(tabType) {
     const targetTab = document.querySelector(`.tab[onclick*="${tabType}"]`);
-    if (targetTab) {
-        switchTab(targetTab, tabType);
-    }
+    if (targetTab) switchTab(targetTab, tabType);
 
     const tabsContainer = document.querySelector('.tabs-container');
-    if (tabsContainer) {
-        tabsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    if (tabsContainer) tabsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     const menu = document.getElementById("boostMenu");
-    if (menu) {
-        menu.style.display = 'none';
-        menu.classList.remove("show"); // Удаляем класс на всякий случай
-    }
+    if (menu) menu.style.display = 'none';
 }
 
-// ==========================================
-// 3. ВАША СТАНДАРТНАЯ ЛОГИКА ТАРИФОВ И ВКЛАДОК
-// ==========================================
 function switchTab(element, categoryType) {
     document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
     element.classList.add('active');
@@ -2632,11 +2620,9 @@ function switchTab(element, categoryType) {
     if (categoryType === 'data-esim') {
         if (subTabs) subTabs.style.display = 'flex';
         switchSubTab('single-country'); 
-    } 
-    else if (categoryType === 'physical-sim') {
+    } else if (categoryType === 'physical-sim') {
         if (physicalSimContainer) physicalSimContainer.style.display = 'block';
-    } 
-    else if (categoryType === 'esim-pro') {
+    } else if (categoryType === 'esim-pro') {
         if (esimProContainer) esimProContainer.style.display = 'block';
     }
 }
@@ -2649,10 +2635,8 @@ function switchSubTab(subCategory) {
     if (subCategory === 'single-country') {
         if (document.querySelectorAll('.sub-tab')[0]) document.querySelectorAll('.sub-tab')[0].classList.add('active');
         if (singleProducts) singleProducts.style.display = 'block';
-        if (regionProducts) regionProducts.style.display = 'none';
     } else if (subCategory === 'regions') {
         if (document.querySelectorAll('.sub-tab')[1]) document.querySelectorAll('.sub-tab')[1].classList.add('active');
-        if (singleProducts) singleProducts.style.display = 'none';
         if (regionProducts) regionProducts.style.display = 'block';
     }
 }
@@ -2671,7 +2655,7 @@ function updateCountryTariff() {
         document.getElementById('resIncoming').innerText = data.inc;
         document.getElementById('resDataPrice').innerText = data.data;
         document.getElementById('resSms').innerText = data.sms;
-        resultCard.style.display = 'block';
+        if (resultCard) resultCard.style.display = 'block';
     }
 }
 
@@ -2689,15 +2673,13 @@ function updateCountryTariffPro() {
         document.getElementById('proResIncoming').innerText = data.inc;
         document.getElementById('proResDataPrice').innerText = data.data;
         document.getElementById('proResSms').innerText = data.sms;
-        resultCard.style.display = 'block';
+        if (resultCard) resultCard.style.display = 'block';
     }
 }
 
 // ==========================================
-// 4. ГЛОБАЛЬНЫЕ СЛУШАТЕЛИ СОБЫТИЙ (ОБЪЕДИНЕНО)
+// ИНИЦИАЛИЗАЦИЯ И СЛУШАТЕЛИ
 // ==========================================
-
-// Поиск по странам
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("countrySearch");
     if (searchInput) {
@@ -2709,9 +2691,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const titleText = card.querySelector("h3") ? card.querySelector("h3").textContent.toLowerCase() : "";
                 const subtitleText = card.querySelector(".product-subtitle") ? card.querySelector(".product-subtitle").textContent.toLowerCase() : "";
 
-                if (filterValue === "") {
-                    card.style.display = ""; 
-                } else if (titleText.includes(filterValue) || subtitleText.includes(filterValue)) {
+                if (filterValue === "" || titleText.includes(filterValue) || subtitleText.includes(filterValue)) {
                     card.style.display = ""; 
                 } else {
                     card.style.display = "none";
@@ -2721,74 +2701,64 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// Единый клик по экрану для закрытия всех всплывающих элементов "мимо кассы"
+// Глобальный клик «мимо кассы» с защитой для модальных кнопок
 window.onclick = function(event) {
-    // А) Закрытие бургер-меню (Цэс)
+    // Не закрывать, если кликнули по кнопкам опций внутри модалки
+    if (event.target.matches('.opt-btn') || event.target.matches('.modal-action-btn')) {
+        return;
+    }
+
     if (!event.target.matches('.header-menu-btn') && !event.target.matches('.fa-bars')) {
         const dropdown = document.getElementById('boostMenu');
-        if (dropdown && dropdown.style.display === 'block') {
-            dropdown.style.display = 'none';
-        }
+        if (dropdown && dropdown.style.display === 'block') dropdown.style.display = 'none';
     }
 
-    // Б) Закрытие окна адреса
     const addressModal = document.getElementById('addressModal');
-    if (event.target === addressModal) {
-        addressModal.style.display = 'none';
-    }
+    if (event.target === addressModal) addressModal.style.display = 'none';
 
-    // В) Закрытие окна тарифов (eSIM тарифной шторки)
     const tariffModal = document.getElementById('tariffModalOverlay');
-    if (event.target === tariffModal) {
-        tariffModal.classList.remove('active');
-    }
+    if (event.target === tariffModal) tariffModal.classList.remove('active');
 
-    // Г) Закрытие окна помощи по клику на темную область
     const helpModal = document.getElementById('helpModal');
-    if (event.target === helpModal) {
-        helpModal.style.display = 'none';
-    }
+    if (event.target === helpModal) helpModal.style.display = 'none';
 };
+</script>
 
-    </script>
-<div id="tariffModalOverlay" class="modal-overlay" onclick="closeTariffModal()">
-        <div class="modal-bottom-sheet" onclick="event.stopPropagation()">
-            <div class="modal-drag-handler"></div>
-            
-            <div class="modal-header">
-                <div class="modal-title-row">
-                    <img id="modalCountryFlag" src="" alt="" style="display:none; width:24px; margin-right:8px;">
-                    <h2 id="modalCountryName">Улсын нэр</h2>
-                </div>
-                <button class="modal-close-btn" onclick="closeTariffModal()">&times;</button>
+<div id="tariffModalOverlay" class="modal-overlay">
+    <div class="modal-bottom-sheet" onclick="event.stopPropagation()">
+        <div class="modal-drag-handler"></div>
+        
+        <div class="modal-header">
+            <div class="modal-title-row">
+                <img id="modalCountryFlag" src="" alt="" style="display:none; width:24px; margin-right:8px;">
+                <h2 id="modalCountryName">Улсын нэр</h2>
+            </div>
+            <button class="modal-close-btn" onclick="closeTariffModal()">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="modal-operator-info">
+                <div class="op-meta-item"><strong>Оператор:</strong> <span id="modalOperatorName">-</span></div>
+                <div class="op-meta-item"><strong>Стандарт:</strong> <span id="modalNetworkStandard">-</span></div>
+                <div class="op-meta-item"><strong>Хотспот (Хуваалцах):</strong> <span id="modalHotspotStatus">-</span></div>
             </div>
 
-            <div class="modal-body">
-                <div class="modal-operator-info">
-                    <div class="op-meta-item"><strong>Оператор:</strong> <span id="modalOperatorName">-</span></div>
-                    <div class="op-meta-item"><strong>Стандарт:</strong> <span id="modalNetworkStandard">-</span></div>
-                    <div class="op-meta-item"><strong>Хотспот (Хуваалцах):</strong> <span id="modalHotspotStatus">-</span></div>
-                </div>
+            <div class="modal-section-title">1. Дата багц сонгох:</div>
+            <div id="modalDataOptions" class="modal-options-grid"></div>
 
-                <div class="modal-section-title">1. Дата багц сонгох:</div>
-                <div id="modalDataOptions" class="modal-options-grid">
-                    </div>
+            <div class="modal-section-title" style="margin-top: 15px;">2. Хугацаа сонгох (Хоног):</div>
+            <div id="modalDayOptions" class="modal-options-grid"></div>
 
-                <div class="modal-section-title" style="margin-top: 15px;">2. Хугацаа сонгох (Хоног):</div>
-                <div id="modalDayOptions" class="modal-options-grid">
-                    </div>
-
-                <div class="modal-footer-price-box">
-    <div class="price-label">Үндсэн үнэ:</div>
-    <div id="modalFinalPrice" class="price-value">0 ₮</div>
-    <button id="modalOrderBtn" class="modal-action-btn" onclick="confirmOrder()">Захиалах</button>
-</div>
-
-                <div id="modalFooterNotes" class="modal-notes-box">
-                    </div>
+            <div class="modal-footer-price-box">
+                <div class="price-label">Үндсэн үнэ:</div>
+                <div id="modalFinalPrice" class="price-value">0 ₮</div>
+                <button id="modalOrderBtn" class="modal-action-btn" onclick="confirmOrder()" style="cursor: pointer;" role="button">Захиалах</button>
             </div>
+
+            <div id="modalFooterNotes" class="modal-notes-box"></div>
         </div>
     </div>
+</div>
 
 </body>
 </html>
