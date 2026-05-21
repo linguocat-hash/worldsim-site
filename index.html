@@ -175,18 +175,17 @@
         /* --- Переключатели --- */
         .tabs-container {
             display: flex;
-            gap: 8px;
+            flex-wrap: wrap;          /* Разрешает кнопкам переноситься на новую строку */
+            gap: 8px;                 /* Расстояние между кнопками */
+            justify-content: center;  /* Выравнивает кнопки по центру */
             padding: 15px;
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-
-        .tabs-container::-webkit-scrollbar {
-            display: none;
         }
 
         .tab {
-            padding: 10px 16px;
+            flex: 1 1 calc(50% - 8px); /* Пытаются занять по половине экрана */
+            min-width: 120px;          /* Защита от слишком сильного сжатия */
+            text-align: center;
+            padding: 10px 12px;
             border-radius: 6px;
             font-size: 13px;
             font-weight: 700;
@@ -195,6 +194,11 @@
             color: var(--brand-blue);
             border: 1px solid #dee2e6;
             transition: all 0.2s;
+        }
+
+        /* Если кнопок нечетное количество (как у вас — 3), последняя займет всю нижнюю строку */
+        .tab:last-child:nth-child(odd) {
+            flex: 1 1 100%;
         }
 
         .tab.active {
