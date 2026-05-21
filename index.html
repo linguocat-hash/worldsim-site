@@ -1798,6 +1798,48 @@
 </div>
 <script>
 
+function confirmOrder() {
+    // 1. Получаем данные о том, что выбрал пользователь в модальном окне
+    // (Скрипт ищет элементы с классом 'active' или 'selected' — замените названия классов, если у вас в калькуляторе они называются иначе)
+    var selectedDataEl = document.querySelector('#modalDataOptions .active, #modalDataOptions .selected');
+    var selectedDayEl = document.querySelector('#modalDayOptions .active, #modalDayOptions .selected');
+    var finalPriceEl = document.getElementById('modalFinalPrice');
+
+    var dataValue = selectedDataEl ? selectedDataEl.innerText.trim() : "Не выбрано";
+    var dayValue = selectedDayEl ? selectedDayEl.innerText.trim() : "Не выбрано";
+    var priceValue = finalPriceEl ? finalPriceEl.innerText.trim() : "0 ₮";
+
+    // 2. Формируем красивый текст сообщения для вас
+    var messageText = "Сайн байна уу! Би сим карт захиалах хүсэлтэй байна.\n\n" +
+                      "📦 Багц: " + dataValue + "\n" +
+                      "📅 Хугацаа: " + dayValue + "\n" +
+                      "💰 Үнэ: " + priceValue;
+
+    // Кодируем текст для безопасной передачи в URL
+    var encodedText = encodeURIComponent(messageText);
+
+    // 3. Базовый ID вашей страницы ВорлдСИМ
+    var pageId = "110415741283142";
+    
+    // 4. Проверяем устройство (Android/ПК или iPhone) и формируем правильную ссылку
+    var finalUrl = "";
+    
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        // Ссылка для iOS (принудительное открытие приложения Messenger)
+        finalUrl = "fb-messenger://user-thread/" + pageId;
+        
+        // Примечание: К сожалению, протокол fb-messenger:// на iOS не умеет автоматически вставлять текст в поле ввода.
+        // Клиент просто перейдет в чат и сможет написать вам. 
+        // Если вы хотите, чтобы текст железно передавался и на iPhone, лучше использовать способ с Meta-автоматизацией (через ref-параметры).
+    } else {
+        // Ссылка для Android и Компьютеров (с автозаполнением текста сообщения через m.me)
+        finalUrl = "https://m.me/" + pageId + "?text=" + encodedText;
+    }
+
+    // 5. Открываем чат в новой вкладке
+    window.open(finalUrl, '_blank');
+}
+
 // Умный скрипт для переключения Android / iPhone
   if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
     var link = document.getElementById('orderBtn');
@@ -2737,10 +2779,10 @@ window.onclick = function(event) {
                     </div>
 
                 <div class="modal-footer-price-box">
-                    <div class="price-label">Үндсэн үнэ:</div>
-                    <div id="modalFinalPrice" class="price-value">0 ₮</div>
-                    <button class="modal-action-btn" onclick="confirmOrder()">Захиалах</button>
-                </div>
+    <div class="price-label">Үндсэн үнэ:</div>
+    <div id="modalFinalPrice" class="price-value">0 ₮</div>
+    <button id="modalOrderBtn" class="modal-action-btn" onclick="confirmOrder()">Захиалах</button>
+</div>
 
                 <div id="modalFooterNotes" class="modal-notes-box">
                     </div>
