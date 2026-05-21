@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>WorldSIM Mongolia | Аяллын сим карт</title>
+    <title>WorldSIM Mongolia | Аяллын сим карт - Travel eSIM, биет сим</title>
     <meta name="description" content="WorldSIM Mongolia | Аяллын сим карт | Аяллын Data eSIM - Биет СИМ">
 
     <meta property="og:type" content="website">
@@ -1333,8 +1333,9 @@
                 <div class="sim-detail-item"><i class="fa-solid fa-money-bill-wave"></i> Нэгж: <span>16.45 $</span></div>
                 <div class="sim-detail-item"><i class="fa-solid fa-calendar-days"></i> Хугацаа: <span>365 хоног</span></div>
             </div>
-            <a href="https://m.me/61560020138379" target="_blank" style="text-decoration: none; display: block;">
-                <button class="sim-buy-btn">Захиалах</button>
+            <a href="https://m.me/110415741283142" id="orderBtn" target="_blank" class="btn-order">
+    Захиалах
+</a>
             </a>
         </div>
 
@@ -1798,6 +1799,13 @@
 </div>
 <script>
 
+// Умный скрипт для переключения Android / iPhone
+  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    var link = document.getElementById('orderBtn');
+    // Если клиент с Айфона, принудительно открываем приложение Messenger через правильный ID
+    link.href = "fb-messenger://user-thread/110415741283142";
+  }
+
 // ==========================================
 // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И БАЗА ДАННЫХ
 // ==========================================
@@ -1838,7 +1846,7 @@ const simTariffsData = {
     "Мьянмар": { op: "Telenor", toMn: "0.38 $", local: "0.40 $", inc: "Үнэгүй", data: "0.0095 $", sms: "0.08 $" },
     "Нидерланд": { op: "Vodafone", toMn: "0.09 $", local: "0.46 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.21 $" },
     "Норвег": { op: "Telenor", toMn: "0.09 $", local: "0.09 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.16 $" },
-    "ОХУ": { op: "Tele2", toMn: "1.03 $", local: "0.84 $", inc: "Үнэгүй", data: "0.0090 $", sms: "0.06 $" },
+    "ОХУ": { op: "Tele2, Beeline", toMn: "1.03 $", local: "0.84 $", inc: "Үнэгүй", data: "0.0090 $", sms: "0.06 $" },
     "Өмнөд Африк": { op: "Vodacom", toMn: "0.41 $", local: "0.42 $", inc: "Үнэгүй", data: "0.0119 $", sms: "0.17 $" },
     "Өмнөд Судан": { op: "Zain SouthSudan", toMn: "0.96 $", local: "0.96 $", inc: "Үнэгүй", data: "0.0313 $", sms: "0.23 $" },
     "Пакистан": { op: "Telenor", toMn: "0.38 $", local: "0.15 $", inc: "Үнэгүй", data: "0.0065 $", sms: "0.06 $" },
