@@ -2720,51 +2720,50 @@ function switchSubTab(subCategory) {
     }
 }
 
-// На iOS window.onclick может не срабатывать на пустых зонах. 
-// Используем touchstart или принудительно делегируем событие на document
+// ==========================================
+// ЕДИНЫЙ И БЕЗОПАСНЫЙ ОБРАБОТЧИК КЛИКОВ ДЛЯ iOS И ANDROID
+// ==========================================
 document.addEventListener('click', function(event) {
-    // Не закрывать, если кликнули по кнопкам опций внутри модалки
-    if (event.target.matches('.opt-btn') || event.target.matches('.modal-action-btn')) {
-        return;
+    const target = event.target;
+
+    // 1. Защита элементов внутри модального окна тарифов
+    if (target.matches('.opt-btn') || target.matches('.modal-action-btn') || target.closest('.modal-bottom-sheet')) {
+        return; // Если кликнули внутри тарифов или по кнопкам — ничего не закрываем
     }
 
-    if (!event.target.matches('.header-menu-btn') && !event.target.matches('.fa-bars')) {
+    // 2. Закрытие шторки меню (boostMenu), если кликнули мимо кнопки вызова
+    if (!target.matches('.header-menu-btn') && !target.closest('.header-menu-btn') && !target.matches('.fa-bars')) {
         const dropdown = document.getElementById('boostMenu');
-        if (dropdown && dropdown.style.display === 'block') dropdown.style.display = 'none';
+        if (dropdown && dropdown.style.display === 'block') {
+            dropdown.style.display = 'none';
+        }
     }
 
+    // 3. Закрытие модального окна адреса при клике строго на фон
     const addressModal = document.getElementById('addressModal');
-    if (event.target === addressModal) addressModal.style.display = 'none';
+    if (target === addressModal) {
+        addressModal.style.display = 'none';
+    }
 
+    // 4. Закрытие окна тарифов при клике строго на фон (modal-overlay)
     const tariffModal = document.getElementById('tariffModalOverlay');
-    if (event.target === tariffModal) tariffModal.classList.remove('active');
+    if (target === tariffModal) {
+        tariffModal.classList.remove('active');
+    }
 
+    // 5. Закрытие окна помощи при клике строго на фон
     const helpModal = document.getElementById('helpModal');
-    if (event.target === helpModal) helpModal.style.display = 'none';
+    if (target === helpModal) {
+        helpModal.style.display = 'none';
+    }
 });
 
-// Глобальный клик «мимо кассы» с защитой для модальных кнопок
-window.onclick = function(event) {
-    // Не закрывать, если кликнули по кнопкам опций внутри модалки
-    if (event.target.matches('.opt-btn') || event.target.matches('.modal-action-btn')) {
-        return;
-    }
+// Полностью очищаем window.onclick, чтобы iOS Safari не дублировал и не блокировал клики
+window.onclick = null;
 
-    if (!event.target.matches('.header-menu-btn') && !event.target.matches('.fa-bars')) {
-        const dropdown = document.getElementById('boostMenu');
-        if (dropdown && dropdown.style.display === 'block') dropdown.style.display = 'none';
-    }
-
-    const addressModal = document.getElementById('addressModal');
-    if (event.target === addressModal) addressModal.style.display = 'none';
-
-    const tariffModal = document.getElementById('tariffModalOverlay');
-    if (event.target === tariffModal) tariffModal.classList.remove('active');
-
-    const helpModal = document.getElementById('helpModal');
-    if (event.target === helpModal) helpModal.style.display = 'none';
-};
-
+// ==========================================
+// ВАШИ ФУНКЦИИ (СОХРАНЕНЫ И ОПТИМИЗИРОВАНЫ)
+// ==========================================
 function handleMenuClick(tabType) {
     const tabs = document.querySelectorAll('.tab');
     let targetTab = null;
@@ -2790,6 +2789,7 @@ function handleMenuClick(tabType) {
     const menu = document.getElementById("boostMenu");
     if (menu) menu.style.display = 'none';
 }
+
 // Универсальная функция для заказа фиксированных продуктов (Биет СИМ и eSIM Pro)
 function orderDirectProduct(productType, productName) {
     const pageId = "110415741283142";
@@ -2801,7 +2801,7 @@ function orderDirectProduct(productType, productName) {
     // Базовая ссылка для веба и Android
     const url = "https://m.me/" + pageId + "?text=" + encodedText;
     
- // Безопасное открытие ссылки с поддержкой iOS Safari
+    // Безопасное открытие ссылки с поддержкой iOS Safari
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         const link = document.createElement('a');
         link.href = url;
