@@ -692,55 +692,30 @@ body {
     opacity: 1;
 }
 
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 2000;
-    
-    /* Плавное появление подложки */
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    
-    /* Включаем изоляцию слоев, чтобы iPhone не путал слои */
-    isolation: isolate; 
-}
-
-.modal-overlay.active {
-    visibility: visible;
-    opacity: 1;
-}
-
 .modal-bottom-sheet {
-    /* Меняем на fixed, чтобы шторка не перекрывала контент в скрытом состоянии */
-    position: fixed;
-    bottom: 0;
+    position: absolute;
+    bottom: -100%;
     left: 0; right: 0;
     background: #ffffff;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     max-height: 85vh;
     overflow-y: auto;
-    z-index: 2001;
     
-    /* Безопасный отступ для iPhone */
+    /* Добавляем безопасный отступ снизу для iPhone, чтобы контент и кнопка заказа не уходили под полоску */
     padding: 16px 16px calc(16px + env(safe-area-inset-bottom)) 16px;
+    
     box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+    transition: bottom 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     
-    /* Скрываем шторку вниз через мощный transform (работает на iOS без багов) */
-    transform: translateY(100%);
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    
-    /* Аппаратное ускорение анимации на Айфоне */
-    will-change: transform;
+    /* Плавный скролл внутри шторки на iOS */
     -webkit-overflow-scrolling: touch; 
 }
 
-/* Когда окно активно — плавно поднимаем шторку вверх */
 .modal-overlay.active .modal-bottom-sheet {
-    transform: translateY(0);
+    bottom: 0;
 }
+
         .modal-drag-handler {
             width: 40px; height: 5px;
             background: #e0e0e0;
@@ -3017,53 +2992,45 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Включаем логику только для iOS устройств
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    
+    // Принудительно добавляем стили кликабельности для iOS
+    const style = document.createElement('style');
+    style.innerHTML = '.product-card, .product-card * { cursor: pointer !important; -webkit-tap-highlight-color: transparent; }';
+    document.head.appendChild(style);
+
+    // Слушаем клики на всем документе (это гарантирует, что Safari поймает тап)
+    document.body.addEventListener('click', function(event) {
+        // Находим саму карточку, даже если кликнули на флаг или текст внутри неё
+        const card = event.target.closest('.product-card');
         
-        let startY = 0;
-        let isScrolling = false;
-
-        // 1. Запоминаем точку, где пользователь коснулся экрана
-        document.body.addEventListener('touchstart', function(event) {
-            const card = event.target.closest('.product-card');
-            if (card) {
-                startY = event.touches[0].pageY;
-                isScrolling = false;
-            }
-        }, { passive: true });
-
-        // 2. Если палец сместился больше чем на 10 пикселей — значит пользователь скроллит список
-        document.body.addEventListener('touchmove', function(event) {
-            const card = event.target.closest('.product-card');
-            if (card) {
-                const moveY = event.touches[0].pageY;
-                if (Math.abs(moveY - startY) > 10) {
-                    isScrolling = true; // Это скролл, клик делать не нужно
+        if (card) {
+            // 1. Пытаемся взять страну из onclick, если Safari его видит
+            let country = '';
+            const inlineClick = card.getAttribute('onclick');
+            
+            if (inlineClick) {
+                const match = inlineClick.match(/openTariffModal\(['"‘“](.*?)['"’“]\)/);
+                if (match && match[1]) {
+                    country = match[1];
                 }
             }
-        }, { passive: true });
-
-        // 3. Ловим момент отрыва пальца от экрана
-        document.body.addEventListener('touchend', function(event) {
-            // Если пользователь просто листал список вниз — ничего не делаем
-            if (isScrolling) return;
-
-            const card = event.target.closest('.product-card');
-            if (card) {
-                const inlineClick = card.getAttribute('onclick');
-                
-                if (inlineClick && inlineClick.includes('openTariffModal')) {
-                    // Вытаскиваем название страны из кавычек
-                    const match = inlineClick.match(/openTariffModal\(['"‘“](.*?)['"’“]\)/);
-                    
-                    if (match && match[1] && typeof openTariffModal === 'function') {
-                        // Насильно открываем тарифы, полностью игнорируя капризы кликов Safari
-                        openTariffModal(match[1]);
-                    }
+            
+            // 2. ЕСЛИ SAFARI СЛЕПОЙ и не увидел onclick, вытаскиваем название страны прямо из текста заголовка карточки!
+            if (!country) {
+                // Ищем тег заголовка внутри карточки (обычно это h3, h4 или класс с названием страны)
+                const titleElement = card.querySelector('h3') || card.querySelector('h4') || card.querySelector('.product-name');
+                if (titleElement) {
+                    country = titleElement.innerText.trim();
                 }
             }
-        }, { passive: true });
-    }
+            
+            // 3. Если страну определили и функция в коде есть — запускаем модалку в обход всех багов
+            if (country && typeof openTariffModal === 'function') {
+                console.log("Фикс сработал для страны:", country);
+                openTariffModal(country);
+            }
+        }
+    });
 });
 </script>
 </body>
