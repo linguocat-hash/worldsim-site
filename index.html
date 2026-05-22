@@ -1763,6 +1763,38 @@ body.modal-open {
     </div>
 </div>
 </div>
+
+<!-- 1. МОДАЛЬНОЕ ОДНО: МАНАЙ ХАЯГ (ВОССТАНОВЛЕНО СЮДА) -->
+<div id="addressModal" class="address-modal-overlay">
+    <div class="address-modal-content">
+        <span class="address-modal-close" onclick="closeAddressModal()">×</span>
+        
+        <h2>📍 Манай хаяг, цагийн хуваарь</h2>
+        <p>Та манай оффис дээр ирж үйлчилгээ авах боломжтой:</p>
+        
+        <a href="https://maps.app.goo.gl/ECfotyHKngNeDhkm9" target="_blank" class="address-map-link">
+            <img src="OfficeRekhet.jpg" alt="Эрхэт оффис байршил" class="address-modal-img">
+            <span class="address-map-hint"><i class="fa-solid fa-map-location-dot"></i> Google Maps дээр харах</span>
+        </a>
+
+        <div class="address-info" style="font-size: 14px; line-height: 1.5; margin: 15px 0; color: #333;">
+            <p style="margin-bottom: 8px;"><strong>1️⃣ Байршил:</strong> БЗД, Энх тайваны өргөн чөлөө, Бөхийн өргөөний баруун талд, Эрхэт оффис, 10 давхар, 1006 тоот.</p>
+            <p style="margin-bottom: 8px;"><strong>2️⃣ Цагийн хуваарь:</strong><br>
+               Да-Ба: 09:00 - 17:00 🕘<br>
+               Бя-Ня: Тантай цагаа тохироод уулзах боломжтой. 🤝
+            </p>
+            <p><strong>3️⃣ Холбоо барих:</strong> 80599859 ☎️</p>
+        </div>
+
+        <p class="warning-text" style="background-color: #fff9db; padding: 10px; border-radius: 8px; font-size: 13px; border-left: 4px solid #fcc419; margin-top: 10px;">📌 Та ирэхээсээ өмнө заавал мэдэгдээрэй. 👌</p>
+
+        <a href="tel:+97680599859" class="address-call-btn">
+            <i class="fa-solid fa-phone"></i> Залгах
+        </a>
+    </div>
+</div>
+
+<!-- 2. МОДАЛЬНОЕ ОКНО: ТУСЛАМЖ -->
 <div id="helpModal" class="help-modal-overlay">
     <div class="help-modal-content">
         <span class="help-modal-close" onclick="closeHelpModal()">×</span>
@@ -1785,6 +1817,27 @@ body.modal-open {
         </div>
     </div>
 </div>
+
+<!-- 3. ОРИГИНАЛЬНОЕ НИЖНЕЕ МЕНЮ -->
+</main>
+
+<nav class="bottom-nav">
+    <a href="#" class="nav-item active" onclick="navigateTo('home')">
+        <i class="fa-solid fa-house"></i>
+        <span>Нүүр</span>
+    </a>
+    
+    <a href="#" class="nav-item" onclick="navigateTo('address', event); return false;">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>Манай хаяг</span>
+    </a>
+
+    <a href="#" class="nav-item" onclick="navigateTo('help', event); return false;">
+        <i class="fa-solid fa-circle-question"></i>
+        <span>Тусламж</span>
+    </a>
+</nav>
+
 <script>
 
 function confirmOrder() {
