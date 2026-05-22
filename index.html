@@ -2773,41 +2773,36 @@ function orderDirectProduct(productType, productName) {
     }
 }
 
-// ЕДИНАЯ И НАДЕЖНАЯ СИСТЕМА ПОИСКА
+// ЕДИНАЯ СИСТЕМА ПОИСКА И АВТОКЛИКА ПО ENTER
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("countrySearch");
     
     if (searchInput) {
-        // Главная функция, которая обрабатывает и ввод, и нажатие Enter
         function handleSearch(e) {
             const query = searchInput.value.toLowerCase().trim();
-            
-            // Расширенный список селекторов: ищет карточки стран, тарифов, элементов списков и блоков табов
-            const selectors = '.country-card, .tariff-card, .plan-card, .tab-content, [data-country], .destination-card, .bundle-card';
-            const cards = document.querySelectorAll(selectors);
+            const cards = document.querySelectorAll(".product-list .product-card");
             
             cards.forEach(card => {
                 const text = card.textContent.toLowerCase();
                 
                 if (query === "") {
-                    // Если строка поиска пустая, возвращаем элементам их дефолтный вид
+                    // Если строка поиска пустая, сбрасываем стили (показываем всё)
                     card.style.display = "";
                 } else {
-                    // Если текст запроса найден внутри карточки — показываем её, иначе прячем
+                    // Проверяем, есть ли запрос в тексте карточки
                     if (text.includes(query)) {
-                        // Если у вас flex-сетка, используется "", браузер сам подставит нужный тип отображения
-                        card.style.display = ""; 
+                        card.style.display = ""; // Показываем совпадение
                     } else {
-                        card.style.display = "none";
+                        card.style.display = "none"; // Прячем лишнее
                     }
                 }
             });
 
-            // Если нажат ENTER или кнопка "Поиск" на мобильной клавиатуре
+            // ОБРАБОТКА НАЖАТИЯ ENTER
             if (e.type === "keydown" && e.key === "Enter") {
-                e.preventDefault();
+                e.preventDefault(); // Предотвращаем перезагрузку страницы
                 
-                // Находим самый первый элемент, который остался видимым после фильтрации
+                // Ищем первую карточку, которая осталась видимой на экране
                 let firstMatch = null;
                 for (let card of cards) {
                     if (card.style.display !== "none") {
@@ -2816,15 +2811,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
                 
-                // Если нашли — автоматически кликаем по нему (открывается тариф или запускается переход)
+                // Если нашли совпадение — симулируем клик для вызова функции openTariffModal
                 if (firstMatch) {
                     firstMatch.click();
-                    searchInput.blur(); // Скрываем экранную клавиатуру на смартфонах
+                    searchInput.blur(); // Скрываем мобильную клавиатуру
                 }
             }
         }
 
-        // Привязываем одну логику сразу на ввод текста и на нажатие клавиш
+        // Вешаем обработчики на ввод текста и на нажатие клавиш
         searchInput.addEventListener("input", handleSearch);
         searchInput.addEventListener("keydown", handleSearch);
     }
