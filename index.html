@@ -2666,6 +2666,32 @@ window.onclick = function(event) {
     const helpModal = document.getElementById('helpModal');
     if (event.target === helpModal) helpModal.style.display = 'none';
 };
+
+function handleMenuClick(tabType) {
+    const tabs = document.querySelectorAll('.tab');
+    let targetTab = null;
+    
+    // Ищем вкладку, в onclick которой есть нужное слово (например, 'physical-sim')
+    tabs.forEach(tab => {
+        const onclickAttr = tab.getAttribute('onclick') || '';
+        if (onclickAttr.includes(tabType)) {
+            targetTab = tab;
+        }
+    });
+
+    // Если нашли — вызываем вашу родную функцию switchTab
+    if (targetTab) {
+        switchTab(targetTab, tabType);
+    }
+
+    // Плавно скроллим к табам
+    const tabsContainer = document.querySelector('.tabs-container');
+    if (tabsContainer) tabsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Закрываем шторку меню
+    const menu = document.getElementById("boostMenu");
+    if (menu) menu.style.display = 'none';
+}
 </script>
 
 <div id="tariffModalOverlay" class="modal-overlay">
