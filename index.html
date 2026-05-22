@@ -43,11 +43,30 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         }
 
-        body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            padding-bottom: 75px;
-        }
+        /* --- Нижняя навигация --- */
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    /* Безопасный отступ снизу, чтобы bottom-nav не перекрывал контент */
+    padding-bottom: calc(75px + env(safe-area-inset-bottom)) !important; 
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url('Worldsimfrontpage_2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: space-around;
+    /* Корректный паддинг с учётом нижней полосы iPhone (Home Indicator) */
+    padding: 12px 0 calc(12px + env(safe-area-inset-bottom)) 0; 
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 1000;
+}
 
         /* --- Шапка сайта (Светлая под логотип) --- */
         header {
