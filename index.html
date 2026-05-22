@@ -2840,19 +2840,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 const text = card.textContent.toLowerCase();
                 
                 if (query === "") {
-                    // Если строка поиска пустая, сбрасываем стили (показываем всё)
                     card.style.display = "";
                 } else {
-                    // Проверяем, есть ли запрос в тексте карточки
                     if (text.includes(query)) {
-                        card.style.display = ""; // Показываем совпадение
+                        card.style.display = ""; 
                     } else {
-                        card.style.display = "none"; // Прячем лишнее
+                        card.style.display = "none"; 
                     }
                 }
             });
 
-            // ОБРАБОТКА НАЖАТИЯ ENTER С ПРИОРИТЕТОМ ОДИНОЧНЫХ СТРАН
             if (e.type === "keydown" && e.key === "Enter") {
                 e.preventDefault(); 
                 
@@ -2864,28 +2861,23 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (card.style.display !== "none") {
                         const titleText = card.querySelector('h3') ? card.querySelector('h3').textContent.toLowerCase() : "";
                         
-                        // 1. Улучшенный вариант: если введенный текст содержится прямо в заголовке h3 (например, "хятад")
                         if (titleText.includes(query)) {
-                            // Если это при этом одиночная страна — это идеальное попадание
                             if (card.closest('#single-country-products')) {
                                 exactMatch = card;
                                 break; 
                             }
                         }
                         
-                        // 2. Хороший вариант: любая карточка, которая находится в блоке одиночных стран
                         if (!singleCountryMatch && card.closest('#single-country-products')) {
                             singleCountryMatch = card;
                         }
 
-                        // 3. Запасной вариант: просто любая первая видимая карточка (например, регион)
                         if (!firstMatch) {
                             firstMatch = card;
                         }
                     }
                 }
                 
-                // Выбираем самую релевантную карточку по цепочке приоритетов
                 const cardToClick = exactMatch || singleCountryMatch || firstMatch;
                 
                 if (cardToClick) {
@@ -2893,25 +2885,24 @@ document.addEventListener("DOMContentLoaded", function () {
                     searchInput.blur(); 
                 }
             }
-        } // <-- Вот эта скобка закрывает функцию handleSearch
+        }
 
-        // Вешаем обработчики на ввод текста и на нажатие клавиш
         searchInput.addEventListener("input", handleSearch);
         searchInput.addEventListener("keydown", handleSearch);
-    } // <-- Вот эта скобка закрывала проверку if (searchInput)
-}); // <-- А эта закрывает DOMContentLoaded
+    } 
+});
 </script>
 
 <style>
 /* Специальный фикс для кликов в Safari (iOS) */
-.product-card, .sim-card, .sub-tab, .tab {
-    cursor: pointer;
+.product-card, .sim-card, .sub-tab, .tab, .nav-item {
+    cursor: pointer !important;
     -webkit-tap-highlight-color: transparent;
 }
 
 /* Заставляем Safari проваливать клик сквозь внутренний текст/картинки на саму карточку */
 .product-card *, .sim-card *, .sub-tab *, .tab * {
-    pointer-events: none;
+    pointer-events: none !important;
 }
 
 /* Разрешаем клики внутри самого всплывающего окна, чтобы там всё нажималось */
