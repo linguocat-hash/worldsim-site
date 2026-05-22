@@ -27,6 +27,32 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+@media screen and (max-width: 768px) {
+    /* 1. Заставляем все сторонние виджеты и чаты пропускать клики сквозь себя */
+    #chatrace-container, 
+    [class*="chat"], 
+    [id*="chat"], 
+    [class*="widget"],
+    iframe {
+        pointer-events: none !important;
+    }
+    
+    /* 2. Разрешаем клики ТОЛЬКО для самой иконки чата, если она есть в углу */
+    .chatrace-button, 
+    [class*="chat-icon"] {
+        pointer-events: auto !important;
+    }
+
+    /* 3. Принудительно оживляем секцию, где лежат страны */
+    /* Замените .countries-container на ваш реальный класс обертки списка стран, если он называется иначе */
+    .product-grid,
+    .countries-container,
+    .product-card {
+        pointer-events: auto !important;
+        position: relative !important;
+        z-index: 999999 !important;
+    }
+}
         :root {
             --brand-blue: #002b49;   /* Темно-синий из WORLDSIM */
             --brand-green: #7cb305;  /* Салатовый из WORLDSIM */
@@ -2992,52 +3018,46 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 <script>
 (function() {
-    // Включаем консоль только на iPhone/iPad
+    // Включаем фикс строго для iOS устройств
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        var logBox = document.getElementById('safariLog');
-        if (logBox) logBox.style.display = 'block';
+        
+        // Принудительно делаем карточки кликабельными для системы
+        var style = document.createElement('style');
+        style.innerHTML = '.product-card { cursor: pointer !important; -webkit-tap-highlight-color: transparent !important; }';
+        document.head.appendChild(style);
 
-        function log(msg) {
-            if (logBox) logBox.innerHTML += '<br>• ' + msg;
-        }
+        // Используем старый добрый метод отслеживания кликов по всему экрану
+        document.addEventListener('click', function(event) {
+            
+            // Ищем карточку стандартным путем
+            var currentElement = event.target;
+            var card = null;
+            
+            while (currentElement && currentElement !== document.body) {
+                if (currentElement.classList && currentElement.classList.contains('product-card')) {
+                    card = currentElement;
+                    break;
+                }
+                currentElement = currentElement.parentNode;
+            }
 
-        // Перехватываем клик
-        document.addEventListener('click', function(e) {
-            var card = e.target.closest('.product-card');
+            // Если нашли карточку, по которой нажали
             if (card) {
-                log('Нажата карточка страны!');
-                
                 var inlineClick = card.getAttribute('onclick');
-                if (!inlineClick) {
-                    log('Ошибка: Атрибут onclick не найден на карточке!');
-                    return;
-                }
                 
-                log('Найдено в onclick: ' + inlineClick);
-                
-                // Проверяем наличие функции в системе
-                if (typeof window.openTariffModal !== 'function') {
-                    log('КРИТИЧЕСКАЯ ОШИБКА: Функция openTariffModal НЕ существует в window!');
-                    return;
-                }
-                
-                log('Функция openTariffModal найдена, запускаем...');
-                
-                try {
-                    // Вытаскиваем страну
+                if (inlineClick && inlineClick.indexOf('openTariffModal') !== -1) {
+                    // БЕЗОПАСНЫЙ РАЗБОР СТРОКИ: убираем всё лишнее, оставляя только текст внутри кавычек
                     var cleanText = inlineClick.replace('openTariffModal(', '').replace(')', '');
-                    var countryName = cleanText.replace(/['"‘“开口’”]/g, '').trim();
+                    var countryName = cleanText.replace(/['"‘“’”]/g, '').trim();
                     
-                    log('Передаем страну: "' + countryName + '"');
-                    
-                    // Вызываем оригинальную функцию
-                    window.openTariffModal(countryName);
-                    log('Функция выполнилась без вылета JS!');
-                } catch(err) {
-                    log('Внутри openTariffModal произошел сбой: ' + err.message);
+                    // Если функция открытия существует в глобальной видимости window
+                    if (countryName && typeof window.openTariffModal === 'function') {
+                        // Вызываем открытие модального окна напрямую
+                        window.openTariffModal(countryName);
+                    }
                 }
             }
-        }, true);
+        }, true); // true активирует фазу перехвата, клик сработает раньше любых багов
     }
 })();
 </script>
