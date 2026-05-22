@@ -2900,6 +2900,14 @@ document.addEventListener("DOMContentLoaded", function () {
         searchInput.addEventListener("keydown", handleSearch);
     } // <-- Вот эта скобка закрывала проверку if (searchInput)
 }); // <-- А эта закрывает DOMContentLoaded
+/* Фикс для Safari: заставляем клик проваливаться сквозь текст/картинки прямо на карточку */
+  .product-card *, .sim-card *, .sub-tab *, .tab * {
+      pointer-events: none;
+  }
+  /* Разрешаем клики для внутренних элементов самой модалки, чтобы они нажимались */
+  .modal-bottom-sheet * {
+      pointer-events: auto;
+  }
 </script>
 
 <!-- ДОБАВЛЕНО: onclick="closeTariffModal()" для корректного закрытия при клике на фон -->
