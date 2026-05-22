@@ -2992,33 +2992,35 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Включаем фикс строго на устройствах Apple (iPhone/iPad)
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    
+    // Добавляем специальный стиль для iOS, чтобы Safari знал, что по карточкам можно кликать
+    const style = document.createElement('style');
+    style.innerHTML = '.product-card { cursor: pointer !important; -webkit-tap-highlight-color: transparent; }';
+    document.head.appendChild(style);
+
+    // Слушаем стандартный click на всем документе
+    document.body.addEventListener('click', function(event) {
+        // Ищем, попал ли клик на карточку страны
+        const card = event.target.closest('.product-card');
         
-        document.body.addEventListener('touchstart', function(event) {
-            // Ищем, коснулся ли палец карточки страны
-            const card = event.target.closest('.product-card');
+        if (card) {
+            const inlineClick = card.getAttribute('onclick');
             
-            if (card) {
-                const inlineClick = card.getAttribute('onclick');
+            // Если у карточки есть onclick с нашей функцией, но Safari его проигнорировал
+            if (inlineClick && inlineClick.includes('openTariffModal')) {
+                // Вытаскиваем название страны
+                const match = inlineClick.match(/openTariffModal\(['"‘“](.*?)['"’“]\)/);
                 
-                // Если внутри onclick прописана функция открытия тарифов
-                if (inlineClick && inlineClick.includes('openTariffModal')) {
-                    
-                    // Блокируем стандартный капризный клик Safari
-                    event.preventDefault(); 
-                    
-                    // Вытаскиваем чистое название страны из кавычек (например, 'China' или 'Japan')
-                    const match = inlineClick.match(/openTariffModal\(['"‘“](.*?)['"’“]\)/);
-                    
-                    // Напрямую активируем открытие модального окна в обход блокировок iOS
-                    if (match && match[1] && typeof openTariffModal === 'function') {
-                        openTariffModal(match[1]); 
+                if (match && match[1] && typeof openTariffModal === 'function') {
+                    // Если модалка еще не открыта, запускаем её вручную
+                    const modal = document.getElementById('tariffModalOverlay');
+                    if (!modal || !modal.classList.contains('active')) {
+                        openTariffModal(match[1]);
                     }
                 }
             }
-        }, { passive: false }); // passive: false обязателен для работы preventDefault на iOS
-    }
+        }
+    });
 });
 </script>
 </body>
