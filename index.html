@@ -2991,47 +2991,49 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    
-    // Принудительно добавляем стили кликабельности для iOS
-    const style = document.createElement('style');
-    style.innerHTML = '.product-card, .product-card * { cursor: pointer !important; -webkit-tap-highlight-color: transparent; }';
-    document.head.appendChild(style);
-
-    // Слушаем клики на всем документе (это гарантирует, что Safari поймает тап)
-    document.body.addEventListener('click', function(event) {
-        // Находим саму карточку, даже если кликнули на флаг или текст внутри неё
-        const card = event.target.closest('.product-card');
+(function() {
+    // Включаем фикс строго для iOS устройств
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         
-        if (card) {
-            // 1. Пытаемся взять страну из onclick, если Safari его видит
-            let country = '';
-            const inlineClick = card.getAttribute('onclick');
+        // Принудительно делаем карточки кликабельными для системы
+        var style = document.createElement('style');
+        style.innerHTML = '.product-card { cursor: pointer !important; -webkit-tap-highlight-color: transparent !important; }';
+        document.head.appendChild(style);
+
+        // Используем старый добрый метод отслеживания кликов по всему экрану
+        document.addEventListener('click', function(event) {
             
-            if (inlineClick) {
-                const match = inlineClick.match(/openTariffModal\(['"‘“](.*?)['"’“]\)/);
-                if (match && match[1]) {
-                    country = match[1];
+            // Ищем карточку стандартным путем
+            var currentElement = event.target;
+            var card = null;
+            
+            while (currentElement && currentElement !== document.body) {
+                if (currentElement.classList && currentElement.classList.contains('product-card')) {
+                    card = currentElement;
+                    break;
+                }
+                currentElement = currentElement.parentNode;
+            }
+
+            // Если нашли карточку, по которой нажали
+            if (card) {
+                var inlineClick = card.getAttribute('onclick');
+                
+                if (inlineClick && inlineClick.indexOf('openTariffModal') !== -1) {
+                    // БЕЗОПАСНЫЙ РАЗБОР СТРОКИ: убираем всё лишнее, оставляя только текст внутри кавычек
+                    var cleanText = inlineClick.replace('openTariffModal(', '').replace(')', '');
+                    var countryName = cleanText.replace(/['"‘“’”]/g, '').trim();
+                    
+                    // Если функция открытия существует в глобальной видимости window
+                    if (countryName && typeof window.openTariffModal === 'function') {
+                        // Вызываем открытие модального окна напрямую
+                        window.openTariffModal(countryName);
+                    }
                 }
             }
-            
-            // 2. ЕСЛИ SAFARI СЛЕПОЙ и не увидел onclick, вытаскиваем название страны прямо из текста заголовка карточки!
-            if (!country) {
-                // Ищем тег заголовка внутри карточки (обычно это h3, h4 или класс с названием страны)
-                const titleElement = card.querySelector('h3') || card.querySelector('h4') || card.querySelector('.product-name');
-                if (titleElement) {
-                    country = titleElement.innerText.trim();
-                }
-            }
-            
-            // 3. Если страну определили и функция в коде есть — запускаем модалку в обход всех багов
-            if (country && typeof openTariffModal === 'function') {
-                console.log("Фикс сработал для страны:", country);
-                openTariffModal(country);
-            }
-        }
-    });
-});
+        }, true); // true активирует фазу перехвата, клик сработает раньше любых багов
+    }
+})();
 </script>
 </body>
 </html>
