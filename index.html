@@ -980,6 +980,22 @@ body.modal-open {
     cursor: pointer;
     -webkit-tap-highlight-color: transparent; /* Убирает серую вспышку при тапе */
 }
+
+CSS
+/* Добавляем отступ снизу для самого контейнера с контентом */
+main.product-list {
+    /* Резервируем место: высота меню (около 75px) + безопасный отступ iPhone */
+    padding-bottom: calc(85px + env(safe-area-inset-bottom)) !important;
+    
+    /* Гарантируем правильный расчет высоты с учетом внутренних отступов */
+    box-sizing: border-box;
+}
+
+/* На всякий случай проверяем body и html */
+html, body {
+    height: auto !important;
+    min-height: 100%;
+}
 </style>
 </head>
 <body>
