@@ -2993,48 +2993,44 @@ document.addEventListener("DOMContentLoaded", function () {
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     
-    // 1. Насильно вытаскиваем карточки стран на самый передний план CSS
-    // и принудительно активируем на них обработку событий pointer-events
+    // Принудительно добавляем стили кликабельности для iOS
     const style = document.createElement('style');
-    style.innerHTML = `
-        .product-card { 
-            position: relative !important;
-            z-index: 99999 !important; 
-            pointer-events: auto !important;
-            cursor: pointer !important;
-            -webkit-tap-highlight-color: rgba(0,0,0,0.1) !important;
-        }
-    `;
+    style.innerHTML = '.product-card, .product-card * { cursor: pointer !important; -webkit-tap-highlight-color: transparent; }';
     document.head.appendChild(style);
 
-    // 2. Вешаем прямой обработчик клика прямо на каждую карточку по отдельности
-    // Ждем 1 секунду, чтобы динамические карточки успели отрендериться в DOM
-    setTimeout(function() {
-        const cards = document.querySelectorAll('.product-card');
+    // Слушаем клики на всем документе (это гарантирует, что Safari поймает тап)
+    document.body.addEventListener('click', function(event) {
+        // Находим саму карточку, даже если кликнули на флаг или текст внутри неё
+        const card = event.target.closest('.product-card');
         
-        cards.forEach(function(card) {
-            // Вешаем стандартный клик
-            card.addEventListener('click', function(e) {
-                handleCardClick(card);
-            });
+        if (card) {
+            // 1. Пытаемся взять страну из onclick, если Safari его видит
+            let country = '';
+            const inlineClick = card.getAttribute('onclick');
             
-            // Дублируем мобильным тач-событием прямо на карточку
-            card.addEventListener('touchend', function(e) {
-                // Если это не сильный скролл, обрабатываем как клик
-                handleCardClick(card);
-            });
-        });
-    }, 1000);
-
-    function handleCardClick(card) {
-        const inlineClick = card.getAttribute('onclick');
-        if (inlineClick) {
-            const match = inlineClick.match(/openTariffModal\(['"‘“](.*?)['"’“]\)/);
-            if (match && match[1] && typeof openTariffModal === 'function') {
-                openTariffModal(match[1]);
+            if (inlineClick) {
+                const match = inlineClick.match(/openTariffModal\(['"‘“](.*?)['"’“]\)/);
+                if (match && match[1]) {
+                    country = match[1];
+                }
+            }
+            
+            // 2. ЕСЛИ SAFARI СЛЕПОЙ и не увидел onclick, вытаскиваем название страны прямо из текста заголовка карточки!
+            if (!country) {
+                // Ищем тег заголовка внутри карточки (обычно это h3, h4 или класс с названием страны)
+                const titleElement = card.querySelector('h3') || card.querySelector('h4') || card.querySelector('.product-name');
+                if (titleElement) {
+                    country = titleElement.innerText.trim();
+                }
+            }
+            
+            // 3. Если страну определили и функция в коде есть — запускаем модалку в обход всех багов
+            if (country && typeof openTariffModal === 'function') {
+                console.log("Фикс сработал для страны:", country);
+                openTariffModal(country);
             }
         }
-    }
+    });
 });
 </script>
 </body>
