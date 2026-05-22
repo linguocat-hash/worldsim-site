@@ -2990,6 +2990,33 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     </div>
 </div>
-
+<script>
+(function() {
+    // Проверяем, что это устройство на iOS (iPhone/iPad)
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        
+        // Слушаем касания на всем документе
+        document.addEventListener('touchstart', function(event) {
+            // Ищем, коснулся ли пользователь карточки или вкладки
+            const clickable = event.target.closest('.product-card, .sim-card, .tab, .sub-tab, .nav-item');
+            
+            if (clickable) {
+                // Предотвращаем стандартное зависание Safari
+                event.preventDefault();
+                
+                // Генерируем настоящее системное событие клика
+                const clickEvent = new MouseEvent('click', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window
+                });
+                
+                // Симулируем честный клик, который Safari обязан обработать
+                clickable.dispatchEvent(clickEvent);
+            }
+        }, { passive: false }); // passive: false обязателен, чтобы preventDefault сработал
+    }
+})();
+</script>
 </body>
 </html>
