@@ -2810,13 +2810,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (card.style.display !== "none") {
                         const titleText = card.querySelector('h3') ? card.querySelector('h3').textContent.toLowerCase() : "";
                         
-                        // 1. Идеальный вариант: если название в <h3> совпало один в один с тем, что ввели
-                        if (titleText === query) {
-                            exactMatch = card;
-                            break; 
+                        // 1. Улучшенный вариант: если введенный текст содержится прямо в заголовке h3 (например, "хятад")
+                        if (titleText.includes(query)) {
+                            // Если это при этом одиночная страна — это идеальное попадание
+                            if (card.closest('#single-country-products')) {
+                                exactMatch = card;
+                                break; 
+                            }
                         }
                         
-                        // 2. Хороший вариант: карточка находится в блоке одиночных стран (#single-country-products)
+                        // 2. Хороший вариант: любая карточка, которая находится в блоке одиночных стран
                         if (!singleCountryMatch && card.closest('#single-country-products')) {
                             singleCountryMatch = card;
                         }
@@ -2836,7 +2839,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     searchInput.blur(); 
                 }
             }
-});
+        } // <-- Вот эта скобка закрывает функцию handleSearch
+
+        // Вешаем обработчики на ввод текста и на нажатие клавиш
+        searchInput.addEventListener("input", handleSearch);
+        searchInput.addEventListener("keydown", handleSearch);
+    } // <-- Вот эта скобка закрывала проверку if (searchInput)
+}); // <-- А эта закрывает DOMContentLoaded
 </script>
 
 <!-- ДОБАВЛЕНО: onclick="closeTariffModal()" для корректного закрытия при клике на фон -->
