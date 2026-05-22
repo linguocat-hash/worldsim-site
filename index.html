@@ -2582,11 +2582,13 @@ function confirmOrder() {
     // Разделение логики Android / iPhone
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         finalUrl = "fb-messenger://user-thread/" + pageId;
+        // Для iPhone меняем адрес страницы напрямую, Safari это не блокирует
+        window.location.href = finalUrl; 
     } else {
         finalUrl = "https://m.me/" + pageId + "?text=" + encodedText;
+        window.open(finalUrl, '_blank');
     }
 
-    window.open(finalUrl, '_blank');
     closeTariffModal();
 }
 
