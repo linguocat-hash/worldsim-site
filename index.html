@@ -2772,6 +2772,53 @@ function orderDirectProduct(productType, productName) {
         window.open(url, '_blank');
     }
 }
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("countrySearch");
+    
+    if (searchInput) {
+        // 1. Мгновенная фильтрация при вводе букв
+        searchInput.addEventListener("input", function (e) {
+            const query = e.target.value.toLowerCase().trim();
+            const countryCards = document.querySelectorAll(".country-card"); // проверьте ваш класс карточек
+            
+            countryCards.forEach(card => {
+                const countryName = card.textContent.toLowerCase();
+                if (countryName.includes(query)) {
+                    card.style.display = ""; 
+                } else {
+                    card.style.display = "none"; 
+                }
+            });
+        });
+
+        // 2. Логика для клавиши ENTER
+        searchInput.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // Предотвращаем перезагрузку страницы (если инпут внутри формы)
+                
+                // Находим ВСЕ карточки стран
+                const countryCards = document.querySelectorAll(".country-card");
+                
+                // Ищем среди них ПЕРВУЮ, которая сейчас видна на экране (не скрыта поиском)
+                let firstVisibleCard = null;
+                for (let card of countryCards) {
+                    if (card.style.display !== "none") {
+                        firstVisibleCard = card;
+                        break; // Нашли первую подходящую и останавливаем цикл
+                    }
+                }
+                
+                // Если такая страна нашлась, имитируем клик по ней
+                if (firstVisibleCard) {
+                    firstVisibleCard.click(); 
+                    
+                    // Опционально: убираем фокус с поисковой строки, чтобы скрылась клавиатура на телефоне
+                    searchInput.blur(); 
+                }
+            }
+        });
+    }
+});
 </script>
 
 <!-- ДОБАВЛЕНО: onclick="closeTariffModal()" для корректного закрытия при клике на фон -->
