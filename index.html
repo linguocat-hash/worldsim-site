@@ -997,9 +997,9 @@ body.modal-open {
     <p>Аялагчдад зориулсан шилдэг eSIM болон дугаартай биет сим карт</p>
     
     <div class="search-container">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="countrySearch" placeholder="Улс хайх... Жишээ нь: USA">
-    </div>
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" id="countrySearch" placeholder="Улс хайх... Жишээ нь: USA" onkeyup="fastSearch(event)">
+</div>
 </section>
 
 <div class="tabs-container">
@@ -2759,7 +2759,7 @@ function orderDirectProduct(productType, productName) {
     // Базовая ссылка для веба и Android
     const url = "https://m.me/" + pageId + "?text=" + encodedText;
     
-    // Безопасное открытие ссылки с поддержкой iOS Safari
+ // Безопасное открытие ссылки с поддержкой iOS Safari
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         const link = document.createElement('a');
         link.href = url;
@@ -2772,51 +2772,61 @@ function orderDirectProduct(productType, productName) {
         window.open(url, '_blank');
     }
 }
+
+// ЕДИНАЯ И НАДЕЖНАЯ СИСТЕМА ПОИСКА
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("countrySearch");
     
     if (searchInput) {
-        // 1. Мгновенная фильтрация при вводе букв
-        searchInput.addEventListener("input", function (e) {
-            const query = e.target.value.toLowerCase().trim();
-            const countryCards = document.querySelectorAll(".country-card"); // проверьте ваш класс карточек
+        // Главная функция, которая обрабатывает и ввод, и нажатие Enter
+        function handleSearch(e) {
+            const query = searchInput.value.toLowerCase().trim();
             
-            countryCards.forEach(card => {
-                const countryName = card.textContent.toLowerCase();
-                if (countryName.includes(query)) {
-                    card.style.display = ""; 
+            // Расширенный список селекторов: ищет карточки стран, тарифов, элементов списков и блоков табов
+            const selectors = '.country-card, .tariff-card, .plan-card, .tab-content, [data-country], .destination-card, .bundle-card';
+            const cards = document.querySelectorAll(selectors);
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                
+                if (query === "") {
+                    // Если строка поиска пустая, возвращаем элементам их дефолтный вид
+                    card.style.display = "";
                 } else {
-                    card.style.display = "none"; 
+                    // Если текст запроса найден внутри карточки — показываем её, иначе прячем
+                    if (text.includes(query)) {
+                        // Если у вас flex-сетка, используется "", браузер сам подставит нужный тип отображения
+                        card.style.display = ""; 
+                    } else {
+                        card.style.display = "none";
+                    }
                 }
             });
-        });
 
-        // 2. Логика для клавиши ENTER
-        searchInput.addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                e.preventDefault(); // Предотвращаем перезагрузку страницы (если инпут внутри формы)
+            // Если нажат ENTER или кнопка "Поиск" на мобильной клавиатуре
+            if (e.type === "keydown" && e.key === "Enter") {
+                e.preventDefault();
                 
-                // Находим ВСЕ карточки стран
-                const countryCards = document.querySelectorAll(".country-card");
-                
-                // Ищем среди них ПЕРВУЮ, которая сейчас видна на экране (не скрыта поиском)
-                let firstVisibleCard = null;
-                for (let card of countryCards) {
+                // Находим самый первый элемент, который остался видимым после фильтрации
+                let firstMatch = null;
+                for (let card of cards) {
                     if (card.style.display !== "none") {
-                        firstVisibleCard = card;
-                        break; // Нашли первую подходящую и останавливаем цикл
+                        firstMatch = card;
+                        break;
                     }
                 }
                 
-                // Если такая страна нашлась, имитируем клик по ней
-                if (firstVisibleCard) {
-                    firstVisibleCard.click(); 
-                    
-                    // Опционально: убираем фокус с поисковой строки, чтобы скрылась клавиатура на телефоне
-                    searchInput.blur(); 
+                // Если нашли — автоматически кликаем по нему (открывается тариф или запускается переход)
+                if (firstMatch) {
+                    firstMatch.click();
+                    searchInput.blur(); // Скрываем экранную клавиатуру на смартфонах
                 }
             }
-        });
+        }
+
+        // Привязываем одну логику сразу на ввод текста и на нажатие клавиш
+        searchInput.addEventListener("input", handleSearch);
+        searchInput.addEventListener("keydown", handleSearch);
     }
 });
 </script>
