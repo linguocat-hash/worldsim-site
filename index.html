@@ -3023,5 +3023,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 })();
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        document.body.addEventListener('touchstart', function(event) {
+            // Ищем, кликнул ли пользователь на карточку страны
+            const card = event.target.closest('.product-card');
+            if (card) {
+                const inlineClick = card.getAttribute('onclick');
+                if (inlineClick && inlineClick.includes('openTariffModal')) {
+                    event.preventDefault(); // Останавливаем баг Safari
+                    // Вытаскиваем название страны из кавычек
+                    const match = inlineClick.match(/openTariffModal\(['"‘“](.*?)['" Tyrol’“]\)/);
+                    if (match && match[1] && typeof openTariffModal === 'function') {
+                        openTariffModal(match[1]); // Насильно открываем тарифы
+                    }
+                }
+            }
+        }, { passive: false });
+    }
+});
+</script>
 </body>
 </html>
