@@ -2992,29 +2992,34 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 <script>
 (function() {
-    // Проверяем, что это устройство на iOS (iPhone/iPad)
+    // Включается строго на устройствах Apple, не трогает Android
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         
-        // Слушаем касания на всем документе
+        // Перехватываем касание пальца к экрану
         document.addEventListener('touchstart', function(event) {
-            // Ищем, коснулся ли пользователь карточки или вкладки
-            const clickable = event.target.closest('.product-card, .sim-card, .tab, .sub-tab, .nav-item');
             
-            if (clickable) {
-                // Предотвращаем стандартное зависание Safari
-                event.preventDefault();
+            // Ищем, попал ли палец на карточку, вкладку или кнопку
+            const element = event.target.closest('.product-card, .sim-card, .tab, .sub-tab, .nav-item, .modal-action-btn, .opt-btn');
+            
+            if (element) {
+                // Создаем чистый системный клик
+                const clickEvent = document.createEvent('MouseEvent');
+                clickEvent.initMouseEvent(
+                    'click', 
+                    true,     // bubbles (разрешить всплытие)
+                    true,     // cancelable (можно отменить)
+                    window,   // view
+                    1,        // detail
+                    0, 0, 0, 0, // координаты x, y, screenX, screenY
+                    false, false, false, false, // модификаторы клавиш (ctrl, alt...)
+                    0,        // button
+                    null      // relatedTarget
+                );
                 
-                // Генерируем настоящее системное событие клика
-                const clickEvent = new MouseEvent('click', {
-                    bubbles: true,
-                    cancelable: true,
-                    view: window
-                });
-                
-                // Симулируем честный клик, который Safari обязан обработать
-                clickable.dispatchEvent(clickEvent);
+                // Принудительно отдаем событие элементу
+                element.dispatchEvent(clickEvent);
             }
-        }, { passive: false }); // passive: false обязателен, чтобы preventDefault сработал
+        }, { passive: true });
     }
 })();
 </script>
