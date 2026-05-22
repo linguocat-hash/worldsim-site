@@ -2992,35 +2992,53 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    
-    // Добавляем специальный стиль для iOS, чтобы Safari знал, что по карточкам можно кликать
-    const style = document.createElement('style');
-    style.innerHTML = '.product-card { cursor: pointer !important; -webkit-tap-highlight-color: transparent; }';
-    document.head.appendChild(style);
-
-    // Слушаем стандартный click на всем документе
-    document.body.addEventListener('click', function(event) {
-        // Ищем, попал ли клик на карточку страны
-        const card = event.target.closest('.product-card');
+    // Включаем логику только для iOS устройств
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         
-        if (card) {
-            const inlineClick = card.getAttribute('onclick');
-            
-            // Если у карточки есть onclick с нашей функцией, но Safari его проигнорировал
-            if (inlineClick && inlineClick.includes('openTariffModal')) {
-                // Вытаскиваем название страны
-                const match = inlineClick.match(/openTariffModal\(['"‘“](.*?)['"’“]\)/);
+        let startY = 0;
+        let isScrolling = false;
+
+        // 1. Запоминаем точку, где пользователь коснулся экрана
+        document.body.addEventListener('touchstart', function(event) {
+            const card = event.target.closest('.product-card');
+            if (card) {
+                startY = event.touches[0].pageY;
+                isScrolling = false;
+            }
+        }, { passive: true });
+
+        // 2. Если палец сместился больше чем на 10 пикселей — значит пользователь скроллит список
+        document.body.addEventListener('touchmove', function(event) {
+            const card = event.target.closest('.product-card');
+            if (card) {
+                const moveY = event.touches[0].pageY;
+                if (Math.abs(moveY - startY) > 10) {
+                    isScrolling = true; // Это скролл, клик делать не нужно
+                }
+            }
+        }, { passive: true });
+
+        // 3. Ловим момент отрыва пальца от экрана
+        document.body.addEventListener('touchend', function(event) {
+            // Если пользователь просто листал список вниз — ничего не делаем
+            if (isScrolling) return;
+
+            const card = event.target.closest('.product-card');
+            if (card) {
+                const inlineClick = card.getAttribute('onclick');
                 
-                if (match && match[1] && typeof openTariffModal === 'function') {
-                    // Если модалка еще не открыта, запускаем её вручную
-                    const modal = document.getElementById('tariffModalOverlay');
-                    if (!modal || !modal.classList.contains('active')) {
+                if (inlineClick && inlineClick.includes('openTariffModal')) {
+                    // Вытаскиваем название страны из кавычек
+                    const match = inlineClick.match(/openTariffModal\(['"‘“](.*?)['"’“]\)/);
+                    
+                    if (match && match[1] && typeof openTariffModal === 'function') {
+                        // Насильно открываем тарифы, полностью игнорируя капризы кликов Safari
                         openTariffModal(match[1]);
                     }
                 }
             }
-        }
-    });
+        }, { passive: true });
+    }
 });
 </script>
 </body>
