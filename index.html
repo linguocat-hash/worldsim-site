@@ -2887,9 +2887,53 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        searchInput.addEventListener("input", handleSearch);
+searchInput.addEventListener("input", handleSearch);
         searchInput.addEventListener("keydown", handleSearch);
     } 
+});
+
+// ==========================================
+// БРОНЕБОЙНЫЙ ФИКС КЛИКОВ ДЛЯ IPHONE (ВКЛЮЧАЯ КИТАЙ, ЯПОНИЮ И ДР.)
+// ==========================================
+document.addEventListener("DOMContentLoaded", function () {
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        
+        function fixIOSClicks() {
+            // Находим все кликабельные элементы на сайте
+            const elements = document.querySelectorAll('.tab, .sub-tab, .product-card, .sim-card, .nav-item');
+            
+            elements.forEach(el => {
+                if (el.hasAttribute('onclick') && !el.dataset.iosFixed) {
+                    const clickCode = el.getAttribute('onclick');
+                    
+                    // Перехватываем физическое касание экрана до блокировок Safari
+                    el.addEventListener('touchstart', function (e) {
+                        new Function(clickCode).call(el);
+                    }, { passive: true });
+                    
+                    el.dataset.iosFixed = "true";
+                }
+            });
+        }
+
+        // Запуск фикса при первичной загрузке
+        fixIOSClicks();
+
+        // Главное решение: следим за динамическим появлением карточек стран 
+        // (Китай, Япония и др.) и активируем их спустя 150мс после их рендеринга
+        const observer = new MutationObserver(() => {
+            setTimeout(fixIOSClicks, 150);
+        });
+        
+        observer.observe(document.body, { childList: true, subtree: true });
+        
+        // Дополнительный триггер: чиним карточки при переключении категорий
+        document.addEventListener('touchstart', function(e) {
+            if (e.target.closest('.tab') || e.target.closest('.sub-tab')) {
+                setTimeout(fixIOSClicks, 150);
+            }
+        }, { passive: true });
+    }
 });
 </script>
 
