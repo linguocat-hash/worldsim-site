@@ -257,24 +257,29 @@
         }
 
 /* --- Нижняя навигация --- */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            
-            /* ЗАМЕНА ФОНА: Установили картинку вместо var(--white) */
-            background-image: url('Worldsimfrontpage_2.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            z-index: 1000;
-        }
+        {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    /* Добавляем безопасный отступ снизу для всего контента */
+    padding-bottom: calc(75px + env(safe-area-inset-bottom)); 
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url('Worldsimfrontpage_2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: space-around;
+    /* Корректный паддинг с учётом нижней полосы iPhone */
+    padding: 12px 0 calc(12px + env(safe-area-inset-bottom)) 0; 
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 1000;
+}
 
         /* Темная подложка ТОЛЬКО для нижней панели, чтобы текст и салатовые иконки читались */
         .bottom-nav::before {
@@ -493,24 +498,37 @@
             color: var(--text-dark);
             line-height: 1.4;
         }
-/* Стили для выбора стран и вывода тарифов */
-        .country-select-box {
-            margin-bottom: 15px;
-        }
+/* --- Стили для выбора стран и вывода тарифов --- */
+.country-select-box {
+    margin-bottom: 15px;
+    position: relative; /* Нужно для правильного позиционирования, если потребуется */
+}
 
-        .country-select-box select {
-            width: 100%;
-            padding: 12px 15px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-dark);
-            background-color: var(--white);
-            border: 1px solid #dcdfe6;
-            border-radius: 8px;
-            outline: none;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
+.country-select-box select {
+    -webkit-appearance: none;   /* Сбрасываем дефолтный дизайн Apple/Safari */
+    -moz-appearance: none;
+    appearance: none;
+    
+    width: 100%;
+    padding: 12px 40px 12px 15px; /* Увеличили правый отступ до 40px, чтобы текст не налезал на стрелочку */
+    
+    font-size: 16px;              /* СТРОГО 16px: спасает от принудительного приближения (зума) экрана на iPhone */
+    font-weight: 600;
+    color: var(--text-dark);
+    background-color: var(--white);
+    
+    /* Добавляем кастомную аккуратную стрелочку вниз (SVG) */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23002b49' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px; /* Размер стрелочки */
+    
+    border: 1px solid #dcdfe6;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
 
         .tariff-result-card {
             background: #ffffff;
@@ -912,6 +930,31 @@
 
 .help-modal-content li {
     margin-bottom: 8px;
+}
+/* Предотвращает дергание фона при открытых модальных окнах на iOS */
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
+
+/* Настройки для самого Bottom Sheet, чтобы он учитывал "челку" и нижний индикатор iPhone (Safe Area) */
+.modal-bottom-sheet {
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    max-height: 92vh; /* Оставляем место сверху, чтобы окно не улетало за экран */
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Включает плавный нативный скролл внутри модалки на iOS */
+}
+
+/* Для всех кликабельных элементов на iOS принудительно ставим указатель */
+.tab, .sub-tab, .opt-btn, .modal-action-btn, .nav-item {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent; /* Убирает серый квадрат-вспышку при тапе на iPhone */
 }
 </style>
 </head>
@@ -1780,45 +1823,32 @@
 <script>
 
 function confirmOrder() {
-    // 1. Получаем данные о том, что выбрал пользователь в модальном окне
-    // (Скрипт ищет элементы с классом 'active' или 'selected' — замените названия классов, если у вас в калькуляторе они называются иначе)
-    var selectedDataEl = document.querySelector('#modalDataOptions .active, #modalDataOptions .selected');
-    var selectedDayEl = document.querySelector('#modalDayOptions .active, #modalDayOptions .selected');
-    var finalPriceEl = document.getElementById('modalFinalPrice');
+    const country = currentCountryKey || "eSIM";
+    const dataPkg = selectedDataPackage || "Не выбрано";
+    const days = selectedDays ? selectedDays + " хоног" : "Не выбрано";
+    const price = document.getElementById('modalFinalPrice').innerText;
+    const pageId = "110415741283142";
 
-    var dataValue = selectedDataEl ? selectedDataEl.innerText.trim() : "Не выбрано";
-    var dayValue = selectedDayEl ? selectedDayEl.innerText.trim() : "Не выбрано";
-    var priceValue = finalPriceEl ? finalPriceEl.innerText.trim() : "0 ₮";
-
-    // 2. Формируем красивый текст сообщения для вас
-    var messageText = "Сайн байна уу! Би сим карт захиалах хүсэлтэй байна.\n\n" +
-                      "📦 Багц: " + dataValue + "\n" +
-                      "📅 Хугацаа: " + dayValue + "\n" +
-                      "💰 Үнэ: " + priceValue;
-
-    // Кодируем текст для безопасной передачи в URL
-    var encodedText = encodeURIComponent(messageText);
-
-    // 3. Базовый ID вашей страницы ВорлдСИМ
-    var pageId = "110415741283142";
+    const textMessage = `Сайн байна уу? Захиалга өгөх хүсэлтэй байна:\n🌍 Улс: ${country}\n📦 Багц: ${dataPkg}\n⏳ Хугацаа: ${days}\n💰 Үнэ: ${price}`;
+    const encodedText = encodeURIComponent(textMessage);
     
-    // 4. Проверяем устройство (Android/ПК или iPhone) и формируем правильную ссылку
-    var finalUrl = "";
+    // Безопасный фолбек для iOS: если приложение не установлено, откроется веб-версия
+    let url = "https://m.me/" + pageId + "?text=" + encodedText;
     
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        // Ссылка для iOS (принудительное открытие приложения Messenger)
-        finalUrl = "fb-messenger://user-thread/" + pageId;
-        
-        // Примечание: К сожалению, протокол fb-messenger:// на iOS не умеет автоматически вставлять текст в поле ввода.
-        // Клиент просто перейдет в чат и сможет написать вам. 
-        // Если вы хотите, чтобы текст железно передавался и на iPhone, лучше использовать способ с Meta-автоматизацией (через ref-параметры).
+        // На iOS Safari это предотвратит блокировку всплывающего окна
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     } else {
-        // Ссылка для Android и Компьютеров (с автозаполнением текста сообщения через m.me)
-        finalUrl = "https://m.me/" + pageId + "?text=" + encodedText;
+        window.open(url, '_blank');
     }
 
-    // 5. Открываем чат в новой вкладке
-    window.open(finalUrl, '_blank');
+    closeTariffModal();
 }
 
 // Умный скрипт для переключения Android / iPhone
@@ -2422,6 +2452,10 @@ function closeHelpModal() {
 function closeTariffModal() {
     const overlay = document.getElementById('tariffModalOverlay');
     if (overlay) overlay.classList.remove('active');
+
+    // === ВСТАВИТЬ СЮДА ===
+    // Возвращаем скролл сайта, когда модалка закрывается
+    document.body.classList.remove('modal-open');
 }
 
 // Открытие модального окна для выбранной страны (eSIM)
@@ -2447,11 +2481,11 @@ function openTariffModal(countryName) {
         packages.forEach((pkg, index) => {
             const btn = document.createElement('button');
             btn.className = "opt-btn";
-            btn.setAttribute("role", "button"); // Для корректных кликов на iOS
-            btn.style.cursor = "pointer";       // Для корректных кликов на iOS
+            btn.setAttribute("role", "button");
+            btn.style.cursor = "pointer";
             btn.innerText = pkg;
             btn.onclick = (e) => {
-                e.stopPropagation(); // Защита от закрытия окна на iPhone
+                e.stopPropagation();
                 selectDataPackage(pkg);
             };
             dataContainer.appendChild(btn);
@@ -2461,6 +2495,10 @@ function openTariffModal(countryName) {
 
     const overlay = document.getElementById('tariffModalOverlay');
     if (overlay) overlay.classList.add('active');
+
+    // === ВСТАВИТЬ СЮДА ===
+    // Блокируем скролл фона сайта на Айфоне при открытии окна
+    document.body.classList.add('modal-open');
 }
 
 function selectDataPackage(pkg) {
@@ -2622,28 +2660,27 @@ function switchSubTab(subCategory) {
     }
 }
 
-// ==========================================
-// ИНИЦИАЛИЗАЦИЯ И СЛУШАТЕЛИ
-// ==========================================
-document.addEventListener("DOMContentLoaded", function () {
-    const searchInput = document.getElementById("countrySearch");
-    if (searchInput) {
-        searchInput.addEventListener("input", function (e) {
-            const filterValue = e.target.value.toLowerCase().trim();
-            const productCards = document.querySelectorAll(".product-card");
-
-            productCards.forEach(function (card) {
-                const titleText = card.querySelector("h3") ? card.querySelector("h3").textContent.toLowerCase() : "";
-                const subtitleText = card.querySelector(".product-subtitle") ? card.querySelector(".product-subtitle").textContent.toLowerCase() : "";
-
-                if (filterValue === "" || titleText.includes(filterValue) || subtitleText.includes(filterValue)) {
-                    card.style.display = ""; 
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        });
+// На iOS window.onclick может не срабатывать на пустых зонах. 
+// Используем touchstart или принудительно делегируем событие на document
+document.addEventListener('click', function(event) {
+    // Не закрывать, если кликнули по кнопкам опций внутри модалки
+    if (event.target.matches('.opt-btn') || event.target.matches('.modal-action-btn')) {
+        return;
     }
+
+    if (!event.target.matches('.header-menu-btn') && !event.target.matches('.fa-bars')) {
+        const dropdown = document.getElementById('boostMenu');
+        if (dropdown && dropdown.style.display === 'block') dropdown.style.display = 'none';
+    }
+
+    const addressModal = document.getElementById('addressModal');
+    if (event.target === addressModal) addressModal.style.display = 'none';
+
+    const tariffModal = document.getElementById('tariffModalOverlay');
+    if (event.target === tariffModal) tariffModal.classList.remove('active');
+
+    const helpModal = document.getElementById('helpModal');
+    if (event.target === helpModal) helpModal.style.display = 'none';
 });
 
 // Глобальный клик «мимо кассы» с защитой для модальных кнопок
