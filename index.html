@@ -1034,7 +1034,22 @@ html, body {
     opacity: 1;
 }
 
-
+document.addEventListener('click', function(event) {
+    // Находим кнопку, даже если палец попал точно по буквам текста
+    const simBuyBtn = event.target.closest('.direct-order-trigger') || (event.target.classList && event.target.classList.contains('direct-order-trigger') ? event.target : null);
+    
+    if (simBuyBtn) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        const productType = simBuyBtn.getAttribute('data-type');
+        const packageName = simBuyBtn.getAttribute('data-package');
+        
+        if (productType && packageName && typeof window.orderDirectProduct === 'function') {
+            window.orderDirectProduct(productType, packageName);
+        }
+        return; 
+    }
 
 </style>
 </head>
@@ -1554,7 +1569,7 @@ html, body {
         <option value="Сингапур">Сингапур 🇸🇬</option>
         <option value="Солонгос">Солонгос 🇰🇷</option>
         <option value="Судан">Судан 🇸🇩</option>
-        <option value="Тажикистан">Тажикистан 🇹жил</option>
+        <option value="Тажикистан">Тажикистан 🇹🇯</option>
         <option value="Тайвань">Тайвань 🇹🇼</option>
         <option value="Тайланд">Тайланд 🇹🇭</option>
         <option value="Тунис">Тунис 🇹🇳</option>
@@ -3068,6 +3083,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 })();
 
+.sim-buy-btn {
+    background: var(--brand-green);
+    color: var(--white);
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    
+    /* Жесткое позиционирование для Android */
+    position: relative !important;
+    z-index: 9999 !important;
+    -webkit-tap-highlight-color: transparent; /* Убирает серый синяк при тапе на Андроид */
+}
+
+/* КРИТИЧЕСКИЙ ФИКС ДЛЯ АНДРОИД: Клик должен ловить только сам контейнер кнопки, а не текст внутри */
+.sim-buy-btn * {
+    pointer-events: none !important;
+}
 </script>
 </body>
 </html>
