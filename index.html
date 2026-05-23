@@ -1522,7 +1522,7 @@ html, body {
         <option value="Сингапур">Сингапур 🇸🇬</option>
         <option value="Солонгос">Солонгос 🇰🇷</option>
         <option value="Судан">Судан 🇸🇩</option>
-        <option value="Тажикистан">Тажикистан 🇹жил</option>
+        <option value="Тажикистан">Тажикистан 🇹🇯</option>
         <option value="Тайвань">Тайвань 🇹🇼</option>
         <option value="Тайланд">Тайланд 🇹🇭</option>
         <option value="Тунис">Тунис 🇹🇳</option>
@@ -2991,49 +2991,110 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
 </div>
 <script>
-(function() {
-    // Включаем фикс строго для iOS устройств
+document.addEventListener('DOMContentLoaded', function () {
+    
+    // Включаем логику строго для iPhone / iPad
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         
-        // Принудительно делаем карточки кликабельными для системы
+        // 1. Принудительно делаем все интерактивные элементы кликабельными в Safari
         var style = document.createElement('style');
-        style.innerHTML = '.product-card { cursor: pointer !important; -webkit-tap-highlight-color: transparent !important; }';
+        style.innerHTML = '.product-card, .tab, .sub-tab, .modal-action-btn, #esimCountrySelector, #simCountrySelector, .product-card * { cursor: pointer !important; -webkit-tap-highlight-color: transparent !important; }';
         document.head.appendChild(style);
 
-        // Используем старый добрый метод отслеживания кликов по всему экрану
-        document.addEventListener('click', function(event) {
-            
-            // Ищем карточку стандартным путем
-            var currentElement = event.target;
-            var card = null;
-            
-            while (currentElement && currentElement !== document.body) {
-                if (currentElement.classList && currentElement.classList.contains('product-card')) {
-                    card = currentElement;
-                    break;
+        // 2. Нативный перехватчик для селектора eSIM Pro
+        var esimSelector = document.getElementById('esimCountrySelector');
+        if (esimSelector) {
+            esimSelector.addEventListener('change', function () {
+                if (typeof window.updateEsimCountryTariff === 'function') {
+                    window.updateEsimCountryTariff();
                 }
-                currentElement = currentElement.parentNode;
-            }
+            });
+        }
 
-            // Если нашли карточку, по которой нажали
+        // 3. Нативный перехватчик для селектора Биет Сим (Новый)
+        var simSelector = document.getElementById('simCountrySelector');
+        if (simSelector) {
+            simSelector.addEventListener('change', function () {
+                if (typeof window.updateCountryTariff === 'function') {
+                    window.updateCountryTariff();
+                }
+            });
+        }
+
+        // 4. Глобальный перехватчик кликов на ранней фазе (Карточки, Табы, Кнопка заказа)
+        document.body.addEventListener('click', function (event) {
+            var target = event.target;
+
+            // ПЕРЕХВАТ ДЛЯ КАРТОЧЕК СТРАН
+            var card = target.closest('.product-card');
             if (card) {
                 var inlineClick = card.getAttribute('onclick');
-                
                 if (inlineClick && inlineClick.indexOf('openTariffModal') !== -1) {
-                    // БЕЗОПАСНЫЙ РАЗБОР СТРОКИ: убираем всё лишнее, оставляя только текст внутри кавычек
-                    var cleanText = inlineClick.replace('openTariffModal(', '').replace(')', '');
-                    var countryName = cleanText.replace(/['"‘“’”]/g, '').trim();
+                    event.preventDefault();
+                    event.stopPropagation();
                     
-                    // Если функция открытия существует в глобальной видимости window
-                    if (countryName && typeof window.openTariffModal === 'function') {
-                        // Вызываем открытие модального окна напрямую
-                        window.openTariffModal(countryName);
+                    var matches = inlineClick.match(/openTariffModal\('(.*)'\)/);
+                    var rawValue = (matches && matches[1]) ? matches[1] : '';
+                    if (!rawValue) {
+                        rawValue = inlineClick.replace('openTariffModal(', '').replace(')', '').replace(/['"]/g, '').trim();
                     }
+
+                    if (rawValue && typeof window.openTariffModal === 'function') {
+                        window.openTariffModal(rawValue);
+                    }
+                    return;
                 }
             }
-        }, true); // true активирует фазу перехвата, клик сработает раньше любых багов
+
+            // ПЕРЕХВАТ ДЛЯ ОСНОВНЫХ ТАБОВ
+            var tab = target.closest('.tab');
+            if (tab) {
+                var tabClick = tab.getAttribute('onclick');
+                if (tabClick && tabClick.indexOf('switchTab') !== -1) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    var tabMatches = tabClick.match(/switchTab\(this,\s*'(.*)'\)/);
+                    var tabType = (tabMatches && tabMatches[1]) ? tabMatches[1] : '';
+                    
+                    if (tabType && typeof window.switchTab === 'function') {
+                        window.switchTab(tab, tabType);
+                    }
+                    return;
+                }
+            }
+
+            // ПЕРЕХВАТ ДЛЯ ПОД-ТАБОВ
+            var subTab = target.closest('.sub-tab');
+            if (subTab) {
+                var subClick = subTab.getAttribute('onclick');
+                if (subClick && subClick.indexOf('switchSubTab') !== -1) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    var subMatches = subClick.match(/switchSubTab\('(.*)'\)/);
+                    var subType = (subMatches && subMatches[1]) ? subMatches[1] : '';
+                    
+                    if (subType && typeof window.switchSubTab === 'function') {
+                        window.switchSubTab(subType);
+                    }
+                    return;
+                }
+            }
+
+            // ПЕРЕХВАТ ДЛЯ КНОПКИ ЗАКАЗА "ЗАХИАЛАХ"
+            var orderBtn = target.closest('#modalOrderBtn');
+            if (orderBtn) {
+                if (typeof window.confirmOrder === 'function') {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    window.confirmOrder();
+                }
+            }
+
+        }, true); // Фаза capture спасает от багов Safari
     }
-})();
+});
 </script>
 </body>
 </html>
