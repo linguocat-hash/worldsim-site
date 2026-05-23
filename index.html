@@ -466,17 +466,22 @@ body {
 
         /* Наша фирменная зеленая кнопка */
         .sim-buy-btn {
-            background: var(--brand-green);
-            color: var(--white);
-            border: none;
-            width: 100%;
-            padding: 10px;
-            font-size: 13px;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
+    background: var(--brand-green);
+    color: var(--white);
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    
+    /* === КРИТИЧЕСКИЙ ФИКС ДЛЯ НАЖАТИЯ ПАЛЬЦЕМ === */
+    position: relative !important;    /* Позволяет включить z-index */
+    z-index: 9999 !important;        /* Выводит кнопку на самый верхний слой сайта */
+    pointer-events: auto !important; /* Принудительно заставляет принимать клики */
+}
 
         .sim-buy-btn:active {
             background: #639002;
