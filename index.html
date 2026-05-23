@@ -1893,10 +1893,9 @@ html, body {
 <script>
 
 function confirmOrder() {
-    // 1. Безопасный сбор данных с проверкой, чтобы скрипт не падал, если переменные не заданы
-    const country = typeof currentCountryKey !== 'undefined' ? currentCountryKey : "eSIM";
-    const dataPkg = typeof selectedDataPackage !== 'undefined' ? selectedDataPackage : "Не выбрано";
-    const days = typeof selectedDays !== 'undefined' && selectedDays ? selectedDays + " хоног" : "Не выбрано";
+    const country = (typeof currentCountryKey !== 'undefined' && currentCountryKey) ? currentCountryKey : "eSIM";
+    const dataPkg = (typeof selectedDataPackage !== 'undefined' && selectedDataPackage) ? selectedDataPackage : "Не выбрано";
+    const days = (typeof selectedDays !== 'undefined' && selectedDays) ? selectedDays + " хоног" : "Не выбрано";
     
     const priceEl = document.getElementById('modalFinalPrice');
     const price = priceEl ? priceEl.innerText : "0 ₮";
@@ -1905,21 +1904,15 @@ function confirmOrder() {
     const textMessage = `Сайн байна уу? Захиалга өгөх хүсэлтэй байна:\n🌍 Улс: ${country}\n📦 Багц: ${dataPkg}\n⏳ Хугацаа: ${days}\n💰 Үнэ: ${price}`;
     const encodedText = encodeURIComponent(textMessage);
     
-    // Ссылка на Messenger
     let url = "https://m.me/" + pageId + "?text=" + encodedText;
     
-    // 2. Универсальный обход блокировщиков окон для Android и iOS
     const link = document.createElement('a');
     link.href = url;
     
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        // Для iOS открываем в новой вкладке (Safari это разрешает для прямых ссылок)
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
     } else {
-        // ДЛЯ ANDROID: Открываем строго в том же окне (_self).
-        // Это заставит Android WebView не блокировать ссылку, а сразу перенаправить 
-        // пользователя в установленное приложение Facebook Messenger.
         link.target = '_self'; 
     }
     
@@ -1927,7 +1920,6 @@ function confirmOrder() {
     link.click();
     document.body.removeChild(link);
 
-    // 3. Небольшая задержка перед закрытием модалки, чтобы Android успел обработать клик по ссылке
     setTimeout(function() {
         if (typeof closeTariffModal === 'function') {
             closeTariffModal();
@@ -1935,11 +1927,10 @@ function confirmOrder() {
     }, 300);
 }
 
-// Умный скрипт для переключения (теперь безопасный, не вызывает ошибок в консоли)
 if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    var link = document.getElementById('orderBtn');
-    if (link) { 
-        link.href = "fb-messenger://user-thread/110415741283142";
+    var iosLink = document.getElementById('orderBtn');
+    if (iosLink) {
+        iosLink.href = "fb-messenger://user-thread/110415741283142";
     }
 }
 
