@@ -466,22 +466,17 @@ body {
 
         /* Наша фирменная зеленая кнопка */
         .sim-buy-btn {
-    background: var(--brand-green);
-    color: var(--white);
-    border: none;
-    width: 100%;
-    padding: 10px;
-    font-size: 13px;
-    font-weight: 700;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s;
-    
-    /* === КРИТИЧЕСКИЙ ФИКС ДЛЯ НАЖАТИЯ ПАЛЬЦЕМ === */
-    position: relative !important;    /* Позволяет включить z-index */
-    z-index: 9999 !important;        /* Выводит кнопку на самый верхний слой сайта */
-    pointer-events: auto !important; /* Принудительно заставляет принимать клики */
-}
+            background: var(--brand-green);
+            color: var(--white);
+            border: none;
+            width: 100%;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
 
         .sim-buy-btn:active {
             background: #639002;
@@ -3001,17 +2996,25 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener('DOMContentLoaded', function () {
     
     // === ЛОГИКА ДЛЯ ВСЕХ УСТРОЙСТВ (И Android, и iPhone) ===
-    // Подстраховка для кнопок заказа, если они дублируются или перекрыты слоями
-    document.body.addEventListener('click', function (event) {
-        var orderBtn = event.target.closest('.modal-action-btn');
-        if (orderBtn) {
-            if (typeof window.confirmOrder === 'function') {
-                event.preventDefault();
-                event.stopPropagation();
-                window.confirmOrder();
-            }
+// Стандартное всплытие (без true), чтобы не ломать нативные события браузеров
+document.body.addEventListener('click', function (event) {
+    // Ищем кнопку .modal-action-btn, даже если кликнули ровно по тексту "Захиалах"
+    var orderBtn = event.target.closest('.modal-action-btn');
+    
+    if (orderBtn) {
+        // Если у кнопки уже есть инлайн onclick (как в HTML), 
+        // позволяем браузеру выполнить его штатно и выходим.
+        if (orderBtn.hasAttribute('onclick')) {
+            return; 
         }
-    }, true);
+
+        // Если вдруг onclick стерся, но функция есть — подстраховываем
+        if (typeof window.confirmOrder === 'function') {
+            event.preventDefault();
+            window.confirmOrder();
+        }
+    }
+}); // Убрали 'true' отсюда!
 
 
     // === ЛОГИКА СТРОГО ДЛЯ IPHONE / IPAD (Обход багов Safari) ===
