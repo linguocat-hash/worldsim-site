@@ -2993,52 +2993,59 @@ document.addEventListener("DOMContentLoaded", function () {
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     
-    // Включаем логику строго для iPhone / iPad
+    // === ЛОГИКА ДЛЯ ВСЕХ УСТРОЙСТВ (И Android, и iPhone) ===
+    // Подстраховка для кнопок заказа, если они дублируются или перекрыты слоями
+    document.body.addEventListener('click', function (event) {
+        var orderBtn = event.target.closest('.modal-action-btn');
+        if (orderBtn) {
+            if (typeof window.confirmOrder === 'function') {
+                event.preventDefault();
+                event.stopPropagation();
+                window.confirmOrder();
+            }
+        }
+    }, true);
+
+
+    // === ЛОГИКА СТРОГО ДЛЯ IPHONE / IPAD (Обход багов Safari) ===
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         
-        // 1. Принудительно делаем все интерактивные элементы кликабельными в Safari
         var style = document.createElement('style');
         style.innerHTML = '.product-card, .tab, .sub-tab, .modal-action-btn, #esimCountrySelector, #simCountrySelector, .product-card * { cursor: pointer !important; -webkit-tap-highlight-color: transparent !important; }';
         document.head.appendChild(style);
 
-        // 2. Нативный перехватчик для селектора eSIM Pro
+        // Перехватчик для селектора eSIM Pro
         var esimSelector = document.getElementById('esimCountrySelector');
         if (esimSelector) {
             esimSelector.addEventListener('change', function () {
-                if (typeof window.updateEsimCountryTariff === 'function') {
-                    window.updateEsimCountryTariff();
-                }
+                if (typeof window.updateEsimCountryTariff === 'function') { window.updateEsimCountryTariff(); }
             });
         }
 
-        // 3. Нативный перехватчик для селектора Биет Сим (Новый)
+        // Перехватчик для селектора Биет Сим
         var simSelector = document.getElementById('simCountrySelector');
         if (simSelector) {
             simSelector.addEventListener('change', function () {
-                if (typeof window.updateCountryTariff === 'function') {
-                    window.updateCountryTariff();
-                }
+                if (typeof window.updateCountryTariff === 'function') { window.updateCountryTariff(); }
             });
         }
 
-        // 4. Глобальный перехватчик кликов на ранней фазе (Карточки, Табы, Кнопка заказа)
+        // Глобальный перехватчик кликов Safari (Карточки и Табы)
         document.body.addEventListener('click', function (event) {
             var target = event.target;
 
-            // ПЕРЕХВАТ ДЛЯ КАРТОЧЕК СТРАН
+            // Перехват карточек стран
             var card = target.closest('.product-card');
             if (card) {
                 var inlineClick = card.getAttribute('onclick');
                 if (inlineClick && inlineClick.indexOf('openTariffModal') !== -1) {
                     event.preventDefault();
                     event.stopPropagation();
-                    
                     var matches = inlineClick.match(/openTariffModal\('(.*)'\)/);
                     var rawValue = (matches && matches[1]) ? matches[1] : '';
                     if (!rawValue) {
                         rawValue = inlineClick.replace('openTariffModal(', '').replace(')', '').replace(/['"]/g, '').trim();
                     }
-
                     if (rawValue && typeof window.openTariffModal === 'function') {
                         window.openTariffModal(rawValue);
                     }
@@ -3046,17 +3053,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            // ПЕРЕХВАТ ДЛЯ ОСНОВНЫХ ТАБОВ
+            // Перехват основных табов
             var tab = target.closest('.tab');
             if (tab) {
                 var tabClick = tab.getAttribute('onclick');
                 if (tabClick && tabClick.indexOf('switchTab') !== -1) {
                     event.preventDefault();
                     event.stopPropagation();
-                    
                     var tabMatches = tabClick.match(/switchTab\(this,\s*'(.*)'\)/);
                     var tabType = (tabMatches && tabMatches[1]) ? tabMatches[1] : '';
-                    
                     if (tabType && typeof window.switchTab === 'function') {
                         window.switchTab(tab, tabType);
                     }
@@ -3064,35 +3069,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            // ПЕРЕХВАТ ДЛЯ ПОД-ТАБОВ
+            // Перехват под-табов
             var subTab = target.closest('.sub-tab');
             if (subTab) {
                 var subClick = subTab.getAttribute('onclick');
                 if (subClick && subClick.indexOf('switchSubTab') !== -1) {
                     event.preventDefault();
                     event.stopPropagation();
-                    
                     var subMatches = subClick.match(/switchSubTab\('(.*)'\)/);
                     var subType = (subMatches && subMatches[1]) ? subMatches[1] : '';
-                    
                     if (subType && typeof window.switchSubTab === 'function') {
                         window.switchSubTab(subType);
                     }
                     return;
                 }
             }
-
-            // ПЕРЕХВАТ ДЛЯ КНОПКИ ЗАКАЗА "ЗАХИАЛАХ"
-            var orderBtn = target.closest('#modalOrderBtn');
-            if (orderBtn) {
-                if (typeof window.confirmOrder === 'function') {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    window.confirmOrder();
-                }
-            }
-
-        }, true); // Фаза capture спасает от багов Safari
+        }, true);
     }
 });
 </script>
