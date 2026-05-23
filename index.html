@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#002b49">
 
     <title>WorldSIM Mongolia | Аяллын сим карт - Travel eSIM, биет сим</title>
     <meta name="description" content="WorldSIM Mongolia | Аяллын сим карт | Аяллын Data eSIM - Биет СИМ">
@@ -275,13 +276,6 @@ body {
             font-size: 14px;
         }
 
-/* --- Нижняя навигация --- */
-        {
-    background-color: var(--bg-light);
-    color: var(--text-dark);
-    /* Добавляем безопасный отступ снизу для всего контента */
-    padding-bottom: calc(75px + env(safe-area-inset-bottom)); 
-}
 
 .bottom-nav {
     position: fixed;
@@ -684,22 +678,7 @@ body {
             background: #0056b3 !important;
         }
 /* --- СТИЛИ ДЛЯ ВСПЛЫВАЮЩЕГО ОКНА ТАРИФОВ (BOTTOM SHEET) --- */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 2000;
-    
-    /* Исправляем анимацию: вместо display используем visibility */
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
 
-.modal-overlay.active {
-    visibility: visible;
-    opacity: 1;
-}
 
 .modal-bottom-sheet {
     position: absolute;
@@ -716,9 +695,7 @@ body {
     
     box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
     transition: bottom 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    
-    /* Плавный скролл внутри шторки на iOS */
-    -webkit-overflow-scrolling: touch; 
+     
 }
 
 .modal-overlay.active .modal-bottom-sheet {
@@ -972,8 +949,7 @@ body {
 /* Предотвращает дергание фона при открытых модальных окнах на iOS */
 body.modal-open {
     overflow: hidden;
-    position: fixed;
-    width: 100%;
+    touch-action: none;
 }
 
 /* Настройки для самого Bottom Sheet, чтобы он учитывал "челку" и нижний индикатор iPhone (Safe Area) */
@@ -986,7 +962,7 @@ body.modal-open {
 
 .modal-body {
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Включает плавный нативный скролл внутри модалки на iOS */
+    
 }
 
 /* Для всех кликабельных элементов на iOS принудительно ставим указатель */
@@ -1000,7 +976,6 @@ body.modal-open {
     -webkit-tap-highlight-color: transparent; /* Убирает серую вспышку при тапе */
 }
 
-CSS
 /* Добавляем отступ снизу для самого контейнера с контентом */
 main.product-list {
     /* Резервируем место: высота меню (около 75px) + безопасный отступ iPhone */
@@ -1016,14 +991,12 @@ html, body {
     min-height: 100%;
 }
 .modal-overlay {
-    display: none; /* Или flex, но важно следующее: */
+    display: none;
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.5);
-    z-index: 1000;
-    
-    /* Ключевое изменение: */
-    pointer-events: none; /* Изначально окно не ловит клики */
+    z-index: 2000;
+    pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -1036,6 +1009,26 @@ html, body {
 
 
 
+</style>
+
+<style>
+/* Специальный фикс для кликов в Safari (iOS) */
+.product-card, .sim-card, .sub-tab, .tab, .nav-item {
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: auto !important;
+}
+
+/* Заставляем Safari проваливать клик сквозь внутренний текст/картинки на саму карточку */
+.sim-card *, .sub-tab *, .tab * {
+    pointer-events: none !important;
+}
+
+/* Разрешаем клики внутри самого всплывающего окна и на кнопках sim-buy-btn */
+.modal-bottom-sheet *,
+.sim-buy-btn {
+    pointer-events: auto !important;
+}
 </style>
 </head>
 <body>
@@ -1078,7 +1071,7 @@ html, body {
     
     <div class="search-container">
     <i class="fa-solid fa-magnifying-glass"></i>
-    <input type="text" id="countrySearch" placeholder="Улс хайх... Жишээ нь: USA" onkeyup="fastSearch(event)">
+    <input type="text" id="countrySearch" placeholder="Улс хайх... Жишээ нь: USA" >
 </div>
 </section>
 
@@ -1096,7 +1089,7 @@ html, body {
 <main class="product-list">
     
     <div id="region-products" style="display: none;">
-        <div class="product-card" onclick="openTariffModal('Хятад, Хонг Конг, Макао')" style="cursor: pointer;">
+        <div class="product-card" data-country="Хятад, Хонг Конг, Макао" style="cursor: pointer;">
             <div class="product-info">
                 <div class="multi-flag-icon" style="font-size: 26px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: #fff1f0; border-radius: 50%;">🇨🇳</div>
                 <div class="product-details">
@@ -1108,7 +1101,7 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Ази 15 улс 🌏')" style="cursor: pointer;">
+        <div class="product-card" data-country="Ази 15 улс 🌏" style="cursor: pointer;">
             <div class="product-info">
                 <div class="multi-flag-icon" style="font-size: 26px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: #e6f7ff; border-radius: 50%;">🌏</div>
                 <div class="product-details">
@@ -1120,7 +1113,7 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Ази 25 улс 🌏')" style="cursor: pointer;">
+        <div class="product-card" data-country="Ази 25 улс 🌏" style="cursor: pointer;">
             <div class="product-info">
                 <div class="multi-flag-icon" style="font-size: 26px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: #feffe6; border-radius: 50%;">💎</div>
                 <div class="product-details">
@@ -1132,7 +1125,7 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Ойрх Дорнод 🏜️')" style="cursor: pointer;">
+        <div class="product-card" data-country="Ойрх Дорнод 🏜️" style="cursor: pointer;">
             <div class="product-info">
                 <div class="multi-flag-icon" style="font-size: 26px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: #fffbe6; border-radius: 50%;">🐪</div>
                 <div class="product-details">
@@ -1144,7 +1137,7 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Европ (40 улс) 🇪🇺')" style="cursor: pointer;">
+        <div class="product-card" data-country="Европ (40 улс) 🇪🇺" style="cursor: pointer;">
             <div class="product-info">
                 <div class="multi-flag-icon" style="font-size: 26px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: #f0f5ff; border-radius: 50%;">🇪🇺</div>
                 <div class="product-details">
@@ -1156,7 +1149,7 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Европ (56 улс) 🇪🇺🌍')" style="cursor: pointer;">
+        <div class="product-card" data-country="Европ (56 улс) 🇪🇺🌍" style="cursor: pointer;">
             <div class="product-info">
                 <div class="multi-flag-icon" style="font-size: 26px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: #f5f5f5; border-radius: 50%;">🌍</div>
                 <div class="product-details">
@@ -1168,9 +1161,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
     </div> <div id="single-country-products">
-        <div class="product-card" onclick="openTariffModal('БНХАУ (China)')" style="cursor: pointer;">
+        <div class="product-card" data-country="БНХАУ (China)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/cn.png" alt="Хятад" class="product-img">
+                <img src="https://flagcdn.com/w160/cn.png" alt="Хятад" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>БНХАУ (Mainland China)</h3>
                     <div class="product-price">28,000 ₮ -өөс</div>
@@ -1179,9 +1172,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Япон (Japan)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Япон (Japan)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/jp.png" alt="Япон" class="product-img">
+                <img src="https://flagcdn.com/w160/jp.png" alt="Япон" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Япон (Japan)</h3>
                     <div class="product-price">20,000 ₮ -өөс</div> 
@@ -1190,9 +1183,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Солонгос (Korea)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Солонгос (Korea)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/kr.png" alt="Солонгос" class="product-img">
+                <img src="https://flagcdn.com/w160/kr.png" alt="Солонгос" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Солонгос (Korea)</h3>
                     <div class="product-price">25,000 ₮ -өөс</div> 
@@ -1201,9 +1194,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('ОХУ (Russia)')" style="cursor: pointer;">
+        <div class="product-card" data-country="ОХУ (Russia)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/ru.png" alt="ОХУ" class="product-img">
+                <img src="https://flagcdn.com/w160/ru.png" alt="ОХУ" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>ОХУ (Russia)</h3>
                     <div class="product-price">29,000 ₮ -өөс</div> 
@@ -1212,9 +1205,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Казахстан (Kazakhstan)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Казахстан (Kazakhstan)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/kz.png" alt="Казахстан" class="product-img">
+                <img src="https://flagcdn.com/w160/kz.png" alt="Казахстан" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Казахстан (Kazakhstan)</h3>
                     <div class="product-price">28,000 ₮ -өөс</div> 
@@ -1223,9 +1216,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('АНУ (USA)')" style="cursor: pointer;">
+        <div class="product-card" data-country="АНУ (USA)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/us.png" alt="АНУ" class="product-img">
+                <img src="https://flagcdn.com/w160/us.png" alt="АНУ" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>АНУ (USA)</h3>
                     <div class="product-price">24,000 ₮ -өөс</div> 
@@ -1234,9 +1227,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Канада (Canada)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Канада (Canada)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/ca.png" alt="Канада" class="product-img">
+                <img src="https://flagcdn.com/w160/ca.png" alt="Канада" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Канада (Canada)</h3>
                     <div class="product-price">31,000 ₮ -өөс</div> 
@@ -1245,9 +1238,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Тайвань (Taiwan)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Тайвань (Taiwan)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/tw.png" alt="Тайвань" class="product-img">
+                <img src="https://flagcdn.com/w160/tw.png" alt="Тайвань" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Тайвань (Taiwan)</h3>
                     <div class="product-price">24,000 ₮ -өөс</div> 
@@ -1256,20 +1249,20 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Гонконг (Hong Kong)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Гонконг (Hong Kong)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/hk.png" alt="Гонконг" class="product-img">
+                <img src="https://flagcdn.com/w160/hk.png" alt="Гонконг" class="product-img" loading="lazy">
                 <div class="product-details">
-                    <h3>Хонг Конг (Hong Kong)</h3>
+                    <h3>Гонконг (Hong Kong)</h3>
                     <div class="product-price">21,000 ₮ -өөс</div> 
                 </div>
             </div>
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Тайланд (Thailand)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Тайланд (Thailand)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/th.png" alt="Тайланд" class="product-img">
+                <img src="https://flagcdn.com/w160/th.png" alt="Тайланд" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Тайланд (Thailand)</h3>
                     <div class="product-price">20,000 ₮ -өөс</div> 
@@ -1278,9 +1271,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Вьетнам (Vietnam)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Вьетнам (Vietnam)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/vn.png" alt="Вьетнам" class="product-img">
+                <img src="https://flagcdn.com/w160/vn.png" alt="Вьетнам" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Вьетнам (Vietnam)</h3>
                     <div class="product-price">20,000 ₮ -өөс</div> 
@@ -1289,9 +1282,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Малайз (Malaysia)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Малайз (Malaysia)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/my.png" alt="Малайз" class="product-img">
+                <img src="https://flagcdn.com/w160/my.png" alt="Малайз" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Малайз (Malaysia)</h3>
                     <div class="product-price">24,000 ₮ -өөс</div> 
@@ -1300,9 +1293,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Филиппин (Philippines)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Филиппин (Philippines)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/ph.png" alt="Филиппин" class="product-img">
+                <img src="https://flagcdn.com/w160/ph.png" alt="Филиппин" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Филиппин (Philippines)</h3>
                     <div class="product-price">26,000 ₮ -өөс</div>
@@ -1311,9 +1304,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Лаос (Laos)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Лаос (Laos)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/la.png" alt="Лаос" class="product-img">
+                <img src="https://flagcdn.com/w160/la.png" alt="Лаос" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Лаос (Laos)</h3>
                     <div class="product-price">26,000 ₮ -өөс</div>
@@ -1322,9 +1315,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Сингапур (Singapore)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Сингапур (Singapore)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/sg.png" alt="Сингапур" class="product-img">
+                <img src="https://flagcdn.com/w160/sg.png" alt="Сингапур" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Сингапур (Singapore)</h3>
                     <div class="product-price">23,000 ₮ -өөс</div>
@@ -1333,9 +1326,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Индонезия (Indonesia)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Индонезия (Indonesia)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/id.png" alt="Индонезия" class="product-img">
+                <img src="https://flagcdn.com/w160/id.png" alt="Индонезия" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Индонезия (Indonesia)</h3>
                     <div class="product-price">24,000 ₮ -өөс</div>
@@ -1344,9 +1337,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Австрали (Australia)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Австрали (Australia)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/au.png" alt="Австрали" class="product-img">
+                <img src="https://flagcdn.com/w160/au.png" alt="Австрали" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Австрали (Australia)</h3>
                     <div class="product-price">26,000 ₮ -өөс</div>
@@ -1355,9 +1348,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Непал (Nepal)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Непал (Nepal)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/np.png" alt="Непал" class="product-img">
+                <img src="https://flagcdn.com/w160/np.png" alt="Непал" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Непал (Nepal)</h3>
                     <div class="product-price">36,000 ₮ -өөс</div>
@@ -1366,9 +1359,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('АНЭ (UAE)')" style="cursor: pointer;">
+        <div class="product-card" data-country="АНЭ (UAE)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/ae.png" alt="АНЭ" class="product-img">
+                <img src="https://flagcdn.com/w160/ae.png" alt="АНЭ" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>АНЭ (UAE)</h3>
                     <div class="product-price">32,000 ₮ -өөс</div>
@@ -1377,9 +1370,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Саудын Араб (Saudi Arabia)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Саудын Араб (Saudi Arabia)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/sa.png" alt="Саудын Араб" class="product-img">
+                <img src="https://flagcdn.com/w160/sa.png" alt="Саудын Араб" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Саудын Араб (Saudi Arabia)</h3>
                     <div class="product-price">31,000 ₮ -өөс</div>
@@ -1388,9 +1381,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Энэтхэг (India)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Энэтхэг (India)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/in.png" alt="Энэтхэг" class="product-img">
+                <img src="https://flagcdn.com/w160/in.png" alt="Энэтхэг" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Энэтхэг (India)</h3>
                     <div class="product-price">32,000 ₮ -өөс</div>
@@ -1399,9 +1392,9 @@ html, body {
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
 
-        <div class="product-card" onclick="openTariffModal('Турк (Turkey)')" style="cursor: pointer;">
+        <div class="product-card" data-country="Турк (Turkey)" style="cursor: pointer;">
             <div class="product-info">
-                <img src="https://flagcdn.com/w160/tr.png" alt="Турк" class="product-img">
+                <img src="https://flagcdn.com/w160/tr.png" alt="Турк" class="product-img" loading="lazy">
                 <div class="product-details">
                     <h3>Турк (Turkey)</h3>
                     <div class="product-price">24,000 ₮ -өөс</div>
@@ -1554,7 +1547,7 @@ html, body {
         <option value="Сингапур">Сингапур 🇸🇬</option>
         <option value="Солонгос">Солонгос 🇰🇷</option>
         <option value="Судан">Судан 🇸🇩</option>
-        <option value="Тажикистан">Тажикистан 🇹🇯</option>
+        <option value="Тажикистан">Тажикистан 🇹жил</option>
         <option value="Тайвань">Тайвань 🇹🇼</option>
         <option value="Тайланд">Тайланд 🇹🇭</option>
         <option value="Тунис">Тунис 🇹🇳</option>
@@ -1953,12 +1946,6 @@ function confirmOrder() {
     closeTariffModal();
 }
 
-// Умный скрипт для переключения Android / iPhone
-  if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    var link = document.getElementById('orderBtn');
-    // Если клиент с Айфона, принудительно открываем приложение Messenger через правильный ID
-    link.href = "fb-messenger://user-thread/110415741283142";
-  }
 
 // ==========================================
 // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И БАЗА ДАННЫХ
@@ -2921,73 +2908,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
 searchInput.addEventListener("input", handleSearch);
         searchInput.addEventListener("keydown", handleSearch);
-    } 
-});
+    }
 
-// ==========================================
-// БРОНЕБОЙНЫЙ ФИКС КЛИКОВ ДЛЯ IPHONE (ВКЛЮЧАЯ КИТАЙ, ЯПОНИЮ И ДР.)
-// ==========================================
-document.addEventListener("DOMContentLoaded", function () {
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        
-        function fixIOSClicks() {
-            // Находим все кликабельные элементы на сайте
-            const elements = document.querySelectorAll('.tab, .sub-tab, .product-card, .sim-card, .nav-item');
-            
-            elements.forEach(el => {
-                if (el.hasAttribute('onclick') && !el.dataset.iosFixed) {
-                    const clickCode = el.getAttribute('onclick');
-                    
-                    // Перехватываем физическое касание экрана до блокировок Safari
-                    el.addEventListener('touchstart', function (e) {
-                        new Function(clickCode).call(el);
-                    }, { passive: true });
-                    
-                    el.dataset.iosFixed = "true";
-                }
-            });
-        }
-
-        // Запуск фикса при первичной загрузке
-        fixIOSClicks();
-
-        // Главное решение: следим за динамическим появлением карточек стран 
-        // (Китай, Япония и др.) и активируем их спустя 150мс после их рендеринга
-        const observer = new MutationObserver(() => {
-            setTimeout(fixIOSClicks, 150);
-        });
-        
-        observer.observe(document.body, { childList: true, subtree: true });
-        
-        // Дополнительный триггер: чиним карточки при переключении категорий
-        document.addEventListener('touchstart', function(e) {
-            if (e.target.closest('.tab') || e.target.closest('.sub-tab')) {
-                setTimeout(fixIOSClicks, 150);
+    // Product card click delegation — works on all platforms including iOS Safari
+    var list = document.querySelector(".product-list");
+    if (list) {
+        list.addEventListener("click", function(event) {
+            var card = event.target.closest(".product-card");
+            if (!card) return;
+            var country = card.getAttribute("data-country");
+            if (country && typeof window.openTariffModal === "function") {
+                window.openTariffModal(country);
             }
-        }, { passive: true });
+        });
     }
 });
+
 </script>
 
-<style>
-/* Специальный фикс для кликов в Safari (iOS) */
-.product-card, .sim-card, .sub-tab, .tab, .nav-item {
-    cursor: pointer !important;
-    -webkit-tap-highlight-color: transparent;
-    pointer-events: auto !important;
-}
 
-/* Заставляем Safari проваливать клик сквозь внутренний текст/картинки на саму карточку */
-.product-card *, .sim-card *, .sub-tab *, .tab * {
-    pointer-events: none !important;
-}
-
-/* Разрешаем клики внутри самого всплывающего окна, и на кнопках внутри sim-card */
-.modal-bottom-sheet * ,
-.sim-buy-btn {
-    pointer-events: auto !important;
-}
-</style>
 
 <div id="tariffModalOverlay" class="modal-overlay" onclick="closeTariffModal()">
     <div class="modal-bottom-sheet" onclick="event.stopPropagation()">
@@ -3024,52 +2963,6 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     </div>
 </div>
-<script>
-(function() {
-    // Включаем фикс строго для iOS устройств
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        
-        // Принудительно делаем карточки кликабельными для системы
-        var style = document.createElement('style');
-        style.innerHTML = '.product-card { cursor: pointer !important; -webkit-tap-highlight-color: transparent !important; }';
-        document.head.appendChild(style);
 
-        // Используем старый добрый метод отслеживания кликов по всему экрану
-        document.addEventListener('click', function(event) {
-            
-            // Ищем карточку стандартным путем
-            var currentElement = event.target;
-            var card = null;
-            
-            while (currentElement && currentElement !== document.body) {
-                if (currentElement.classList && currentElement.classList.contains('product-card')) {
-                    card = currentElement;
-                    break;
-                }
-                currentElement = currentElement.parentNode;
-            }
-
-            // Если нашли карточку, по которой нажали
-            if (card) {
-                var inlineClick = card.getAttribute('onclick');
-                
-                if (inlineClick && inlineClick.indexOf('openTariffModal') !== -1) {
-                    // БЕЗОПАСНЫЙ РАЗБОР СТРОКИ: убираем всё лишнее, оставляя только текст внутри кавычек
-                    var cleanText = inlineClick.replace('openTariffModal(', '').replace(')', '');
-                    var countryName = cleanText.replace(/['"‘“’”]/g, '').trim();
-                    
-                    // Если функция открытия существует в глобальной видимости window
-                    if (countryName && typeof window.openTariffModal === 'function') {
-                        // Вызываем открытие модального окна напрямую
-                        window.openTariffModal(countryName);
-                    }
-                }
-            }
-        }, true); // true активирует фазу перехвата, клик сработает раньше любых багов
-    }
-})();
-
-
-</script>
 </body>
 </html>
