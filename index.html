@@ -1522,7 +1522,7 @@ html, body {
         <option value="Сингапур">Сингапур 🇸🇬</option>
         <option value="Солонгос">Солонгос 🇰🇷</option>
         <option value="Судан">Судан 🇸🇩</option>
-        <option value="Тажикистан">Тажикистан 🇹🇯</option>
+        <option value="Тажикистан">Тажикистан 🇹жил</option>
         <option value="Тайвань">Тайвань 🇹🇼</option>
         <option value="Тайланд">Тайланд 🇹🇭</option>
         <option value="Тунис">Тунис 🇹🇳</option>
@@ -2810,15 +2810,20 @@ function orderDirectProduct(productType, productName) {
     const textMessage = `Сайн байна уу? Захиалга өгөх хүсэлтэй байна:\n📦 Төрөл: ${productType}\n🔥 Бүтээгдэхүүн: ${productName}`;
     const encodedText = encodeURIComponent(textMessage);
     
-    // Разделение логики Android / iPhone
+    // Базовая ссылка для веба и Android
+    const url = "https://m.me/" + pageId + "?text=" + encodedText;
+    
+    // Безопасное открытие ссылки с поддержкой iOS Safari
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        // Для iPhone: вызываем приложение Мессенджер напрямую через диплинк
-        const finalUrl = "fb-messenger://user-thread/" + pageId;
-        window.location.href = finalUrl; 
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     } else {
-        // Для Android и ПК: открываем веб-версию ссылки m.me
-        const finalUrl = "https://m.me/" + pageId + "?text=" + encodedText;
-        window.open(finalUrl, '_blank');
+        window.open(url, '_blank');
     }
 }
 
@@ -2986,102 +2991,49 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    
-    // === ЛОГИКА ДЛЯ ВСЕХ УСТРОЙСТВ (И Android, и iPhone) ===
-    // Подстраховка для кнопок заказа, если они дублируются или перекрыты слоями
-    document.body.addEventListener('click', function (event) {
-        var orderBtn = event.target.closest('.modal-action-btn');
-        if (orderBtn) {
-            if (typeof window.confirmOrder === 'function') {
-                event.preventDefault();
-                event.stopPropagation();
-                window.confirmOrder();
-            }
-        }
-    }, true);
-
-
-    // === ЛОГИКА СТРОГО ДЛЯ IPHONE / IPAD (Обход багов Safari) ===
+(function() {
+    // Включаем фикс строго для iOS устройств
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         
+        // Принудительно делаем карточки кликабельными для системы
         var style = document.createElement('style');
-        style.innerHTML = '.product-card, .tab, .sub-tab, .modal-action-btn, #esimCountrySelector, #simCountrySelector, .product-card * { cursor: pointer !important; -webkit-tap-highlight-color: transparent !important; }';
+        style.innerHTML = '.product-card { cursor: pointer !important; -webkit-tap-highlight-color: transparent !important; }';
         document.head.appendChild(style);
 
-        // Перехватчик для селектора eSIM Pro
-        var esimSelector = document.getElementById('esimCountrySelector');
-        if (esimSelector) {
-            esimSelector.addEventListener('change', function () {
-                if (typeof window.updateEsimCountryTariff === 'function') { window.updateEsimCountryTariff(); }
-            });
-        }
+        // Используем старый добрый метод отслеживания кликов по всему экрану
+        document.addEventListener('click', function(event) {
+            
+            // Ищем карточку стандартным путем
+            var currentElement = event.target;
+            var card = null;
+            
+            while (currentElement && currentElement !== document.body) {
+                if (currentElement.classList && currentElement.classList.contains('product-card')) {
+                    card = currentElement;
+                    break;
+                }
+                currentElement = currentElement.parentNode;
+            }
 
-        // Перехватчик для селектора Биет Сим
-        var simSelector = document.getElementById('simCountrySelector');
-        if (simSelector) {
-            simSelector.addEventListener('change', function () {
-                if (typeof window.updateCountryTariff === 'function') { window.updateCountryTariff(); }
-            });
-        }
-
-        // Глобальный перехватчик кликов Safari (Карточки и Табы)
-        document.body.addEventListener('click', function (event) {
-            var target = event.target;
-
-            // Перехват карточек стран
-            var card = target.closest('.product-card');
+            // Если нашли карточку, по которой нажали
             if (card) {
                 var inlineClick = card.getAttribute('onclick');
+                
                 if (inlineClick && inlineClick.indexOf('openTariffModal') !== -1) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    var matches = inlineClick.match(/openTariffModal\('(.*)'\)/);
-                    var rawValue = (matches && matches[1]) ? matches[1] : '';
-                    if (!rawValue) {
-                        rawValue = inlineClick.replace('openTariffModal(', '').replace(')', '').replace(/['"]/g, '').trim();
+                    // БЕЗОПАСНЫЙ РАЗБОР СТРОКИ: убираем всё лишнее, оставляя только текст внутри кавычек
+                    var cleanText = inlineClick.replace('openTariffModal(', '').replace(')', '');
+                    var countryName = cleanText.replace(/['"‘“’”]/g, '').trim();
+                    
+                    // Если функция открытия существует в глобальной видимости window
+                    if (countryName && typeof window.openTariffModal === 'function') {
+                        // Вызываем открытие модального окна напрямую
+                        window.openTariffModal(countryName);
                     }
-                    if (rawValue && typeof window.openTariffModal === 'function') {
-                        window.openTariffModal(rawValue);
-                    }
-                    return;
                 }
             }
-
-            // Перехват основных табов
-            var tab = target.closest('.tab');
-            if (tab) {
-                var tabClick = tab.getAttribute('onclick');
-                if (tabClick && tabClick.indexOf('switchTab') !== -1) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    var tabMatches = tabClick.match(/switchTab\(this,\s*'(.*)'\)/);
-                    var tabType = (tabMatches && tabMatches[1]) ? tabMatches[1] : '';
-                    if (tabType && typeof window.switchTab === 'function') {
-                        window.switchTab(tab, tabType);
-                    }
-                    return;
-                }
-            }
-
-            // Перехват под-табов
-            var subTab = target.closest('.sub-tab');
-            if (subTab) {
-                var subClick = subTab.getAttribute('onclick');
-                if (subClick && subClick.indexOf('switchSubTab') !== -1) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    var subMatches = subClick.match(/switchSubTab\('(.*)'\)/);
-                    var subType = (subMatches && subMatches[1]) ? subMatches[1] : '';
-                    if (subType && typeof window.switchSubTab === 'function') {
-                        window.switchSubTab(subType);
-                    }
-                    return;
-                }
-            }
-        }, true);
+        }, true); // true активирует фазу перехвата, клик сработает раньше любых багов
     }
-});
+})();
 </script>
 </body>
 </html>
