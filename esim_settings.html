@@ -546,72 +546,83 @@
 <style>
     /* Затемненный фон вокруг окна, перекрывающий всё */
     .address-modal-overlay {
-        display: none;             /* ПО УМОЛЧАНИЮ СКРЫТО */
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.6);
-        z-index: 99999;            /* Выше всех элементов */
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        box-sizing: border-box;
-    }
+    display: none;             /* Скрыто по умолчанию */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 99999;            /* Поверх всего */
+    justify-content: center;
+    align-items: center;
+    padding: 16px;             /* Небольшие отступы по краям экрана */
+    box-sizing: border-box;
+}
 
-    /* Само белое окно по центру */
-    .address-modal-content {
-        background: #ffffff;
-        width: 100%;
-        max-width: 400px;
-        border-radius: 16px;
-        padding: 20px;
-        position: relative;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        animation: modalFade 0.3s ease;
-        box-sizing: border-box;
-    }
+.address-modal-content {
+    background: #ffffff;
+    width: 100%;
+    max-width: 360px;          /* Оптимальная ширина под мобильные телефоны */
+    max-height: 85vh;          /* Окно не займет больше 85% высоты экрана */
+    overflow-y: auto;          /* ЕСЛИ КОНТЕНТ НЕ ВЛЕЗАЕТ, ОН БУДЕТ СКУРОЛЛИТЬСЯ ВНУТРИ ОКНА */
+    border-radius: 16px;
+    padding: 24px 20px 20px 20px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    animation: modalFade 0.25s ease;
+    box-sizing: border-box;
+    
+    /* Плавный скролл для iOS */
+    -webkit-overflow-scrolling: touch; 
+}
 
-    /* Кнопка закрытия (крестик) */
-    .address-modal-close {
-        position: absolute;
-        top: 12px;
-        right: 16px;
-        font-size: 28px;
-        color: #999;
-        cursor: pointer;
-    }
+/* Кнопка закрытия (Крестик) — увеличен размер и зона клика */
+.address-modal-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 32px;
+    line-height: 1;
+    color: #666;
+    cursor: pointer;
+    padding: 10px;             /* Искусственно расширяем зону тапа на смартфонах */
+    z-index: 100001;
+}
 
-    /* Картинка карты внутри модалки */
-    .address-modal-img {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        display: block;
-        margin-top: 10px;
-    }
+/* Картинка карты */
+.address-modal-img {
+    width: 100%;
+    height: auto;
+    max-height: 180px;         /* Ограничиваем высоту картинки, чтобы сэкономить место */
+    object-fit: cover;         /* Красиво кадрирует фото */
+    border-radius: 12px;
+    display: block;
+    margin: 12px 0;
+}
 
-    /* Кнопка позвонить */
-    .address-call-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        background-color: #7cb305;
-        color: white;
-        text-decoration: none;
-        padding: 12px;
-        border-radius: 8px;
-        font-weight: bold;
-        text-align: center;
-        margin-top: 15px;
-    }
+/* Кнопка "Залгах" */
+.address-call-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #7cb305;
+    color: white !important;
+    text-decoration: none !important;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 15px;
+    box-shadow: 0 4px 12px rgba(124, 179, 5, 0.2);
+}
 
-    @keyframes modalFade {
-        from { opacity: 0; transform: scale(0.95); }
-        to { opacity: 1; transform: scale(1); }
-    }
+@keyframes modalFade {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
 </style>
 
 <script>
