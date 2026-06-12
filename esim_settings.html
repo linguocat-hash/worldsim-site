@@ -591,9 +591,9 @@
 
 <div style="height: 30px;"></div>
 
-<div id="addressModal" class="address-modal-overlay">
-    <div class="address-modal-content">
-        <span class="address-modal-close" onclick="closeAddressModal()">×</span>
+<div id="addressModal" class="address-modal-overlay" onclick="closeAddressModal()">
+    <div class="address-modal-content" onclick="event.stopPropagation()">
+        <span class="address-modal-close" onclick="closeAddressModal()" role="button">×</span>
         
         <h2 style="display: flex; align-items: flex-start; gap: 8px;">
             <span>📍</span>
@@ -723,39 +723,68 @@
     function toggleMenu() {
         var menu = document.getElementById('boostMenu');
         if (menu) {
-            if (menu.style.display === 'block') {
-                menu.style.display = 'none';
-            } else {
-                menu.style.display = 'block';
-            }
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
         }
     }
 
-    // ФУНКЦИИ ДЛЯ МОДАЛЬНОГО ОКНА АДРЕСА
+    // Закрытие меню при тапе в пустую область (безопасно для всех устройств)
+    document.addEventListener('click', function(event) {
+        var menu = document.getElementById('boostMenu');
+        var btn = document.querySelector('.header-menu-btn');
+        if (menu && menu.style.display === 'block') {
+            if (!menu.contains(event.target) && !btn.contains(event.target)) {
+                menu.style.display = 'none';
+            }
+        }
+    });
+
+    // ==========================================
+    // 2. ФУНКЦИИ МОДАЛЬНОГО ОКНА АДРЕСА
+    // ==========================================
     function openAddressModal() {
         var modal = document.getElementById('addressModal');
         if (modal) {
             modal.classList.add('active'); 
-            document.body.style.overflow = 'hidden'; 
+            document.body.style.overflow = 'hidden'; // Блокируем скролл сайта под окном
         }
     }
 
-    // Полный сброс активных классов и разблокировка тач-событий
     function closeAddressModal() {
         var modal = document.getElementById('addressModal');
         if (modal) {
             modal.classList.remove('active'); 
-            document.body.style.overflow = ''; 
+            document.body.style.overflow = ''; // Возвращаем скролл
         }
     }
 
-    // Закрытие модального окна при клике на темную область вокруг него
-    window.addEventListener('click', function(event) {
-        var modal = document.getElementById('addressModal');
-        if (event.target === modal) {
-            closeAddressModal();
+    // ==========================================
+    // 3. ПЕРЕКЛЮЧЕНИЕ ТАБОВ (iOS / Android)
+    // ==========================================
+    function switchTab(clickedElement) {
+        // Убираем активный класс у всех кнопок
+        var tabs = document.querySelectorAll('.tabs-container .tab');
+        tabs.forEach(function(tab) {
+            tab.classList.remove('active');
+        });
+        
+        // Убираем активный класс у всех секций с контентом
+        var sections = document.querySelectorAll('.content-section');
+        sections.forEach(function(section) {
+            section.classList.remove('active');
+        });
+        
+        // Делаем нажатую кнопку активной
+        clickedElement.classList.add('active');
+        
+        // Показываем нужную инструкцию на основе атрибута data-target
+        var targetId = clickedElement.getAttribute('data-target');
+        var targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            targetSection.classList.add('active');
         }
-    });
+    }
+
+    
 </script>
 
 </body>
