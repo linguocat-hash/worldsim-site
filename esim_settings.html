@@ -646,27 +646,29 @@
     }
 
     // ФУНКЦИИ ДЛЯ МОДАЛЬНОГО ОКНА АДРЕСА
-    function openAddressModal() {
-        var modal = document.getElementById('addressModal');
-        if (modal) {
-            modal.style.display = 'flex'; // Показываем окно во весь экран
-        }
+function openAddressModal() {
+    var modal = document.getElementById('addressModal');
+    if (modal) {
+        modal.classList.add('active'); // Включаем окно и клики
+        document.body.style.overflow = 'hidden'; // Блокируем прокрутку сайта на фоне
     }
+}
 
-    function closeAddressModal() {
-        var modal = document.getElementById('addressModal');
-        if (modal) {
-            modal.style.display = 'none'; // Скрываем окно обратно
-        }
+function closeAddressModal() {
+    var modal = document.getElementById('addressModal');
+    if (modal) {
+        modal.classList.remove('active'); // Выключаем окно, возвращаем клики сайту
+        document.body.style.overflow = ''; // Возвращаем прокрутку сайту
     }
+}
 
-    // Закрытие модального окна при клике на темную область вокруг него
-    window.addEventListener('click', function(event) {
-        var modal = document.getElementById('addressModal');
-        if (event.target === modal) {
-            closeAddressModal();
-        }
-    });
+// Закрытие модального окна при клике на темную область вокруг него
+window.addEventListener('click', function(event) {
+    var modal = document.getElementById('addressModal');
+    if (event.target === modal) {
+        closeAddressModal();
+    }
+});
 </script>
 
 </body>
