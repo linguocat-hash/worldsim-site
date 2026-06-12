@@ -358,7 +358,8 @@
             <i class="fa-solid fa-cart-shopping" style="margin-right: 6px;"></i> eSIM, СИМ захиалах
         </a>
         <div style="border-top: 1px solid #eee; margin: 2px 0;"></div>
-        <a href="https://worldsim.translationboard.mn/#address" onclick="toggleMenu()">
+        
+        <a href="#" onclick="openAddressModal(); toggleMenu(); return false;">
             <i class="fa-solid fa-location-dot" style="margin-right: 6px;"></i> Манай хаяг
         </a>
     </div>
@@ -366,7 +367,7 @@
 
 <div class="hero">
     <h1>eSIM хэрхэн суулгах вэ?</h1>
-    <p>Аяллын eSIM картаа гар утсандаа тохируулах алхам алхмаар зааварчилгаа</p>
+    <p>Аяллын eSIM картыг гар утсандаа суулгах, тохируулах зааварчилгаа</p>
 </div>
 
 <div class="tabs-container">
@@ -381,7 +382,7 @@
 <div id="ios-section" class="content-section active">
     <div class="note-block">
         <h4><i class="fa-solid fa-wifi"></i> Санамж:</h4>
-        <p>eSIM-ийг суурилуулахын тулд таны утас <strong>интернетэд (Wi-Fi эсвэл үүрэн дата)</strong> холбогдсон байх шаардлагатай. QR кодыг уншуулах тул өөр төхөөрөмж дээр нээх эсвэл хэвлэж бэлдэнэ үү.</p>
+        <p>eSIM-ийг суулгахын тулд таны утас <strong>интернетэд (Wi-Fi эсвэл дата)</strong> холбогдсон байх шаардлагатай. QR кодыг уншуулах тул өөр төхөөрөмж дээр нээх эсвэл хэвлэж бэлдэнэ үү.</p>
     </div>
 
     <div class="step-card">
@@ -446,7 +447,7 @@
 <div id="android-section" class="content-section">
     <div class="note-block">
         <h4><i class="fa-solid fa-wifi"></i> Санамж:</h4>
-        <p>eSIM-ийг суулгахын тулд таны утас <strong>интернетэд (Wi-Fi эсвэл үүрэн дата)</strong> холбогдсон байх шаардлагатай. QR кодыг уншуулах тул өөр төхөөрөмж дээр нээх эсвэл хэвлэж бэлдэнэ үү.</p>
+        <p>eSIM-ийг суулгахын тулд таны утас <strong>интернетэд (Wi-Fi эсвэл дата)</strong> холбогдсон байх шаардлагатай. QR кодыг уншуулах тул өөр төхөөрөмж дээр нээх эсвэл хэвлэж бэлдэнэ үү.</p>
     </div>
 
     <div class="step-card">
@@ -500,6 +501,37 @@
 
 <div style="height: 30px;"></div>
 
+<div id="addressModal" class="address-modal-overlay">
+        <div class="address-modal-content">
+            <span class="address-modal-close" onclick="closeAddressModal()">×</span>
+            
+            <h2 style="display: flex; align-items: flex-start; gap: 8px;">
+                <span>📍</span>
+                <span style="display: block;">Манай хаяг,<br>цагийн хуваарь</span>
+            </h2>
+            
+            <a href="https://maps.app.goo.gl/ECfotyHKngNeDhkm9" target="_blank" class="address-map-link">
+                <img src="OfficeRekhet.jpg" alt="Эрхэт оффис байршил" class="address-modal-img">
+                <span class="address-map-hint"><i class="fa-solid fa-map-location-dot"></i> Google Maps дээр харах</span>
+            </a>
+
+            <div class="address-info" style="font-size: 14px; line-height: 1.5; margin: 15px 0; color: #333;">
+                <p style="margin-bottom: 8px;"><strong>1️⃣ Байршил:</strong> БЗД, Энх тайваны өргөн чөлөө, Бөхийн өргөөний баруун талд, Эрхэт оффис, 10 давхар, 1006 тоот.</p>
+                <p style="margin-bottom: 8px;"><strong>2️⃣ Цагийн хуваарь:</strong><br>
+                   Да-Ба: 09:00 - 17:00 🕘<br>
+                   Бя-Ня: Тантай цагаа тохироод уулзах боломжтой. 🤝
+                </p>
+                <p><strong>3️⃣ Холбоо барих:</strong> 80599859 ☎️</p>
+            </div>
+
+            <p class="warning-text" style="background-color: #fff9db; padding: 10px; border-radius: 8px; font-size: 13px; border-left: 4px solid #fcc419; margin-top: 10px;">📌 Та ирэхээсээ өмнө заавал мэдэгдээрэй. 👌</p>
+
+            <a href="tel:+97680599859" class="address-call-btn">
+                <i class="fa-solid fa-phone"></i> Залгах
+            </a>
+        </div>
+    </div>
+    
 <nav class="bottom-nav">
     <a href="https://worldsim.translationboard.mn" class="nav-item">
         <i class="fa-solid fa-house"></i>
@@ -547,6 +579,32 @@
         var targetId = element.getAttribute('data-target');
         document.getElementById(targetId).classList.add('active');
     }
+
+    // Функция открытия модального окна адреса
+function openAddressModal() {
+    const modal = document.getElementById('addressModal');
+    if (modal) {
+        modal.style.display = 'flex'; // Показываем окно
+        document.body.classList.add('modal-open'); // Фикс прокрутки фона для iOS
+    }
+}
+
+// Функция закрытия модального окна адреса
+function closeAddressModal() {
+    const modal = document.getElementById('addressModal');
+    if (modal) {
+        modal.style.display = 'none'; // Скрываем окно
+        document.body.classList.remove('modal-open'); // Возвращаем прокрутку фона
+    }
+}
+
+// Дополнительно: закрытие кликом на темную область вокруг контента
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('addressModal');
+    if (event.target === modal) {
+        closeAddressModal();
+    }
+});
 </script>
 
 </body>
