@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#002b49">
+
+    <title>WorldSIM Mongolia | eSIM хэрхэн суулгах заавар - Travel eSIM тохиргоо</title>
+    <meta name="description" content="WorldSIM Mongolia | Аяллын eSIM картыг гар утсандаа хэрхэн суулгах, идэвхжүүлэх тухай алхам алхмаар зааварчилгаа (iOS болон Android).">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://worldsim.translationboard.mn/how-to-set-up-your-esim">
+    <meta property="og:title" content="WorldSIM Mongolia | eSIM хэрхэн суулгах заавар">
+    <meta property="og:description" content="Аяллын eSIM картыг гар утсандаа хэрхэн суулгах, идэвхжүүлэх тухай алхам алхмаар зааварчилгаа.">
+    <meta property="og:image" content="https://worldsim.translationboard.mn/FORPAGESHARESWORLDSIM.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WorldSIM Mongolia | eSIM хэрхэн суулгах заавар">
+    <meta name="twitter:description" content="Аяллын eSIM картыг гар утсандаа хэрхэн суулгах тухай алхам алхмаар зааварчилгаа.">
+
+    <link rel="icon" type="image/x-icon" href="favicon2.ico">
+    <link rel="icon" type="image/png" href="WorldSIMicon32_32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="WorldSIMicon192_192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="WorldSIMicon180_180.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --brand-blue: #002b49;
+            --brand-green: #7cb305;
+            --text-dark: #111111;
+            --text-gray: #666666;
+            --bg-light: #f4f6f8;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        /* --- Шапка сайта --- */
+        header {
+            background-color: var(--white);
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            height: 60px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo-img {
+            height: 38px;
+            width: auto;
+            display: block;
+        }
+
+        .header-menu-btn {
+            background: var(--brand-blue);
+            border: none;
+            color: var(--white);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .header-menu-btn:active {
+            background: #001f35;
+        }
+
+        /* Выпадающее меню */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 55px;
+            right: 15px;
+            background: var(--white);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            width: 200px;
+            z-index: 1001;
+            border: 1px solid #e0e0e0;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 14px 16px;
+            color: var(--brand-blue);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .dropdown-menu a:active {
+            background-color: #f5f5f5;
+            color: var(--brand-green);
+        }
+
+        /* --- Баннер (Hero Section) --- */
+        .hero {
+            background-image: url('Worldsimfrontpage.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        .hero h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 13px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- Переключатели OS (iOS / Android) --- */
+        .tabs-container {
+            display: flex;
+            gap: 8px;
+            padding: 15px;
+            justify-content: center;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer !important;
+            background: var(--white);
+            color: var(--brand-blue);
+            border: 1px solid #dee2e6;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .tab.active {
+            background: var(--brand-green);
+            color: var(--white);
+            border-color: var(--brand-green);
+        }
+
+        .tab * {
+            pointer-events: none !important;
+        }
+
+        /* --- Контентная зона --- */
+        .content-section {
+            padding: 0 15px 25px 15px;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* Справочные блоки (Уведомления) */
+        .note-block {
+            background: #fffbe6;
+            border-left: 4px solid #faad14;
+            padding: 12px 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 15px;
+        }
+
+        .note-block h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--brand-blue);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .note-block p {
+            font-size: 12px;
+            color: var(--text-dark);
+            line-height: 1.4;
+        }
+
+        /* Карточки шагов */
+        .step-card {
+            background: var(--white);
+            border: 1px solid #eef0f2;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .step-number {
+            background: var(--brand-blue);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 800;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-header h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--brand-blue);
+        }
+
+        .step-card p {
+            font-size: 13px;
+            color: var(--text-dark);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .step-card strong {
+            color: var(--brand-blue);
+        }
+
+        /* --- Нижняя навигация --- */
+        .bottom-nav {
+            position: sticky;
+            bottom: 0; left: 0; right: 0;
+            background-image: url('Worldsimfrontpage_2.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0 calc(12px + env(safe-area-inset-bottom)) 0; 
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 1000;
+        }
+
+        .bottom-nav::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 26, 44, 0.75);
+            z-index: 0;
+        }
+
+        .nav-item {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 12px;
+            text-decoration: none;
+            gap: 4px;
+            font-weight: 600;
+            cursor: pointer !important;
+            flex: 1;
+            text-align: center;
+            -webkit-tap-highlight-color: transparent;
+            pointer-events: auto !important;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+            color: rgba(124, 179, 5, 0.6);
+        }
+
+        .nav-item.active {
+            color: #ffffff;
+        }
+
+        .nav-item.active i {
+            color: #7cb305;
+            filter: drop-shadow(0 0 4px rgba(124, 179, 5, 0.4));
+        }
+
+        .nav-item * {
+            pointer-events: none !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <img src="WorldSIM_Logo_TravelPRNews.png" alt="WorldSIM Монгол" class="logo-img">
+    </div> 
+    
+    <button class="header-menu-btn" onclick="toggleMenu()">
+        <i class="fa-solid fa-bars"></i> Цэс
+    </button>
+
+    <div class="dropdown-menu" id="boostMenu">
+        <a href="https://worldsim.translationboard.mn" onclick="toggleMenu()">
+            <i class="fa-solid fa-cart-shopping" style="margin-right: 6px;"></i> eSIM, СИМ захиалах
+        </a>
+        <div style="border-top: 1px solid #eee; margin: 2px 0;"></div>
+        <a href="https://worldsim.translationboard.mn/#address" onclick="toggleMenu()">
+            <i class="fa-solid fa-location-dot" style="margin-right: 6px;"></i> Манай хаяг
+        </a>
+    </div>
+</header>
+
+<div class="hero">
+    <h1>eSIM хэрхэн суулгах вэ?</h1>
+    <p>Аяллын eSIM картаа гар утсандаа тохируулах алхам алхмаар зааварчилгаа</p>
+</div>
+
+<div class="tabs-container">
+    <div class="tab active" data-target="ios-section" onclick="switchTab(this)">
+        <i class="fa-brands fa-apple" style="margin-right: 6px;"></i> iOS (iPhone)
+    </div>
+    <div class="tab" data-target="android-section" onclick="switchTab(this)">
+        <i class="fa-brands fa-android" style="margin-right: 6px;"></i> Android
+    </div>
+</div>
+
+<div id="ios-section" class="content-section active">
+    <div class="note-block">
+        <h4><i class="fa-solid fa-wifi"></i> Санамж:</h4>
+        <p>eSIM-ийг суурилуулахын тулд таны утас <strong>интернетэд (Wi-Fi эсвэл үүрэн дата)</strong> холбогдсон байх шаардлагатай. QR кодыг уншуулах тул өөр төхөөрөмж дээр нээх эсвэл хэвлэж бэлдэнэ үү.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">1</div>
+            <h3>Тохиргоо руу орох</h3>
+        </div>
+        <p>Утасныхаа <strong>Settings</strong> (Тохиргоо) -> <strong>Cellular</strong> (Үүрэн холбоо) хэсгийг нээнэ үү.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">2</div>
+            <h3>eSIM нэмэх</h3>
+        </div>
+        <p><strong>Add eSIM</strong> (eSIM нэмэх) эсвэл <strong>Add Cellular Plan</strong> товчлуур дээр дарна уу.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">3</div>
+            <h3>QR код уншуулах</h3>
+        </div>
+        <p><strong>Use QR Code</strong> сонголтыг сонгож, өөрийн имэйлээр хүлээн авсан QR кодыг утсаараа уншуулна уу.</p>
+        <p><em>Хэрэв QR код уншихгүй бол "Enter Details Manually" дээр дарж, SM-DP+ Address болон Activation Code-ийг хуулж оруулна уу.</em></p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">4</div>
+            <h3>Шошго (Label) нэр өгөх</h3>
+        </div>
+        <p>Шинэ дата eSIM-ийг ялгахын тулд нэр өгнө үү. Жишээ нь: <strong>"WorldSIM"</strong> эсвэл <strong>"Travel"</strong>.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">5</div>
+            <h3>Үндсэн шугамыг сонгох (Default Line)</h3>
+        </div>
+        <p>Дуудлага болон SMS-д өөрийн үндсэн Монгол дугаарыг (Primary) хэвээр үлдээнэ үү.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">6</div>
+            <h3>Үүрэн датаг тохируулах (Cellular Data)</h3>
+        </div>
+        <p>Cellular Data хэсэгт шинээр суулгасан <strong>манай сим карт</strong>  сонгоно уу.</p>
+        <p>⚠️ <strong>Чухал:</strong> "Allow Cellular Data Switching" сонголтыг <strong>УНТРААХ</strong> хэрэгтэй.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">7</div>
+            <h3>Дата Роуминг идэвхжүүлэх</h3>
+        </div>
+        <p>Аялах улсдаа очсоны дараа суулгасан eSIM-ийн тохиргоо руу орж <strong>Data Roaming</strong>-ийг <strong>ON</strong> болгож асааснаар интернет идэвхжинэ.</p>
+    </div>
+</div>
+
+<div id="android-section" class="content-section">
+    <div class="note-block">
+        <h4><i class="fa-solid fa-wifi"></i> Санамж:</h4>
+        <p>eSIM-ийг суулгахын тулд таны утас <strong>интернетэд (Wi-Fi эсвэл үүрэн дата)</strong> холбогдсон байх шаардлагатай. QR кодыг уншуулах тул өөр төхөөрөмж дээр нээх эсвэл хэвлэж бэлдэнэ үү.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">1</div>
+            <h3>Тохиргоо руу орох</h3>
+        </div>
+        <p>Утасныхаа <strong>Settings</strong> (Тохиргоо) -> <strong>Connections</strong> (Холболтууд) -> <strong>SIM manager</strong> (СИМ карт удирдлага) хэсэгт орно уу.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">2</div>
+            <h3>eSIM нэмэх</h3>
+        </div>
+        <p><strong>Add eSIM</strong> эсвэл <strong>Add mobile plan</strong> товчлуур дээр дарна уу.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">3</div>
+            <h3>QR код уншуулах</h3>
+        </div>
+        <p><strong>Scan QR code from service provider</strong> сонголтыг сонгож, өөрийн QR кодыг уншуулна уу.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">4</div>
+            <h3>eSIM суулгах тохиргоог баталгаажуулах</h3>
+        </div>
+        <p>Дэлгэц дээр гарч ирэх зааврын дагуу шинэ eSIM-ийг утасны системд нэмэхийг зөвшөөрч баталгаажуулна уу.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">5</div>
+            <h3>Дата eSIM-ийг сонгох</h3>
+        </div>
+        <p>SIM manager цэс рүү буцаж ороод, <strong>Preferred SIMs</strong> (Үндсэн СИМ) хэсгийн <strong>Mobile data</strong> дээр шинээр нэмэгдсэн eSIM-ийг сонгоно уу.</p>
+    </div>
+
+    <div class="step-card">
+        <div class="step-header">
+            <div class="step-number">6</div>
+            <h3>Дата Роуминг асаах</h3>
+        </div>
+        <p><strong>Settings -> Connections -> Mobile networks</strong> хэсэг рүү орж, <strong>Data roaming</strong> сонголтыг асаана уу. Ингэснээр та хилийн чанадад интернетэд холбогдох болно.</p>
+    </div>
+</div>
+
+<div style="height: 30px;"></div>
+
+<nav class="bottom-nav">
+    <a href="https://worldsim.translationboard.mn" class="nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Нүүр</span>
+    </a>
+    <a href="#" class="nav-item active">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>Заавар</span>
+    </a>
+</nav>
+
+<script>
+    // Логика бургер меню
+    function toggleMenu() {
+        var menu = document.getElementById('boostMenu');
+        if (menu.style.display === 'block') {
+            menu.style.display = 'none';
+        } else {
+            menu.style.display = 'block';
+        }
+    }
+
+    // Закрытие меню при клике вне его
+    window.onclick = function(event) {
+        if (!event.target.matches('.header-menu-btn') && !event.target.matches('.header-menu-btn *')) {
+            var dropdown = document.getElementById('boostMenu');
+            if (dropdown && dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            }
+        }
+    }
+
+    // Переключение табов iOS / Android
+    function switchTab(element) {
+        document.querySelectorAll('.tab').forEach(function(tab) {
+            tab.classList.remove('active');
+        });
+        
+        document.querySelectorAll('.content-section').forEach(function(section) {
+            section.classList.remove('active');
+        });
+
+        element.classList.add('active');
+        
+        var targetId = element.getAttribute('data-target');
+        document.getElementById(targetId).classList.add('active');
+    }
+</script>
+
+</body>
+</html>
