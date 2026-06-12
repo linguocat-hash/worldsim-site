@@ -1112,6 +1112,40 @@ html, body {
 .sim-collapse-toggle.active .arrow-icon {
     transform: rotate(180deg);
 }
+
+/* --- Стили для кнопки "eSIM суулгах заавар" в модальном окне --- */
+.help-more-btn {
+    display: inline-flex !important;   /* Flex для центрирования текста и иконки */
+    align-items: center;
+    justify-content: center;
+    background-color: var(--brand-blue) !important; /* Фирменный темно-синий */
+    color: var(--white) !important;
+    text-decoration: none !important;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 16px;                /* Оптимизировано под длинный текст */
+    border-radius: 20px;               /* Округлая форма */
+    width: auto !important;            /* Перебиваем 100%-ширину от .sim-buy-btn */
+    box-shadow: 0 3px 10px rgba(0, 43, 73, 0.2);
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Эффект при нажатии на телефоне */
+.help-more-btn:active {
+    background-color: var(--brand-green) !important; /* Перекрашивается в салатовый */
+    transform: scale(0.98);
+    box-shadow: 0 2px 6px rgba(124, 179, 5, 0.3);
+}
+
+/* Иконка стрелочки */
+.help-more-btn i {
+    margin-left: 8px;
+    font-size: 11px;
+    transition: transform 0.2s ease;
+    pointer-events: none !important;
+}
+
 </style>
 </head>
 <body>
@@ -2174,6 +2208,12 @@ html, body {
                 <li><strong>2️⃣</strong> Гарч ирсэн мэдээлэл дунд <strong>EID дугаар</strong> байвал таны утас eSIM дэмжинэ. ✅</li>
                 <li><strong>3️⃣</strong> Хэрэв зөвхөн IMEI дугаар байвал eSIM дэмжихгүй. Энэ тохиолдолд та манай <strong>Биет СИМ-ийг</strong> сонгон ашиглах боломжтой. 😊</li>
             </ul>
+
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="https://worldsim.translationboard.mn/esim_settings.html" class="help-more-btn" style="text-decoration: none;">
+                    eSIM суулгах заавар <i class="fa-solid fa-arrow-right" style="margin-left: 5px; font-size: 12px;"></i>
+                </a>
+            </div>
         </div>
 
         <div class="help-section-card">
