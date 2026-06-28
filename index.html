@@ -21,10 +21,10 @@
     <meta name="twitter:description" content="WorldSIM Mongolia | Аяллын сим карт | Аяллын Data eSIM - Биет СИМ">
     <meta name="twitter:image" content="https://worldsim.translationboard.mn/FORPAGESHARESWORLDSIM.png">
 
-    <link rel="icon" type="image/x-icon" href="favicon2.ico">
-    <link rel="icon" type="image/png" href="WorldSIMicon32_32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="WorldSIMicon192_192.png" sizes="192x192">
-    <link rel="apple-touch-icon" href="WorldSIMicon180_180.png">
+<link rel="shortcut icon" href="https://worldsim.translationboard.mn/favicon2.ico" type="image/x-icon">
+<link rel="icon" type="image/png" href="https://worldsim.translationboard.mn/WorldSIMicon32_32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="https://worldsim.translationboard.mn/WorldSIMicon192_192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="https://worldsim.translationboard.mn/WorldSIMicon180_180.png">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -1277,6 +1277,19 @@ html, body {
             </div>
             <i class="fa-solid fa-chevron-right arrow-icon"></i>
         </div>
+
+        <div class="product-card" data-country="АНУ, Канад (USA & Canada) 🇺🇸🇨🇦" style="cursor: pointer;">
+            <div class="product-info">
+                <div class="multi-flag-icon" style="font-size: 26px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: #f5f5f5; border-radius: 50%;">🇺🇸🇨🇦</div>
+                <div class="product-details">
+                    <h3>АНУ, Канад (5G багц)</h3>
+                    <p class="product-subtitle">Хойд Америкийн дата багц</p>
+                    <div class="product-price">18,000 ₮ -өөс</div>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right arrow-icon"></i>
+        </div>
+
     </div> <div id="single-country-products">
         <div class="product-card" data-country="БНХАУ (China)" style="cursor: pointer;">
             <div class="product-info">
@@ -2830,7 +2843,25 @@ const esimProductsData = {
             "Өдөр бүр 3 GB":   { "3": 44000, "5": 61000, "7": 79000, "10": 112000, "15": 153000, "20": 197000, "30": 286000 },
             "Хязгааргүй багц": { "3": 61000, "5": 91000, "7": 121000, "10": 152000, "15": 205000, "20": 287000, "30": 311000 }
         }
-    }
+    },
+    "АНУ, Канад (USA & Canada)": {
+        operator: "T-Mobile / AT&T / Rogers",
+        standard: "5G / 4G / LTE",
+        hotspot: "Ажиллана",
+        notes: "• Фэйсбүүк, Гүүгл шууд ажиллана.<br>• Дугаар байхгүй (зөвхөн дата).<br>• Хойд Америкийн дата багц",
+        tariffs: {
+            "3 GB":             { "3": 39000, "5": 42000, "7": 45000, "10": 48000, "15": 50000, "20": 53000, "30": 55000 },
+            "5 GB":             { "3": 59000, "5": 62000, "7": 65000, "10": 68000, "15": 72000, "20": 75000, "30": 79000 },
+            "10 GB":            { "3": 110000, "5": 115000, "7": 120000, "10": 125000, "15": 130000, "20": 135000, "30": 138000 },
+            "20 GB":            { "3": 199000, "5": 205000, "7": 210000, "10": 215000, "15": 220000, "20": 225000, "30": 235000 },
+            "30 GB":            { "3": 265000, "5": 275000, "7": 285000, "10": 295000, "15": 305000, "20": 315000, "30": 325000 },
+            "50 GB":            { "3": 385000, "5": 405000, "7": 425000, "10": 445000, "15": 465000, "20": 475000, "30": 485000 },
+            "Өдөр бүр 500 MB": { "1": 15000, "3": 24000, "5": 38000, "7": 52000, "10": 75000, "15": 99000, "20": 135000, "30": 185000 },
+            "Өдөр бүр 1 GB":   { "1": 19000, "3": 39000, "5": 62000, "7": 82000, "10": 115000, "15": 165000, "20": 215000, "30": 320000 },
+            "Өдөр бүр 2 GB":   { "1": 24000, "3": 64000, "5": 105000, "7": 145000, "10": 245000, "15": 290000, "20": 385000, "30": 550000 },
+            "Хязгааргүй дата": { "1": 45000, "3": 115000, "5": 185000, "7": 255000, "10": 360000, "15": 540000, "20": 715000, "30": 950000 }
+            }
+        }
 };
 // ==========================================
 // ФУНКЦИИ МОДАЛЬНЫХ ОКН
