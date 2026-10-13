@@ -1018,6 +1018,51 @@ html, body {
     opacity: 1;
 }
 
+.android-order-confirmation {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.55);
+}
+
+.android-order-confirmation.active {
+    display: flex;
+}
+
+.android-order-confirmation__content {
+    width: 100%;
+    max-width: 420px;
+    padding: 24px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.android-order-confirmation__message {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-line;
+}
+
+.android-order-confirmation__button {
+    width: 100%;
+    padding: 12px 20px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--brand-green);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
 .sim-collapse-toggle {
     cursor: pointer;
     display: flex;
@@ -3060,21 +3105,40 @@ function copyOrderTextFallback(text) {
     return copied;
 }
 
+let pendingAndroidOrderUrl = "";
+
+function showAndroidOrderConfirmation(copied, url) {
+    pendingAndroidOrderUrl = url;
+    const dialog = document.getElementById("androidOrderConfirmation");
+    const message = document.getElementById("androidOrderConfirmationMessage");
+
+    message.textContent = copied
+        ? "Таны захиалгын мэдээлэл хуулагдлаа! Та Facebook Messenger нээгдэхэд (Paste) хийж илгээнэ үү.\n\n(Таны захиалгыг боловсруулаад 5-15 минутын дотор eSIM QR код, зааврыг хүргүүлнэ)"
+        : "Захиалгын мэдээллийг автоматаар хуулах боломжгүй байна. Messenger нээгдэхэд мэдээллээ өөрөө хуулж оруулна уу.";
+    dialog.classList.add("active");
+    document.getElementById("androidOrderConfirmationButton").focus();
+}
+
+function confirmAndroidOrder() {
+    if (!pendingAndroidOrderUrl) return;
+
+    const url = pendingAndroidOrderUrl;
+    pendingAndroidOrderUrl = "";
+    document.getElementById("androidOrderConfirmation").classList.remove("active");
+
+    const messengerWindow = window.open(url, "_blank");
+    if (!messengerWindow) {
+        window.location.href = url;
+    }
+}
+
 function openOrderInMessengerOnAndroid(textMessage, url) {
-    const copyPromise = copyOrderText(textMessage);
-    const messengerWindow = window.open('about:blank', '_blank');
-
-    copyPromise.then((copied) => {
-        alert(copied
-            ? "Таны захиалгын мэдээлэл хуулагдлаа! Та Facebook Messenger нээгдэхэд (Paste) хийж илгээнэ үү.\n\n(Таны захиалгыг боловсруулаад 5-15 минутын дотор eSIM QR код, зааврыг хүргүүлнэ)"
-            : "Захиалгын мэдээллийг автоматаар хуулах боломжгүй байна. Messenger нээгдэхэд мэдээллээ өөрөө хуулж оруулна уу.");
-
-        if (messengerWindow && !messengerWindow.closed) {
-            messengerWindow.location.href = url;
-        } else {
-            window.location.href = url;
-        }
-    });
+    copyOrderText(textMessage)
+        .then((copied) => showAndroidOrderConfirmation(copied, url))
+        .catch((error) => {
+            console.error("Не удалось подготовить сообщение заказа", error);
+            showAndroidOrderConfirmation(false, url);
+        });
 }
 
 // === ЕДИНАЯ ИСПРАВЛЕННАЯ ФУНКЦИЯ ЗАКАЗА ===
@@ -3448,6 +3512,13 @@ function toggleSimCountries(element, event) {
 
             <div id="modalFooterNotes" class="modal-notes-box"></div>
         </div>
+    </div>
+</div>
+
+<div id="androidOrderConfirmation" class="android-order-confirmation" role="dialog" aria-modal="true" aria-labelledby="androidOrderConfirmationMessage">
+    <div class="android-order-confirmation__content">
+        <p id="androidOrderConfirmationMessage" class="android-order-confirmation__message"></p>
+        <button id="androidOrderConfirmationButton" class="android-order-confirmation__button" type="button" onclick="confirmAndroidOrder()">баталгаажуулах</button>
     </div>
 </div>
 
