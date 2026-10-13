@@ -1036,6 +1036,8 @@ html, body {
 .android-order-confirmation__content {
     width: 100%;
     max-width: 420px;
+    max-height: 85vh;
+    overflow-y: auto;
     padding: 24px;
     border-radius: 16px;
     background: #fff;
@@ -1049,6 +1051,19 @@ html, body {
     font-size: 16px;
     line-height: 1.5;
     white-space: pre-line;
+}
+
+.android-order-confirmation__order {
+    margin-bottom: 20px;
+    padding: 14px;
+    border-radius: 10px;
+    background: var(--bg-light);
+    color: var(--text-dark);
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: left;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
 .android-order-confirmation__button {
@@ -3107,14 +3122,16 @@ function copyOrderTextFallback(text) {
 
 let pendingAndroidOrderUrl = "";
 
-function showAndroidOrderConfirmation(copied, url) {
+function showAndroidOrderConfirmation(copied, url, textMessage) {
     pendingAndroidOrderUrl = url;
     const dialog = document.getElementById("androidOrderConfirmation");
     const message = document.getElementById("androidOrderConfirmationMessage");
+    const order = document.getElementById("androidOrderConfirmationOrder");
 
     message.textContent = copied
         ? "Таны захиалгын мэдээлэл хуулагдлаа! Та Facebook Messenger нээгдэхэд (Paste) хийж илгээнэ үү.\n\n(Таны захиалгыг боловсруулаад 5-15 минутын дотор eSIM QR код, зааврыг хүргүүлнэ)"
         : "Захиалгын мэдээллийг автоматаар хуулах боломжгүй байна. Messenger нээгдэхэд мэдээллээ өөрөө хуулж оруулна уу.";
+    order.textContent = textMessage;
     dialog.classList.add("active");
     document.getElementById("androidOrderConfirmationButton").focus();
 }
@@ -3134,10 +3151,10 @@ function confirmAndroidOrder() {
 
 function openOrderInMessengerOnAndroid(textMessage, url) {
     copyOrderText(textMessage)
-        .then((copied) => showAndroidOrderConfirmation(copied, url))
+        .then((copied) => showAndroidOrderConfirmation(copied, url, textMessage))
         .catch((error) => {
             console.error("Не удалось подготовить сообщение заказа", error);
-            showAndroidOrderConfirmation(false, url);
+            showAndroidOrderConfirmation(false, url, textMessage);
         });
 }
 
@@ -3518,6 +3535,7 @@ function toggleSimCountries(element, event) {
 <div id="androidOrderConfirmation" class="android-order-confirmation" role="dialog" aria-modal="true" aria-labelledby="androidOrderConfirmationMessage">
     <div class="android-order-confirmation__content">
         <p id="androidOrderConfirmationMessage" class="android-order-confirmation__message"></p>
+        <div id="androidOrderConfirmationOrder" class="android-order-confirmation__order"></div>
         <button id="androidOrderConfirmationButton" class="android-order-confirmation__button" type="button" onclick="confirmAndroidOrder()">баталгаажуулах</button>
     </div>
 </div>
