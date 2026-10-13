@@ -3024,6 +3024,59 @@ function calculateFinalPrice() {
     }
 }
 
+function copyOrderText(text) {
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        try {
+            return navigator.clipboard.writeText(text)
+                .then(() => true)
+                .catch((error) => {
+                    console.warn("Не удалось скопировать заказ через Clipboard API", error);
+                    return copyOrderTextFallback(text);
+                });
+        } catch (error) {
+            console.warn("Не удалось скопировать заказ через Clipboard API", error);
+        }
+    }
+    return Promise.resolve(copyOrderTextFallback(text));
+}
+
+function copyOrderTextFallback(text) {
+    const tempInput = document.createElement("textarea");
+    tempInput.value = text;
+    tempInput.setAttribute("readonly", "");
+    tempInput.style.position = "fixed";
+    tempInput.style.opacity = "0";
+    document.body.appendChild(tempInput);
+    tempInput.select();
+
+    let copied = false;
+    try {
+        copied = document.execCommand("copy");
+    } catch (error) {
+        console.warn("Не удалось скопировать заказ резервным способом", error);
+    } finally {
+        document.body.removeChild(tempInput);
+    }
+    return copied;
+}
+
+function openOrderInMessengerOnAndroid(textMessage, url) {
+    const copyPromise = copyOrderText(textMessage);
+    const messengerWindow = window.open('about:blank', '_blank');
+
+    copyPromise.then((copied) => {
+        alert(copied
+            ? "Таны захиалгын мэдээлэл хуулагдлаа. Messenger нээгдэхэд мессеж бичих хэсэгт удаан дарж Paste (Вставить) хийнэ үү."
+            : "Захиалгын мэдээллийг автоматаар хуулах боломжгүй байна. Messenger нээгдэхэд мэдээллээ өөрөө хуулж оруулна уу.");
+
+        if (messengerWindow && !messengerWindow.closed) {
+            messengerWindow.location.href = url;
+        } else {
+            window.location.href = url;
+        }
+    });
+}
+
 // === ЕДИНАЯ ИСПРАВЛЕННАЯ ФУНКЦИЯ ЗАКАЗА ===
 function confirmOrder() {
     const country = currentCountryKey || "eSIM";
@@ -3061,8 +3114,9 @@ function confirmOrder() {
         link.click();
         document.body.removeChild(link);
 
+    } else if (/Android/i.test(navigator.userAgent)) {
+        openOrderInMessengerOnAndroid(textMessage, url);
     } else {
-        // Для Android и ПК всё работает идеально "из коробки"
         window.open(url, '_blank');
     }
 
@@ -3235,7 +3289,7 @@ function orderDirectProduct(productType, productName) {
     const textMessage = `Сайн байна уу? Захиалга өгөх хүсэлтэй байна:\n📦 Төрөл: ${productType}\n🔥 Бүтээгдэхүүн: ${productName}`;
     const encodedText = encodeURIComponent(textMessage);
     
-    // Базовая ссылка для веба и Android
+    // Базовая ссылка для веба
     const url = "https://m.me/" + pageId + "?text=" + encodedText;
     
     // Безопасное открытие ссылки с поддержкой iOS Safari
@@ -3247,6 +3301,8 @@ function orderDirectProduct(productType, productName) {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    } else if (/Android/i.test(navigator.userAgent)) {
+        openOrderInMessengerOnAndroid(textMessage, url);
     } else {
         window.open(url, '_blank');
     }
