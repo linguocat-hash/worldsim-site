@@ -1018,7 +1018,7 @@ html, body {
     opacity: 1;
 }
 
-.android-order-confirmation {
+.order-confirmation {
     display: none;
     position: fixed;
     inset: 0;
@@ -1029,11 +1029,12 @@ html, body {
     background: rgba(0, 0, 0, 0.55);
 }
 
-.android-order-confirmation.active {
+.order-confirmation.active {
     display: flex;
 }
 
-.android-order-confirmation__content {
+.order-confirmation__content {
+    position: relative;
     width: 100%;
     max-width: 420px;
     max-height: 85vh;
@@ -1046,14 +1047,28 @@ html, body {
     text-align: center;
 }
 
-.android-order-confirmation__message {
+.order-confirmation__close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    background: transparent;
+    color: #777;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.order-confirmation__message {
     margin-bottom: 20px;
     font-size: 16px;
     line-height: 1.5;
     white-space: pre-line;
 }
 
-.android-order-confirmation__order {
+.order-confirmation__order {
     margin-bottom: 20px;
     padding: 14px;
     border-radius: 10px;
@@ -1066,7 +1081,7 @@ html, body {
     overflow-wrap: anywhere;
 }
 
-.android-order-confirmation__button {
+.order-confirmation__button {
     width: 100%;
     padding: 12px 20px;
     border: 0;
@@ -1076,6 +1091,12 @@ html, body {
     font-size: 16px;
     font-weight: 700;
     cursor: pointer;
+}
+
+.order-confirmation__button--secondary {
+    margin-top: 10px;
+    background: #eef1f4;
+    color: var(--brand-blue);
 }
 
 .sim-collapse-toggle {
@@ -3120,28 +3141,28 @@ function copyOrderTextFallback(text) {
     return copied;
 }
 
-let pendingAndroidOrderUrl = "";
+let pendingOrderUrl = "";
 
-function showAndroidOrderConfirmation(copied, url, textMessage) {
-    pendingAndroidOrderUrl = url;
-    const dialog = document.getElementById("androidOrderConfirmation");
-    const message = document.getElementById("androidOrderConfirmationMessage");
-    const order = document.getElementById("androidOrderConfirmationOrder");
+function showOrderConfirmation(copied, url, textMessage) {
+    pendingOrderUrl = url;
+    const dialog = document.getElementById("orderConfirmation");
+    const message = document.getElementById("orderConfirmationMessage");
+    const order = document.getElementById("orderConfirmationOrder");
 
     message.textContent = copied
         ? "Таны захиалгын мэдээлэл хуулагдлаа! Та Facebook Messenger нээгдэхэд (Paste) хийж илгээнэ үү.\n\n(Таны захиалгыг боловсруулаад 5-15 минутын дотор eSIM QR код, зааврыг хүргүүлнэ)"
         : "Захиалгын мэдээллийг автоматаар хуулах боломжгүй байна. Messenger нээгдэхэд мэдээллээ өөрөө хуулж оруулна уу.";
     order.textContent = textMessage;
     dialog.classList.add("active");
-    document.getElementById("androidOrderConfirmationButton").focus();
+    document.getElementById("orderConfirmationButton").focus();
 }
 
-function confirmAndroidOrder() {
-    if (!pendingAndroidOrderUrl) return;
+function confirmOrderInMessenger() {
+    if (!pendingOrderUrl) return;
 
-    const url = pendingAndroidOrderUrl;
-    pendingAndroidOrderUrl = "";
-    document.getElementById("androidOrderConfirmation").classList.remove("active");
+    const url = pendingOrderUrl;
+    pendingOrderUrl = "";
+    document.getElementById("orderConfirmation").classList.remove("active");
 
     const messengerWindow = window.open(url, "_blank");
     if (!messengerWindow) {
@@ -3149,13 +3170,33 @@ function confirmAndroidOrder() {
     }
 }
 
+function closeOrderConfirmation() {
+    pendingOrderUrl = "";
+    document.getElementById("orderConfirmation").classList.remove("active");
+}
+
+function chooseAnotherEsim() {
+    closeOrderConfirmation();
+
+    const dataEsimTab = document.querySelector('.tab[onclick*="data-esim"]');
+    if (dataEsimTab) {
+        switchTab(dataEsimTab, "data-esim");
+        document.querySelector(".tabs-container").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+}
+
 function openOrderInMessengerOnAndroid(textMessage, url) {
     copyOrderText(textMessage)
-        .then((copied) => showAndroidOrderConfirmation(copied, url, textMessage))
+        .then((copied) => showOrderConfirmation(copied, url, textMessage))
         .catch((error) => {
             console.error("Не удалось подготовить сообщение заказа", error);
-            showAndroidOrderConfirmation(false, url, textMessage);
+            showOrderConfirmation(false, url, textMessage);
         });
+}
+
+function openOrderConfirmationOnIOS(textMessage, url) {
+    const copied = copyOrderTextFallback(textMessage);
+    showOrderConfirmation(copied, url, textMessage);
 }
 
 // === ЕДИНАЯ ИСПРАВЛЕННАЯ ФУНКЦИЯ ЗАКАЗА ===
@@ -3172,29 +3213,7 @@ function confirmOrder() {
     const url = "https://m.me/" + pageId + "?text=" + encodedText;
 
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        // ТРЮК ДЛЯ iOS: Синхронно копируем текст в буфер обмена
-        const tempInput = document.createElement("textarea");
-        tempInput.value = textMessage;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        try {
-            document.execCommand("copy");
-            // Предупреждаем пользователя, что нужно нажать Paste (Вставить)
-            alert("Таны захиалгын мэдээлэл хуулагдлаа! Та Facebook Messenger нээгдэхэд (Paste) хийж илгээнэ үү.\n\n(Таны захиалгыг боловсруулаад 5-15 минутын дотор eSIM QR код, зааврыг хүргүүлнэ)");
-        } catch (err) {
-            console.log("Копирование не удалось", err);
-        }
-        document.body.removeChild(tempInput);
-
-        // Безопасное открытие Messenger для iOS
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
+        openOrderConfirmationOnIOS(textMessage, url);
     } else if (/Android/i.test(navigator.userAgent)) {
         openOrderInMessengerOnAndroid(textMessage, url);
     } else {
@@ -3375,13 +3394,7 @@ function orderDirectProduct(productType, productName) {
     
     // Безопасное открытие ссылки с поддержкой iOS Safari
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        openOrderConfirmationOnIOS(textMessage, url);
     } else if (/Android/i.test(navigator.userAgent)) {
         openOrderInMessengerOnAndroid(textMessage, url);
     } else {
@@ -3532,11 +3545,13 @@ function toggleSimCountries(element, event) {
     </div>
 </div>
 
-<div id="androidOrderConfirmation" class="android-order-confirmation" role="dialog" aria-modal="true" aria-labelledby="androidOrderConfirmationMessage">
-    <div class="android-order-confirmation__content">
-        <p id="androidOrderConfirmationMessage" class="android-order-confirmation__message"></p>
-        <div id="androidOrderConfirmationOrder" class="android-order-confirmation__order"></div>
-        <button id="androidOrderConfirmationButton" class="android-order-confirmation__button" type="button" onclick="confirmAndroidOrder()">баталгаажуулах</button>
+<div id="orderConfirmation" class="order-confirmation" role="dialog" aria-modal="true" aria-labelledby="orderConfirmationMessage">
+    <div class="order-confirmation__content">
+        <button class="order-confirmation__close" type="button" aria-label="Хаах" onclick="closeOrderConfirmation()">&times;</button>
+        <p id="orderConfirmationMessage" class="order-confirmation__message"></p>
+        <div id="orderConfirmationOrder" class="order-confirmation__order"></div>
+        <button id="orderConfirmationButton" class="order-confirmation__button" type="button" onclick="confirmOrderInMessenger()">баталгаажуулах</button>
+        <button class="order-confirmation__button order-confirmation__button--secondary" type="button" onclick="chooseAnotherEsim()">өөр eSIM сонгох</button>
     </div>
 </div>
 
