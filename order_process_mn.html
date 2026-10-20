@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+    (function () {
+        var ua = navigator.userAgent || '';
+        // Исключаем Googlebot из JS-редиректа
+        var isGooglebot = /Googlebot/i.test(ua);
+
+        var mobileUa = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+        var ipadDesktopMode = /Macintosh/i.test(ua) && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+        var isMobileLikeDevice = mobileUa || ipadDesktopMode;
+        var isNarrowScreen = window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+        var hasCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        var targetPath = 'order_process_mobile_mn';
+
+        // Редирект выполняется только для обычных пользователей
+        if (!isGooglebot) {
+            if ('toMobile' === 'toMobile') {
+                if (isMobileLikeDevice || (isNarrowScreen && hasCoarsePointer)) {
+                    window.location.replace(targetPath + window.location.search + window.location.hash);
+                }
+            } else {
+                if (!isMobileLikeDevice) {
+                    window.location.replace(targetPath + window.location.search + window.location.hash);
+                }
+            }
+        }
+    })();
+    </script>
+
+    <title>Захиалгыг Бид Яаж Гүйцэтгэдэг Вэ | Translation Board</title>
+    <meta name="description" content="Translation Board компанид захиалга хэрхэн боловсруулагдаж, баталгаажиж, орчуулга хийгдэж, PDF болон эх хувиар хүлээлгэн өгдөгийг тайлбарласан дараалал.">
+    <meta name="robots" content="index, follow">
+
+    <link rel="shortcut icon" href="https://translationboard.mn/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" href="https://translationboard.mn/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://translationboard.mn/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="https://translationboard.mn/android-icon-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://translationboard.mn/apple-icon-180x180.png">
+
+    <link rel="manifest" href="https://translationboard.mn/manifest.json">
+    <meta name="msapplication-config" content="https://translationboard.mn/browserconfig.xml">
+
+    <link rel="alternate" media="only screen and (max-width: 900px)" href="https://translationboard.mn/order_process_mobile_mn">
+
+    <link rel="canonical" href="https://translationboard.mn/order_process_mn.html">
+    <link rel="alternate" hreflang="mn" href="https://translationboard.mn/order_process_mn.html">
+    <link rel="alternate" hreflang="ru" href="https://translationboard.mn/order_process_ru.html">
+    <link rel="alternate" hreflang="en" href="https://translationboard.mn/order_process_en.html">
+    <link rel="alternate" hreflang="zh" href="https://translationboard.mn/order_process_cn.html">
+    <link rel="alternate" hreflang="x-default" href="https://translationboard.mn/order_process_mn.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="mn_MN">
+    <meta property="og:title" content="Захиалгыг Бид Яаж Гүйцэтгэдэг Вэ | Орчуулгын Самбар ХХК">
+    <meta property="og:description" content="Захиалгын орчуулгын ажил хэрхэн явагдахыг алхам бүрээр тайлбарласан хуудас.">
+    <meta property="og:url" content="https://translationboard.mn/order_process_mn.html">
+    <meta property="og:image" content="https://translationboard.mn/FORPAGESHARELOGO.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Захиалгыг Бид Яаж Гүйцэтгэдэг Вэ | Орчуулгын Самбар ХХК">
+    <meta name="twitter:description" content="Орчуулгын Самбар ХХК-ийн захиалгын гүйцэтгэлийн дарааллын танилцуулга.">
+    <meta name="twitter:image" content="https://translationboard.mn/FORPAGESHARELOGO.png">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "@id": "https://translationboard.mn/#organization",
+        "name": "Орчуулгын Самбар ХХК",
+        "alternateName": "Translation Board LLC",
+        "url": "https://translationboard.mn/",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://translationboard.mn/order_process_mn.html",
+            "url": "https://translationboard.mn/order_process_mn.html",
+            "name": "Захиалгыг Бид Яаж Гүйцэтгэдэг Вэ | Translation Board",
+            "description": "Translation Board компанид захиалга хэрхэн боловсруулагдаж, баталгаажиж, орчуулга хийгдэж, PDF болон эх хувиар хүлээлгэн өгдөгийг тайлбарласан дараалал.",
+            "inLanguage": "mn"
+        },
+        "logo": "https://translationboard.mn/LOGO.gif",
+        "image": "https://translationboard.mn/FORPAGESHARELOGO.png",
+        "telephone": "+976-80599859",
+        "priceRange": "₮₮",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Баянзүрх дүүрэг, Бөхийн өргөөний баруун талд, Эрхэт оффис, 10 давхар, 1006 тоот",
+            "addressLocality": "Ulaanbaatar",
+            "addressCountry": "MN"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 47.917496,
+            "longitude": 106.9343258
+        }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #ffffff url('https://translationboard.mn/OfficeLAPTOP.webp') no-repeat center top; background-size: cover; background-attachment: fixed; color: #1a2b3c; }
+        .m-header { background: #000; color: #fff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #222; }
+        .brand { font-size: 14px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 58px); }
+        #menu-icon { cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; width: 22px; height: 14px; position: relative; z-index: 1001; flex-shrink: 0; }
+        #menu-icon .line { width: 22px; height: 2px; background: #fff; border-radius: 2px; display: block; transition: 0.3s ease; transform-origin: left center; }
+        .lang-switcher { display: flex; align-items: center; gap: 8px; margin-left: auto; margin-right: 14px; flex-wrap: wrap; justify-content: center; }
+        .lang-switcher a { text-decoration: none; display: inline-flex; align-items: center; }
+        .lang-switcher img { width: 20px; border-radius: 2px; display: block; opacity: 0.8; }
+        .lang-switcher a.active img { opacity: 1; border: 1px solid #d4a035; box-shadow: 0 0 5px rgba(212, 160, 53, 0.6); }
+        #mobile-nav { display: none; background: #1a2b3c; position: fixed; top: 45px; right: 0; width: 100%; z-index: 999; border-top: 1px solid #2c3e50; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45); }
+        #mobile-nav ul { list-style: none; margin: 0; padding: 0; text-align: left; }
+        #mobile-nav li { border-bottom: 1px solid #2c3e50; opacity: 0; transform: translateX(20px); transition: transform 0.28s ease, opacity 0.28s ease; }
+        #mobile-nav.open li { opacity: 1; transform: translateX(0); }
+        #mobile-nav.open li:nth-child(1) { transition-delay: 0.08s; }
+        #mobile-nav.open li:nth-child(2) { transition-delay: 0.12s; }
+        #mobile-nav.open li:nth-child(3) { transition-delay: 0.16s; }
+        #mobile-nav.open li:nth-child(4) { transition-delay: 0.20s; }
+        #mobile-nav.open li:nth-child(5) { transition-delay: 0.24s; }
+        #mobile-nav.open li:nth-child(6) { transition-delay: 0.28s; }
+        #mobile-nav.open li:nth-child(7) { transition-delay: 0.32s; }
+        #mobile-nav.open li:nth-child(8) { transition-delay: 0.36s; }
+        #mobile-nav a { display: block; color: #fff; text-decoration: none; padding: 16px 22px; font-size: 15px; }
+        #mobile-nav a:hover { background: rgba(255, 255, 255, 0.07); }
+        main { max-width: 1000px; margin: 0 auto; padding: 26px 20px 50px; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+        .gow-process-container { text-align: center; margin: 4px 0 16px; padding: 6px 0; }
+        .gow-process-line { display: block; white-space: nowrap; margin-bottom: 10px; width: 100%; }
+        .gow-process-line:last-child { margin-bottom: 0; }
+        .gow-process-letter-box { display: inline-block; position: relative; width: 36px; height: 48px; margin: 0 2px; vertical-align: middle; }
+        .gow-process-space { display: inline-block; width: 14px; }
+        .gow-process-item { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-transform: uppercase; user-select: none; }
+        .gow-process-item.rune { font-family: 'Segoe UI Historic', 'Arial', sans-serif; font-size: 38px; font-weight: 700; background: linear-gradient(135deg, #9a741e 0%, #f9e497 25%, #d4af37 50%, #ffffff 65%, #b38f2d 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(1px 1px 0.5px #5c4308) drop-shadow(-0.5px -0.5px 0.5px #fff5cc) drop-shadow(0 0 6px rgba(212, 175, 55, 0.5)); opacity: 0; transform: scale(1); animation: gowProcessGoldExplode 2s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .gow-process-item.letter { font-family: 'Montserrat', sans-serif; font-size: 35px; font-weight: 800; color: #1c2e3d; opacity: 0; transform: scale(0.9); animation: gowProcessLetterReveal 1.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; text-shadow: 1px 1px 0 #2f3e4e, 2px 2px 0 #13202d, 2px 4px 4px rgba(0, 0, 0, 0.25); }
+        @keyframes gowProcessGoldExplode { 0% { opacity: 0; transform: scale(1.25); filter: blur(3px) brightness(2) drop-shadow(0 0 15px #ffaa00); } 15% { opacity: 1; transform: scale(1); } 45% { opacity: 1; transform: scale(1.15); filter: drop-shadow(0 0 12px #ff4500) brightness(1.7) contrast(1.2); } 70% { opacity: 0.55; transform: scale(1.04); filter: blur(2px) brightness(0.8); } 100% { opacity: 0; transform: scale(0.85); filter: blur(12px); } }
+        @keyframes gowProcessLetterReveal { 0% { opacity: 0; transform: scale(0.85); filter: blur(5px) brightness(3); color: #fff; } 45% { opacity: 0.7; filter: blur(2px) brightness(2); color: #fff; text-shadow: 0 0 20px #fff, 0 0 12px #ff8c00; } 100% { opacity: 1; transform: scale(1); filter: blur(0); color: #1c2e3d; } }
+        .intro { text-align: center; margin: 0 auto 24px; font-size: 15px; line-height: 1.6; color: #4f5f70; max-width: 860px; }
+        .process-list { display: flex; flex-direction: column; gap: 14px; }
+        .policy-grid { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .policy-card { background: #fff; border: 1px solid #e9edf2; border-radius: 14px; padding: 16px; text-align: left; box-shadow: 0 5px 16px rgba(20, 31, 45, 0.06); }
+        .policy-card h3 { margin: 0 0 10px; font-size: 17px; color: #1a2b3c; font-weight: 800; line-height: 1.35; }
+        .policy-card p { margin: 0 0 8px; font-size: 14px; color: #4e5d70; line-height: 1.55; }
+        .policy-card p:last-child { margin-bottom: 0; }
+        .policy-card a { color: #1a2b3c; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+        .process-item { display: flex; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border: 1px solid #e9edf2; border-left: 4px solid #d4a035; border-radius: 14px; padding: 16px; box-shadow: 0 5px 16px rgba(20, 31, 45, 0.06); }
+        .process-text { text-align: left; min-width: 0; flex: 1; }
+        .process-step { display: inline-block; margin: 0 0 7px; padding: 4px 10px; font-size: 12px; font-weight: 700; color: #c61a30; background: #fff3f5; border-radius: 999px; letter-spacing: 0.4px; text-transform: uppercase; }
+        .process-title { margin: 0; font-size: 17px; line-height: 1.35; color: #1a2b3c; font-weight: 800; }
+        .process-desc { margin: 6px 0 0; font-size: 14px; line-height: 1.5; color: #566679; }
+        .media-circle { width: 104px; height: 104px; min-width: 104px; border-radius: 50%; border: 2px dashed #d4a035; background: radial-gradient(circle at 25% 25%, #fffaf0 0%, #f8efe0 100%); display: flex; align-items: center; justify-content: center; text-align: center; color: #7b5a1d; font-size: 12px; font-weight: 700; line-height: 1.25; padding: 10px; flex-shrink: 0; overflow: hidden; }
+        .media-circle img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+        .tip { margin-top: 20px; text-align: left; background: #f4f8fc; border: 1px solid #dbe8f3; border-radius: 12px; padding: 14px 15px; color: #385067; font-size: 14px; line-height: 1.5; }
+        .tip strong { color: #1a2b3c; }
+        .order-section { margin-top: 26px; background: #fff; border: 1px solid #e9edf2; border-radius: 14px; box-shadow: 0 5px 16px rgba(20, 31, 45, 0.06); padding: 18px; text-align: left; }
+        .order-section-title { margin: 0 0 12px; font-size: 18px; font-weight: 800; color: #1a2b3c; }
+        .order-steps { margin: 0; font-size: 15px; color: #444; line-height: 1.8; }
+        .order-steps p { margin: 0 0 6px; }
+        .order-buttons { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        .m-btn { display: inline-block; text-decoration: none; border-radius: 10px; padding: 12px 16px; font-size: 14px; font-weight: 800; letter-spacing: 0.2px; text-align: center; border: 1px solid transparent; transition: 0.2s ease; }
+        .m-btn:hover { transform: translateY(-1px); }
+        .m-btn-order { background: #d4a035; color: #000; }
+        .m-btn-back { background: #1a2b3c; color: #fff; }
+        .m-btn-call { background: #c61a30; color: #fff; }
+        .inline-call-btn { display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; padding: 7px 12px; border-radius: 999px; background: linear-gradient(135deg, #1e6b5e 0%, #23a48d 100%); color: #fff; text-decoration: none; font-size: 12px; font-weight: 800; letter-spacing: 0.2px; vertical-align: middle; box-shadow: 0 4px 10px rgba(30, 107, 94, 0.28); border: 1px solid rgba(255,255,255,0.2); }
+        .inline-call-btn::before { content: '📞'; font-size: 12px; line-height: 1; }
+        .inline-call-btn:hover, .inline-call-btn:focus, .inline-call-btn:active { filter: brightness(1.08); transform: translateY(-1px); text-decoration: none; }
+        .inline-map-btn { background: linear-gradient(135deg, #315c9b 0%, #4d8de0 100%); box-shadow: 0 4px 10px rgba(49, 92, 155, 0.28); }
+        .inline-map-btn::before { content: '📍'; }
+        .notary-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .notary-actions .inline-call-btn { margin-left: 0; }
+        .policy-card .notary-actions .inline-call-btn { color: #fff; text-decoration: none; }
+        .order-email-note { margin: 14px 0 0; font-size: 13px; color: #666; text-align: center; }
+        .order-email-note strong { color: #1a2b3c; border-bottom: 1px dashed #666; padding-bottom: 2px; }
+        .page-footer { margin-top: 34px; background: rgba(255, 255, 255, 0.92); border-top: 1px solid #e6ebf1; padding: 22px 20px; text-align: center; }
+        .page-footer .brand-line { font-size: 12px; color: #c61a30; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 8px; }
+        .page-footer .copy-line { font-size: 11px; color: #666; }
+        @media (max-width: 780px) { .gow-process-letter-box { width: 31px; height: 42px; margin: 0 1.5px; } .gow-process-item.rune { font-size: 33px; } .gow-process-item.letter { font-size: 30px; } .process-item { padding: 14px; gap: 12px; } .policy-grid { grid-template-columns: 1fr; } .media-circle { width: 88px; height: 88px; min-width: 88px; font-size: 11px; } .process-title { font-size: 16px; } }
+        @media (max-width: 560px) { .brand { font-size: 12px; } .lang-switcher { gap: 6px; margin-left: auto; margin-right: 8px; } .lang-switcher img { width: 18px; } .gow-process-letter-box { width: 24px; height: 34px; margin: 0 1px; } .gow-process-item.rune { font-size: 26px; } .gow-process-item.letter { font-size: 23px; } .gow-process-space { width: 10px; } .process-item { gap: 10px; } .process-desc { font-size: 13px; } .media-circle { width: 76px; height: 76px; min-width: 76px; font-size: 10px; } }
+    </style>
+</head>
+<body>
+    <header class="m-header">
+        <span class="brand">ОРЧУУЛГЫН САМБАР ХХК</span>
+        <div class="lang-switcher" aria-label="Хэл солих">
+            <a href="order_process_mn.html" title="Монгол" class="active"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/mn.svg" alt="Монгол тугийн дүрс"></a>
+            <a href="order_process_en.html" title="English"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/gb.svg" alt="Англи тугийн дүрс"></a>
+            <a href="order_process_ru.html" title="Русский"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/ru.svg" alt="Орос тугийн дүрс"></a>
+            <a href="order_process_cn.html" title="中文"><img src="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/flags/4x3/cn.svg" alt="Хятад тугийн дүрс"></a>
+        </div>
+        <div id="menu-icon" onclick="toggleMenu(event)" aria-label="Цэс нээх" role="button" tabindex="0">
+            <span class="line"></span><span class="line"></span><span class="line"></span>
+        </div>
+    </header>
+    <nav id="mobile-nav" aria-label="Сайт цэс">
+        <ul>
+            <li><a href="https://translationboard.mn/index.html#about">🏢 Бидний тухай</a></li>
+            <li><a href="https://translationboard.mn/index.html#services">⚙️ Үйлчилгээ</a></li>
+            <li><a href="https://translationboard.mn/index.html#work">💼 Манай ажил</a></li>
+            <li><a href="https://translationboard.mn/index.html#price">💰 Үйлчилгээний тариф</a></li>
+            <li><a href="https://translationboard.mn/index.html#location">📍 Холбоо барих</a></li>
+            <li><a href="https://translationboard.mn/index.html#order" style="color:#d4a035;font-weight:700;">📝 Захиалга өгөх</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1 class="sr-only">Бид таны захиалгыг хэрхэн гүйцэтгэдэг вэ</h1>
+        <div class="gow-process-container" id="gow-process-title" aria-hidden="true">
+            <div class="gow-process-line" data-text="БИД ЯАЖ"></div>
+            <div class="gow-process-line" data-text="ЗАХИАЛГА"></div>
+            <div class="gow-process-line" data-text="ГҮЙЦЭТГЭДЭГ ВЭ"></div>
+        </div>
+        <p class="intro">Доор захиалга хүлээн авахаас эхлээд бэлэн эх хувийг хүлээлгэж өгөх хүртэлх ажлын дарааллыг харууллаа.</p>
+        <section class="process-list">
+            <article class="process-item" id="step-1"><div class="process-text"><span class="process-step">Алхам 1</span><h2 class="process-title">ЗАХИАЛГА</h2><p class="process-desc">Захиалагч нь бичиг баримт, материалаа илгээж, орчуулгын хэл, хугацаа болон шаардлагыг товчхон бичиж ирүүлнэ.</p></div><div class="media-circle"><img src="https://translationboard.mn/message.gif" alt="Алхам 1 захиалга илгээх GIF"></div></article>
+            <article class="process-item" id="step-2"><div class="process-text"><span class="process-step">Алхам 2</span><h2 class="process-title">БАТАЛГААЖУУЛАЛТ</h2><p class="process-desc">Ирүүлсэн материалтай танилцсаны дараа үнийн санал болон хугацааг тохиролцож, нэхэмжлэхийг илгээж,  төлбөрийг хүлээн авсны дараа захиалгыг баталгаажуулж и-мэйлээр илгээнэ.</p></div><div class="media-circle"><img src="https://translationboard.mn/calculator.gif" alt="Алхам 2 тооцоолол болон баталгаажуулалт GIF"></div></article>
+            <article class="process-item" id="step-3"><div class="process-text"><span class="process-step">Алхам 3</span><h2 class="process-title">ОРЧУУЛГА</h2><p class="process-desc">Орчуулгыг мэргэжлийн орчуулагч гүйцэтгэхдээ нэр томьёо, баримтын бүтэц болон албан бичгийн стандартыг чанд мөрдөнө.</p></div><div class="media-circle"><img src="https://translationboard.mn/language.gif" alt="Алхам 3 орчуулга хийх GIF"></div></article>
+            <article class="process-item" id="step-4"><div class="process-text"><span class="process-step">Алхам 4</span><h2 class="process-title">ОРЧУУЛГЫН БАТАЛГАА</h2><p class="process-desc">Орчуулсан материалыг дотоод хяналтаар нягталж, тамгаар баталгаажуулж, албан хэрэгцээнд ашиглах боломжтой болгоно.</p></div><div class="media-circle"><img src="https://translationboard.mn/stamp.gif" alt="Алхам 4 тамгаар баталгаажуулах GIF"></div></article>
+            <article class="process-item" id="step-5"><div class="process-text"><span class="process-step">Алхам 5</span><h2 class="process-title">ОРЧУУЛГЫН ХЭЛБЭР</h2><p class="process-desc">Гарын үсэг, тамгатай баримтыг чанартайгаар сканнердаж, тохиромжтой PDF форматаар хадгална.</p></div><div class="media-circle"><img src="https://translationboard.mn/pdf.gif" alt="Алхам 5 PDF хэлбэрт бэлтгэх GIF"></div></article>
+            <article class="process-item" id="step-6"><div class="process-text"><span class="process-step">Алхам 6</span><h2 class="process-title">ХҮЛЭЭЛГЭН ӨГӨХ</h2><p class="process-desc">Хэрэглэгчид эцсийн PDF файл болон захиалгын дэлгэрэнгүй мэдээллийг хавсарган и-мэйлээр илгээнэ.</p></div><div class="media-circle"><img src="https://translationboard.mn/envelope.gif" alt="Алхам 6 и-мэйлээр илгээх GIF"></div></article>
+            <article class="process-item" id="step-7"><div class="process-text"><span class="process-step">Алхам 7</span><h2 class="process-title">ЭХ ХУВЬ</h2><p class="process-desc">Хэрэв танд цаасан эх хувь хэрэгтэй бол манай оффист биечлэн ирж авах боломжтой.</p></div><div class="media-circle"><img src="https://translationboard.mn/icon-student.gif" alt="Алхам 7 эх хувийг биечлэн авах GIF"></div></article>
+        </section>
+        <section class="policy-grid" id="order-policies">
+            <article class="policy-card"><h3>ТӨЛБӨРИЙН НӨХЦӨЛ</h3><p>📩 Захиалгын материалыг танилцсаны дараа төлбөрийн нэхэмжлэхийг и-мэйлээр илгээнэ.</p><p>💳 Төлбөрийг бүрэн төлсний дараа таны захиалга баталгаажна.</p><p>🧾 И-баримтыг захиалагчийн шаардлагын дагуу хувь хүн болон байгууллагаар олгоно.</p><p>💰 Үйлчилгээний үнэ орчуулах материалын агуулга, хэмжээ, хэлнээс хамаарна. Дэлгэрэнгүйг <a href="https://translationboard.mn/index#price">Үйлчилгээний үнэ</a> хэсгээс үзнэ үү.</p></article>
+            <article class="policy-card"><h3>ХУГАЦАА / ЯАРАЛТАЙ ОРЧУУЛГА</h3><p>📅 Орчуулгыг захиалга баталгаажсанаас хойш 24 цагийн дотор гүйцэтгэнэ.</p><p>⏱ Ажлын цагт орчуулах материалын хэмжээ, хэлээс шалтгаалан ихэвчлэн 1-2 цагийн дотор бэлэн болно.</p><p>📦 Материалын хэмжээ их байгаа тохиолдолд дараагийн ажлын өдөрт шилжиж болно.</p><p>🕘 Оффисын ажиллах цагаас гадуур ирсэн захиалгыг дараагийн ажлын өдөрт бэлэн болгож өгнө.</p><p>⚡ Яаралтай орчуулгын гүйцэтгэх хугацаа нь материалын хэмжээ болон орчуулгын хэлнээс хамаарна.</p></article>
+            <article class="policy-card"><h3>ЧАНАР / НУУЦЛАЛ</h3><p>✅ Орчуулга бүрийг ерөнхий орчуулагч хоёр удаа шалгана.</p><p>🔒 Хэрэглэгчийн материалын нууцлалыг бүх шатанд чанд хадгална.</p><p>♻ Хэрэглэгч ирж аваагүй цаасан хувийг хадгалалтын хугацаа дууссаны дараа устгана.</p></article>
+            <article class="policy-card"><h3>АЛБАН ХЭРЭГЛЭЭ / НОТАРИАТ</h3><p>🏛 Орчуулга нь Элчин сайдын яам, Консулын газар болон төрийн байгууллагад ашиглахад тохиромжтой.</p><p>📷 Анхны үнэлгээг тогтоох, захиалга эхлүүлэх зорилгоор эх материалын чанартай зураг явуулж болно.</p><p>📍 Манай оффис дэргэдээ нотариатын газартай тул бичиг баримтыг баталгаажуулахад амар. Нотариатын хаяг: БЗД, Баянзүрх зах, Гео Төв, 2 давхар. Нотариатын утас: 99158500</p><div class="notary-actions"><a href="tel:+97699158500" class="inline-call-btn">НОТАРИАТ</a><a href="https://www.google.com/maps/place/69,+%D0%91%D0%97%D0%94+-+6+%D1%85%D0%BE%D1%80%D0%BE%D0%BE,+%D0%A3%D0%BB%D0%B0%D0%B0%D0%BD%D0%B1%D0%B0%D0%B0%D1%82%D0%B0%D1%80+13373/@47.9177391,106.9326981,19z/data=!4m6!3m5!1s0x5d96923bf640dc29:0xdb52380b88990eaf!8m2!3d47.9177391!4d106.9333418!16s%2Fg%2F11y5l4sj_g?entry=ttu&amp;g_ep=EgoyMDI2MTAwNS4wIKXMDSoASAFQAw%3D%3D" class="inline-call-btn inline-map-btn" target="_blank" rel="noopener noreferrer">ГАЗРЫН ЗУРАГ</a></div><p>📌 Нотариатын тамга нь ихэвчлэн Монгол Улсад ашиглах эсвэл Апостиль гэрчилгээтэй баримтад шаардлагатай.  Ихэнх тохиолдолд нэмэлт нотариатын тамга шаардлагагүй.</p></article>
+        </section>
+        <div style="margin-top:22px;text-align:center;"><a href="https://translationboard.mn/index.html" class="m-btn m-btn-back">↩ НҮҮР ХУУДАС РУУ БУЦАХ</a></div>
+        <section class="order-section" id="order-cta"><p class="order-section-title">📝 Захиалга өгөх</p><div class="order-steps"><p>1. Орчуулгын баримт, материалаа манай и-мэйл хаяг руу илгээнэ үү.</p><p>2. Бид үнийн санал, хугацааг бэлтгэж, хариу  и-мэйл хүргүүлнэ.</p><p>3. Захиалга баталгаажсаны дараа орчуулга эхэлнэ.</p><p>4. Бэлэн болсон орчуулгыг тамгатай PDF хувиар илгээнэ.</p></div><div class="order-buttons"><a href="mailto:linguocat@gmail.com?subject=Орчуулгын захиалга&body=Сайн байна уу! Орчуулгын үнийн санал болон хугацааг тооцохоор материал илгээж байна." class="m-btn m-btn-order">📧 ЗАХИАЛГА ӨГӨХ</a><a href="tel:+97680599859" class="m-btn m-btn-call">📞 ЗАЛГАХ: 8059 9859</a></div><p class="order-email-note">Эсвэл материалаа шууд: <strong>linguocat@gmail.com</strong> хаяг руу илгээнэ үү</p></section>
+    </main>
+    <footer class="page-footer"><div class="brand-line">Translation Board</div><div class="copy-line">© 2026 Translation Board LLC</div></footer>
+    <script>
+        function buildGowProcessTitle() {
+            var container = document.getElementById('gow-process-title');
+            if (!container) return;
+            var runePool = ['ᚱ', 'ᛟ', 'ᛒ', 'ᚢ', 'ᛏ', 'ᛖ', 'ᚾ', 'ᛗ', 'ᛞ', 'ᚨ'];
+            var lines = container.querySelectorAll('.gow-process-line');
+            var glyphPairs = [];
+            function shuffle(array) { for (var i = array.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var temp = array[i]; array[i] = array[j]; array[j] = temp; } }
+            lines.forEach(function(line) {
+                var text = line.getAttribute('data-text') || '';
+                line.innerHTML = '';
+                for (var i = 0; i < text.length; i++) {
+                    var ch = text[i];
+                    if (ch === ' ') { var space = document.createElement('span'); space.className = 'gow-process-space'; line.appendChild(space); continue; }
+                    var box = document.createElement('span'); box.className = 'gow-process-letter-box';
+                    var rune = document.createElement('span'); rune.className = 'gow-process-item rune'; rune.textContent = runePool[(glyphPairs.length + i) % runePool.length];
+                    var letter = document.createElement('span'); letter.className = 'gow-process-item letter'; letter.textContent = ch;
+                    box.appendChild(rune); box.appendChild(letter); line.appendChild(box); glyphPairs.push({ rune: rune, letter: letter });
+                }
+            });
+            var order = []; for (var k = 0; k < glyphPairs.length; k++) { order.push(k); } shuffle(order);
+            for (var n = 0; n < order.length; n++) { var pair = glyphPairs[order[n]]; var jitter = Math.random() * 0.07; var delay = (0.2 + n * 0.08 + jitter).toFixed(2) + 's'; pair.rune.style.animationDelay = delay; pair.letter.style.animationDelay = delay; }
+        }
+        buildGowProcessTitle();
+        function toggleMenu(event) { if (event) event.stopPropagation(); var nav = document.getElementById('mobile-nav'); var icon = document.getElementById('menu-icon'); var lines = icon ? icon.getElementsByClassName('line') : []; if (!nav) return; if (nav.style.display === 'block') { nav.classList.remove('open'); if (lines.length >= 3) { lines[0].style.transform = 'none'; lines[1].style.opacity = '1'; lines[2].style.transform = 'none'; } setTimeout(function() { nav.style.display = 'none'; }, 260); } else { nav.style.display = 'block'; if (lines.length >= 3) { lines[0].style.transform = 'rotate(45deg) translate(2px, -1px)'; lines[1].style.opacity = '0'; lines[2].style.transform = 'rotate(-45deg) translate(2px, 1px)'; } setTimeout(function() { nav.classList.add('open'); }, 20); } }
+        document.addEventListener('click', function(event) { var nav = document.getElementById('mobile-nav'); var menuIcon = document.getElementById('menu-icon'); if (!nav || nav.style.display !== 'block') return; if (!nav.contains(event.target) && (!menuIcon || !menuIcon.contains(event.target))) { toggleMenu(); } });
+        document.getElementById('menu-icon').addEventListener('keydown', function(event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleMenu(); } });
+    </script>
+</body>
+</html>
