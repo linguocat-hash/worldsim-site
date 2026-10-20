@@ -1,79 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <!-- Главные страницы -->
-  <url>
-    <loc>https://translationboard.mn/</loc>
-    <lastmod>2026-10-20</lastmod>
-    <xhtml:link rel="alternate" hreflang="mn" href="https://translationboard.mn/"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://translationboard.mn/index_ru.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://translationboard.mn/index_en.html"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://translationboard.mn/index_cn.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://translationboard.mn/"/>
-  </url>
-  <url>
-    <loc>https://translationboard.mn/index_ru.html</loc>
-    <lastmod>2026-10-20</lastmod>
-    <xhtml:link rel="alternate" hreflang="mn" href="https://translationboard.mn/"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://translationboard.mn/index_ru.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://translationboard.mn/index_en.html"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://translationboard.mn/index_cn.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://translationboard.mn/"/>
-  </url>
-  <url>
-    <loc>https://translationboard.mn/index_en.html</loc>
-    <lastmod>2026-10-20</lastmod>
-    <xhtml:link rel="alternate" hreflang="mn" href="https://translationboard.mn/"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://translationboard.mn/index_ru.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://translationboard.mn/index_en.html"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://translationboard.mn/index_cn.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://translationboard.mn/"/>
-  </url>
-  <url>
-    <loc>https://translationboard.mn/index_cn.html</loc>
-    <lastmod>2026-10-20</lastmod>
-    <xhtml:link rel="alternate" hreflang="mn" href="https://translationboard.mn/"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://translationboard.mn/index_ru.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://translationboard.mn/index_en.html"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://translationboard.mn/index_cn.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://translationboard.mn/"/>
-  </url>
-
-  <!-- Страницы процесса заказа -->
-  <url>
-    <loc>https://translationboard.mn/order_process_mn.html</loc>
-    <lastmod>2026-10-20</lastmod>
-    <xhtml:link rel="alternate" hreflang="mn" href="https://translationboard.mn/order_process_mn.html"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://translationboard.mn/order_process_ru.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://translationboard.mn/order_process_en.html"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://translationboard.mn/order_process_cn.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://translationboard.mn/order_process_mn.html"/>
-  </url>
-  <url>
-    <loc>https://translationboard.mn/order_process_ru.html</loc>
-    <lastmod>2026-10-20</lastmod>
-    <xhtml:link rel="alternate" hreflang="mn" href="https://translationboard.mn/order_process_mn.html"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://translationboard.mn/order_process_ru.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://translationboard.mn/order_process_en.html"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://translationboard.mn/order_process_cn.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://translationboard.mn/order_process_mn.html"/>
-  </url>
-  <url>
-    <loc>https://translationboard.mn/order_process_en.html</loc>
-    <lastmod>2026-10-20</lastmod>
-    <xhtml:link rel="alternate" hreflang="mn" href="https://translationboard.mn/order_process_mn.html"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://translationboard.mn/order_process_ru.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://translationboard.mn/order_process_en.html"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://translationboard.mn/order_process_cn.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://translationboard.mn/order_process_mn.html"/>
-  </url>
-  <url>
-    <loc>https://translationboard.mn/order_process_cn.html</loc>
-    <lastmod>2026-10-20</lastmod>
-    <xhtml:link rel="alternate" hreflang="mn" href="https://translationboard.mn/order_process_mn.html"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://translationboard.mn/order_process_ru.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://translationboard.mn/order_process_en.html"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://translationboard.mn/order_process_cn.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://translationboard.mn/order_process_mn.html"/>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url>
+      <loc>https://worldsim.translationboard.mn/</loc>
+      <lastmod>2026-05-21</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>1.0</priority>
+   </url>
+   <url>
+      <loc>https://worldsim.translationboard.mn/esim_settings.html</loc>
+      <lastmod>2026-06-14</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+   </url>
 </urlset>
