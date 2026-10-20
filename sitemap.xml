@@ -1,15 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-   <url>
-      <loc>https://worldsim.translationboard.mn/</loc>
-      <lastmod>2026-05-21</lastmod>
-      <changefreq>weekly</changefreq>
-      <priority>1.0</priority>
-   </url>
-   <url>
-      <loc>https://worldsim.translationboard.mn/esim_settings.html</loc>
-      <lastmod>2026-06-14</lastmod>
-      <changefreq>weekly</changefreq>
-      <priority>0.8</priority>
-   </url>
+  <!-- Главная страница (Монгольский) -->
+  <url>
+    <loc>https://translationboard.mn/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Русская версия -->
+  <url>
+    <loc>https://translationboard.mn/index_ru.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Английская версия -->
+  <url>
+    <loc>https://translationboard.mn/index_en.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Китайская версия -->
+  <url>
+    <loc>https://translationboard.mn/index_cn.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Как мы выполняем заказ (Монгольский, canonical) -->
+  <url>
+    <loc>https://translationboard.mn/order_process_mn.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Как мы выполняем заказ (Русский, canonical) -->
+  <url>
+    <loc>https://translationboard.mn/order_process_ru.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- How We Process Your Order (English, canonical) -->
+  <url>
+    <loc>https://translationboard.mn/order_process_en.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- 我们的订单如何执行 (Chinese, canonical) -->
+  <url>
+    <loc>https://translationboard.mn/order_process_cn.html</loc>
+    <lastmod>2026-10-20</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>
